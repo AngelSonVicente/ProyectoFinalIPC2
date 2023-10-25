@@ -1,0 +1,572 @@
+{
+    "categorias" : [
+        {
+            "codigo" : 1,
+            "nombre" : "Categoria 1",
+            "descripcion" : "Descripcion categoria 1"
+        },
+        {
+            "codigo" : 2,
+            "nombre" : "Categoria 2",
+            "descripcion" : "Descripcion categoria 2"
+        },
+        {
+            "codigo" : 3,
+            "nombre" : "Categoria 3",
+            "descripcion" : "Descripcion categoria 3"
+        },
+        {
+            "codigo" : 4,
+            "nombre" : "Categoria 4",
+            "descripcion" : "Descripcion categoria 4"
+        },
+        {
+            "codigo" : 5,
+            "nombre" : "Categoria 5",
+            "descripcion" : "Descripcion categoria 5"
+        },
+        {
+            "codigo" : 6,
+            "nombre" : "Categoria 6",
+            "descripcion" : "Descripcion categoria 6"
+        }
+    ],
+    "libros" : [
+        {
+            "isbn" : 1,
+            "nombre" : "Java y la programacion funcional",
+            "costo" : 110,
+            "categoria" : 1,
+            "autor" : "Autor 1"
+        },
+        {
+            "isbn" : 2,
+            "nombre" : "Buenas practicas",
+            "costo" : 125,
+            "categoria" : 3,
+            "autor" : "Autor 1"
+        },
+        {
+            "isbn" : 3,
+            "nombre" : "Porque me converti en desarrollador",
+            "costo" : 75,
+            "categoria" : 2,
+            "autor" : "Autor 4"
+        },
+        {
+            "isbn" : 4,
+            "nombre" : "Codigo Limpio",
+            "costo" : 225,
+            "categoria" : 4,
+            "autor" : "Autor feliz"
+        },
+        {
+            "isbn" : 5,
+            "nombre" : "Design patterns",
+            "costo" : 175,
+            "categoria" : 6,
+            "autor" : "Autor 2"
+        },
+        {
+            "isbn" : 6,
+            "nombre" : "C# - El java de Microsoft",
+            "costo" : 210,
+            "categoria" : 3,
+            "autor" : "Autor Desconocido"
+        },
+        {
+            "isbn" : 7,
+            "nombre" : "Contenedores con Docker",
+            "costo" : 260,
+            "categoria" : 5,
+            "autor" : "Autor Concentrado"
+        },
+        {
+            "isbn" : 8,
+            "nombre" : "Por que PHP deberia dejar de existir",
+            "costo" : 70,
+            "categoria" : 2,
+            "autor" : "Autor inteligente"
+        },
+        {
+            "isbn" : 9,
+            "nombre" : "Mamayas y mas",
+            "costo" : 130,
+            "categoria" : 4,
+            "autor" : "Autor dom"
+        },
+        {
+            "isbn" : 10,
+            "nombre" : "De Java a Jakarta",
+            "costo" : 150,
+            "categoria" : 6,
+            "autor" : "Autor 1"
+        },
+        {
+            "isbn" : 11,
+            "nombre" : "JSP y Servlets",
+            "costo" : 175,
+            "categoria" : 1,
+            "autor" : "Autor Java"
+        },
+        {
+            "isbn" : 12,
+            "nombre" : "Spring y los servlets",
+            "costo" : 215,
+            "categoria" : 1,
+            "autor" : "Autor 1"
+        },
+        {
+            "isbn" : 13,
+            "nombre" : "Html, Css y Js",
+            "costo" : 170,
+            "categoria" : 3,
+            "autor" : "Autor Web"
+        },
+        {
+            "isbn" : 14,
+            "nombre" : "Nuevo dia nueva feature",
+            "costo" : 205,
+            "categoria" : 5,
+            "autor" : "Autor dedicado"
+        },
+        {
+            "isbn" : 15,
+            "nombre" : "Algoritmos avanzados",
+            "costo" : 350,
+            "categoria" : 2,
+            "autor" : "Autor senior"
+        }
+    ],
+    "bibliotecas" : [
+        {
+            "codigo" : 1,
+            "nombre" : "Biblioteca 1",
+            "direccion" : "Direccion 1",
+            "libros" : [
+                { "isbn" : 1, "existencias" : 5 },
+                { "isbn" : 6, "existencias" : 3 },
+                { "isbn" : 9, "existencias" : 2 },
+                { "isbn" : 13, "existencias" : 1 },
+                { "isbn" : 10, "existencias" : 5 },
+                { "isbn" : 7, "existencias" : 4 }
+            ]
+        },
+        {
+            "codigo" : 2,
+            "nombre" : "Biblioteca 2",
+            "direccion" : "Direccion 2",
+            "libros" : [
+                { "isbn" : 1, "existencias" : 5 },
+                { "isbn" : 2, "existencias" : 1 },
+                { "isbn" : 3, "existencias" : 3 },
+                { "isbn" : 5, "existencias" : 2 },
+                { "isbn" : 14, "existencias" : 4 },
+                { "isbn" : 15, "existencias" : 5 }
+            ]
+        },
+        {
+            "codigo" : 3,
+            "nombre" : "Biblioteca 3",
+            "direccion" : "Direccion 3",
+            "libros" : [
+                { "isbn" : 4, "existencias" : 2 },
+                { "isbn" : 8, "existencias" : 3 },
+                { "isbn" : 11, "existencias" : 6 },
+                { "isbn" : 12, "existencias" : 1 },
+                { "isbn" : 1, "existencias" : 6 },
+                { "isbn" : 7, "existencias" : 3 }
+            ]
+        }
+    ],
+    "admin" : {
+        "codigo" : 1,
+        "nombre" : "Administrador",
+        "username" : "admin",
+        "password" : "123",
+        "email" : "example@email.com"
+    },
+    "usuariosRecepcion" : [
+        {
+            "codigo" : 2,
+            "nombre" : "Recepcion 1",
+            "username" : "recepcion1",
+            "password" : "123",
+            "email" : "example@email.com",
+            "biblioteca" : 1
+        },
+        {
+            "codigo" : 3,
+            "nombre" : "Recepcion 2",
+            "username" : "recepcion2",
+            "password" : "123",
+            "email" : "example@email.com",
+            "biblioteca" : 1
+        },
+        {
+            "codigo" : 4,
+            "nombre" : "Recepcion 3",
+            "username" : "recepcion3",
+            "password" : "123",
+            "email" : "example@email.com",
+            "biblioteca" : 2
+        },
+        {
+            "codigo" : 5,
+            "nombre" : "Recepcion 4",
+            "username" : "recepcion4",
+            "password" : "123",
+            "email" : "example@email.com",
+            "biblioteca" : 2
+        },
+        {
+            "codigo" : 6,
+            "nombre" : "Recepcion 5",
+            "username" : "recepcion5",
+            "password" : "123",
+            "email" : "example@email.com",
+            "biblioteca" : 3
+        },
+        {
+            "codigo" : 7,
+            "nombre" : "Recepcion 6",
+            "username" : "recepcion6",
+            "password" : "123",
+            "email" : "example@email.com",
+            "biblioteca" : 3
+        }
+    ],
+    "usuariosTransporte" : [
+        {
+            "codigo" : 8,
+            "nombre" : "Transporte 1",
+            "username" : "transporte1",
+            "password" : "123",
+            "email" : "example@email.com"
+        },
+        {
+            "codigo" : 9,
+            "nombre" : "Transporte 2",
+            "username" : "transporte2",
+            "password" : "123",
+            "email" : "example@email.com"
+        },
+        {
+            "codigo" : 10,
+            "nombre" : "Transporte 3",
+            "username" : "transporte3",
+            "password" : "123",
+            "email" : "example@email.com"
+        }
+    ],
+    "usuarios" : [
+        {
+            "codigo" : 11,
+            "nombre" : "Usuario 1",
+            "username" : "user1",
+            "password" : "123",
+            "email" : "example@email.com",
+            "saldoInicial" : 250.25
+        },
+        {
+            "codigo" : 12,
+            "nombre" : "Usuario 2",
+            "username" : "user2",
+            "password" : "123",
+            "email" : "example@email.com",
+            "saldoInicial" : 0
+        },
+        {
+            "codigo" : 13,
+            "nombre" : "Usuario 3",
+            "username" : "user3",
+            "password" : "123",
+            "email" : "example@email.com",
+            "saldoInicial" : 500
+        },
+        {
+            "codigo" : 14,
+            "nombre" : "Usuario 4",
+            "username" : "user4",
+            "password" : "123",
+            "email" : "example@email.com",
+            "saldoInicial" : 90.6
+        },
+        {
+            "codigo" : 15,
+            "nombre" : "Usuario 5",
+            "username" : "user5",
+            "password" : "123",
+            "email" : "example@email.com",
+            "saldoInicial" : 25.75
+        }
+    ],
+    "solicitudesPrestamo" : [
+        {
+            "codigo" : 1,
+            "biblioteca" : 2,
+            "recepcionista" : 5,
+            "usuario" : 11,
+            "isbn" : 5,
+            "fecha" : "2023-09-01",
+            "estado" : "PENDIENTE",
+            "tipoEntrega" : "RECEPCION",
+            "transportista" : null
+        },
+        {
+            "codigo" : 2,
+            "biblioteca" : 1,
+            "recepcionista" : 2,
+            "usuario" : 12,
+            "isbn" : 13,
+            "fecha" : "2023-09-02",
+            "estado" : "PENDIENTE",
+            "tipoEntrega" : "DOMICILIO",
+            "transportista" : 8
+        },
+        {
+            "codigo" : 3,
+            "biblioteca" : 1,
+            "recepcionista" : 2,
+            "usuario" : 12,
+            "isbn" : 10,
+            "fecha" : "2023-08-30",
+            "estado" : "FINALIZADA",
+            "tipoEntrega" : "DOMICILIO",
+            "transportista" : 9
+        },
+        {
+            "codigo" : 4,
+            "biblioteca" : 3,
+            "recepcionista" : 7,
+            "usuario" : 12,
+            "isbn" : 11,
+            "fecha" : "2023-09-03",
+            "estado" : "PENDIENTE",
+            "tipoEntrega" : "RECEPCION",
+            "transportista" : null
+        },
+        {
+            "codigo" : 5,
+            "biblioteca" : 3,
+            "recepcionista" : 6,
+            "usuario" : 13,
+            "isbn" : 8,
+            "fecha" : "2023-09-04",
+            "estado" : "PENDIENTE",
+            "tipoEntrega" : "DOMICILIO",
+            "transportista" : 10
+        },
+        {
+            "codigo" : 6,
+            "biblioteca" : 2,
+            "recepcionista" : 4,
+            "usuario" : 13,
+            "isbn" : 14,
+            "fecha" : "2023-08-30",
+            "estado" : "FINALIZADA",
+            "tipoEntrega" : "DOMICILIO",
+            "transportista" : 8
+        }
+    ],
+    "prestamos" : [
+        {
+            "codigo" : 1,
+            "biblioteca" : 1,
+            "recepcionista" : 2,
+            "usuario" : 12,
+            "isbn" : 1,
+            "fecha" : "2023-08-30",
+            "estado" : "ACTIVO",
+            "multa" : 0
+        },
+        {
+            "codigo" : 2,
+            "biblioteca" : 2,
+            "recepcionista" : 5,
+            "usuario" : 11,
+            "isbn" : 1,
+            "fecha" : "2023-08-07",
+            "estado" : "FINALIZADO",
+            "multa" : 0
+        },
+        {
+            "codigo" : 3,
+            "biblioteca" : 2,
+            "recepcionista" : 5,
+            "usuario" : 13,
+            "isbn" : 5,
+            "fecha" : "2023-08-07",
+            "estado" : "FINALIZADO CON INCIDENCIA",
+            "multa" : 0
+        },
+        {
+            "codigo" : 4,
+            "biblioteca" : 3,
+            "recepcionista" : 6,
+            "usuario" : 12,
+            "isbn" : 8,
+            "fecha" : "2023-09-04",
+            "estado" : "ACTIVO",
+            "multa" : 0
+        },
+        {
+            "codigo" : 5,
+            "biblioteca" : 3,
+            "recepcionista" : 6,
+            "usuario" : 12,
+            "isbn" : 7,
+            "fecha" : "2023-08-27",
+            "estado" : "ACTIVO",
+            "multa" : 0
+        },
+        {
+            "codigo" : 6,
+            "biblioteca" : 3,
+            "recepcionista" : 7,
+            "usuario" : 11,
+            "isbn" : 4,
+            "fecha" : "2023-08-07",
+            "estado" : "FINALIZADO",
+            "multa" : 0
+        },
+        {
+            "codigo" : 7,
+            "biblioteca" : 2,
+            "recepcionista" : 5,
+            "usuario" : 13,
+            "isbn" : 15,
+            "fecha" : "2023-08-07",
+            "estado" : "FINALIZADO",
+            "multa" : 0
+        },
+        {
+            "codigo" : 8,
+            "biblioteca" : 3,
+            "recepcionista" : 7,
+            "usuario" : 11,
+            "isbn" : 11,
+            "fecha" : "2023-09-01",
+            "estado" : "ACTIVO",
+            "multa" : 0
+        }
+    ],
+    "transportesB" : [
+        {
+            "codigo" : 1,
+            "bibliotecaOrigen" : 1,
+            "bibliotecaDestino" : 2,
+            "recepcionista" : 5,
+            "transportista" : 8,
+            "fecha" : "2023-08-29",
+            "estado" : "FINALIZADO",
+            "detalle" : [
+                { "isbn" : 1, "unidades" : 1 },
+                { "isbn" : 9, "unidades" : 1 }
+            ]
+        },
+        {
+            "codigo" : 2,
+            "bibliotecaOrigen" : 1,
+            "bibliotecaDestino" : 2,
+            "recepcionista" : 5,
+            "transportista" : 8,
+            "fecha" : "2023-08-29",
+            "estado" : "FINALIZADO",
+            "detalle" : [
+                { "isbn" : 7, "unidades" : 1 },
+                { "isbn" : 9, "unidades" : 1 }
+            ]
+        },
+        {
+            "codigo" : 3,
+            "bibliotecaOrigen" : 2,
+            "bibliotecaDestino" : 1,
+            "recepcionista" : 2,
+            "transportista" : 8,
+            "fecha" : "2023-09-03",
+            "estado" : "PENDIENTE",
+            "detalle" : [
+                { "isbn" : 15, "unidades" : 2 },
+                { "isbn" : 5, "unidades" : 1 }
+            ]
+        },
+        {
+            "codigo" : 4,
+            "bibliotecaOrigen" : 1,
+            "bibliotecaDestino" : 2,
+            "recepcionista" : 5,
+            "transportista" : 8,
+            "fecha" : "2023-08-27",
+            "estado" : "PENDIENTE",
+            "detalle" : [
+                { "isbn" : 6, "unidades" : 1 },
+                { "isbn" : 13, "unidades" : 2 }
+            ]
+        },
+        {
+            "codigo" : 5,
+            "bibliotecaOrigen" : 3,
+            "bibliotecaDestino" : 1,
+            "recepcionista" : 3,
+            "transportista" : 8,
+            "fecha" : "2023-08-27",
+            "estado" : "PENDIENTE",
+            "detalle" : [
+                { "isbn" : 7, "unidades" : 1 },
+                { "isbn" : 11, "unidades" : 1 },
+                { "isbn" : 1, "unidades" : 1 }
+            ]
+        },
+        {
+            "codigo" : 6,
+            "bibliotecaOrigen" : 3,
+            "bibliotecaDestino" : 2,
+            "recepcionista" : 5,
+            "transportista" : 8,
+            "fecha" : "2023-08-27",
+            "estado" : "PENDIENTE",
+            "detalle" : [
+                { "isbn" : 4, "unidades" : 1 },
+                { "isbn" : 8, "unidades" : 2 },
+                { "isbn" : 4, "unidades" : 2 }
+            ]
+        }
+    ],
+    "transportesU" : [
+        {
+            "codigo" : 1,
+            "biblioteca" : 1,
+            "usuario" : 12,
+            "transportista" : 8,
+            "fecha" : "2023-08-30",
+            "estado" : "FINALIZADO",
+            "isbn" : 10
+        },
+        {
+            "codigo" : 2,
+            "biblioteca" : 1,
+            "usuario" : 12,
+            "transportista" : 8,
+            "fecha" : "2023-09-02",
+            "estado" : "EN CAMINO",
+            "isbn" : 7
+        }
+    ],
+    "incidencias" : [
+        {
+            "codigo" : 1,
+            "prestamo" : 3,
+            "tipo" : "PERDIDA",
+            "cantidadPagada" : 175
+        }
+    ],
+    "solicitudesRevocacion" : [
+        {
+            "codigo" : 1,
+            "usuario" : 13,
+            "estado" : "ACEPTADA",
+            "detalle" : "Favor de revocar la suspension ya que cancele el costo del libro dañádo"
+        }
+    ]
+}
