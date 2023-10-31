@@ -1,0 +1,25 @@
+<div class="container col-xl-10 col-xxl-8 px-6 py-5">
+    <div class="col-md-10 mx-auto col-lg-3">
+        <h1 class="display-10 fw-bold lh-5 text-body-emphasis mb-50">Iniciar sesión</h1>
+            <span *ngIf="error" class="text-danger">Usuario o contraseña incorrectos</span>
+    </div>    
+    <div class="row align-items-center g-lg-5 py-5">
+        <div class="col-lg-1 text-center text-lg-start">
+        </div>
+        <div class="col-md-5 mx-auto col-lg-5">
+            <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" id="loginForm" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+                <div class="form-floating mb-3">
+                    <input [(ngModel)]="usuario.usuario" type="text" class="form-control" id="usernameInput" name="usernameInput" placeholder="username">
+                    <label for="usernameInput">Nombre de usuario</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input [(ngModel)]="usuario.password" type="password" class="form-control" id="passwordInput" name="passwordInput" placeholder="password">
+                    <label for="passwordInput">Contraseña</label>
+                </div>
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar sesión</button>
+               
+            </form>
+        
+        </div>
+    </div>
+</div>

@@ -1,5 +1,8 @@
 package Datos;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class Util {
 
 
@@ -82,5 +85,24 @@ public class Util {
             return false;
         }
     }
+    
+        public static String Encriptar(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] passwordBytes = password.getBytes();
+            byte[] hashBytes = md.digest(passwordBytes);
+
+            StringBuilder hexHash = new StringBuilder();
+            for (byte b : hashBytes) {
+                hexHash.append(String.format("%02x", b));
+            }
+
+            return hexHash.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }
