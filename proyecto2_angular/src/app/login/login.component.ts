@@ -41,8 +41,8 @@ export class LoginComponent {
       usuario => {
         if (usuario) {
           localStorage.setItem('usuario', JSON.stringify(usuario));
-          if(usuario.tipo=="admin"){
-            this.router.navigate(['Modulos']);
+          if(usuario.tipo=="Admin"){
+            this.router.navigate(['Proyecto2/Modulo/Administrador']);
             
           }else{
             this.router.navigate(['Proyecto2/Menu']);
@@ -51,12 +51,12 @@ export class LoginComponent {
           }
         
         } else {
-          this.error = true; // Usuario no encontrado
+          this.error = true;
         }
       },
       error => {
         console.log('Error: ', error);
-        this.error = true; // Error en la solicitud
+        this.error = true;
       }
     );
   }

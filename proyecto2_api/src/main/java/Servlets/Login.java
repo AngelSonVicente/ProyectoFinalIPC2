@@ -28,15 +28,7 @@ public class Login extends HttpServlet {
     private LoginService loginService = new LoginService();
     private final Gson gson = new Gson();
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//    
-//         if (request.getParameter("carnet") == null) {
-//            this.loadList(request, response);
-//        } else {
-//            this.loadStudent(request, response, request.getParameter("carnet"));
-//        }
-    }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -60,7 +52,8 @@ public class Login extends HttpServlet {
         if ( usuario!= null) {
 
             response.setStatus(HttpServletResponse.SC_OK);
-        String json = new Gson().toJson(usuario);
+       
+            String json = new Gson().toJson(usuario);
 
         // Configura la respuesta
         response.setContentType("application/json");

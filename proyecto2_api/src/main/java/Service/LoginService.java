@@ -1,7 +1,7 @@
 package Service;
 
 
-import Datos.ConexionBD;
+import DatosBD.ConexionBD;
 import Datos.Usuario;
 import Datos.Util;
 import DatosBD.UsuarioBD;
@@ -22,22 +22,27 @@ import java.util.Optional;
  */
 public class LoginService {
     
+     static Connection conexion = ConexionBD.getInstancia().getConexion();
+   
     
-    static Connection conexion = ConexionBD.getInstancia().getConexion();
     Util util = new Util();
 
     private static final String SelectPassword = "SELECT password FROM usuarios WHERE usuario = ?";
 
     public Usuario IsLogin(String ContraIngresada, String UsuarioIngresado) {
+        
         String ContraEncriptada= util.Encriptar(ContraIngresada);
 
+        System.out.print("COntra ingresadaaaa "+ContraEncriptada);
 
         String Contra= obtnerContra(UsuarioIngresado);
 
+        System.out.print("COntra deadeveras "+Contra);
 
         Usuario usuario = new Usuario();
 
         if(ContraEncriptada.equals(Contra)){
+            System.out.println("si ingresó");
 
             usuario=UsuarioBD.getUsuarioByUser(UsuarioIngresado);
             return usuario;

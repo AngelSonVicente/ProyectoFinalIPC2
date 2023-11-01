@@ -9,14 +9,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 import { HttpClientModule } from '@angular/common/http';
-import { ModulosComponent } from './modulos/modulos.component';
+import { ModuloAdminComponent } from './ModuloAdministrador/modulo-admin/modulo-admin.component';
+import { DashboardComponent } from './ModuloAdministrador/dashboard/dashboard.component';
+import { GestionCategoriaComponent } from './ModuloAdministrador/gestion-categoria/gestion-categoria.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     LoginComponent,
-    ModulosComponent
+    ModuloAdminComponent,
+    DashboardComponent,
+    GestionCategoriaComponent
   ],
   imports: [
     BrowserModule,

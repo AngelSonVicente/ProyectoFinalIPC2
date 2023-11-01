@@ -1,4 +1,4 @@
-package Datos;
+package DatosBD;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

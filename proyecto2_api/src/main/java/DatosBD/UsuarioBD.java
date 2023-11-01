@@ -4,7 +4,7 @@
  */
 package DatosBD;
 
-import Datos.ConexionBD;
+import DatosBD.ConexionBD;
 import Datos.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
