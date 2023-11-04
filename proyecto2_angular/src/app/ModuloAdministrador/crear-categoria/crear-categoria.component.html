@@ -1,0 +1,59 @@
+
+<div class="container align-items-center" *ngIf="usuario.tipo!='Admin'">
+    <h1>Lo sentimos no tiene los permisos para poder usar esta opción, inicie sesión como Administrador</h1>
+    </div>
+
+<div class="container" *ngIf="usuario.tipo =='Admin'">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-success" role="alert" *ngIf="saved">
+          Categoria creado exitosamente.
+          Codigo de Categoria Creada: {{codigoCreado}}
+        </div>
+        <h1>Crear nueva categoria</h1>
+        <form [formGroup]="FormularioCategoria" (ngSubmit)="submit()">
+          <div class="form-row">
+          
+  
+            <div class="form-group">
+              <label for="inputAddress">Nombre</label>
+              <input class="form-control"
+                [class.is-invalid]="FormularioCategoria.controls['nombre'].invalid && FormularioCategoria.controls['nombre'].touched"
+                id="nombre" name="nombre" formControlName="nombre" />
+  
+              <div
+                *ngIf="FormularioCategoria.controls['nombre'].invalid && (FormularioCategoria.controls['nombre'].dirty || FormularioCategoria.controls['nombre'].touched)"
+                class="invalid-feedback">
+                <div>
+                  Por favor ingrese el nombre, maximo 100 carateres
+                </div>
+              </div>
+            </div>
+  
+  
+            <div class="form-group">
+              <label for="inputAddress">Descripcion</label>
+              <input class="form-control"
+                [class.is-invalid]="FormularioCategoria.controls['descripcion'].invalid && FormularioCategoria.controls['descripcion'].touched"
+                id="descripcion" name="descripcion" formControlName="descripcion" />
+  
+              <div
+                *ngIf="FormularioCategoria.controls['descripcion'].invalid && (FormularioCategoria.controls['descripcion'].dirty || FormularioCategoria.controls['descripcion'].touched)"
+                class="invalid-feedback">
+                <div>
+                  Por favor ingrese Descripcion, maximo 200 carateres
+                </div>
+              </div>
+            </div>
+  
+            
+  
+  
+            <button class="btn btn-primary" (click)="limpiar()">Limpiar</button>
+  
+            <button class="btn btn-success" type="submit" [disabled]="FormularioCategoria.invalid">Enviar!</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

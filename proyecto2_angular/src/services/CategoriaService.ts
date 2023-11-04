@@ -12,6 +12,11 @@ export class CategoriaService {
 
     constructor(private httpClient: HttpClient) {}
 
+    public crearCategoria(categoria: Categoria): Observable<Categoria> {
+        console.log('connectando con el BE: ' + categoria);
+        return this.httpClient.post<Categoria>(this.API_URL + "GestionCategoria", categoria);
+    }
+
     public getCategorias(): Observable<Categoria[]> {
 
         console.log('connectando con el BE: ');

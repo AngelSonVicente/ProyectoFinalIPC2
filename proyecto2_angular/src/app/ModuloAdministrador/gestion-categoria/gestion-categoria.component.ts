@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Categoria } from 'src/entities/Categoria';
+import { Usuario } from 'src/entities/Usuario';
 
 import {CategoriaService} from 'src/services/CategoriaService';
 
@@ -12,13 +13,16 @@ import {CategoriaService} from 'src/services/CategoriaService';
 
 export class GestionCategoriaComponent implements OnInit {
   categorias: Categoria[] = [];
-  
+  usuario!: Usuario;
   constructor(private Categoriaserice: CategoriaService){
 
     
 
   }
   ngOnInit(): void{
+    let jsonUsuario = localStorage.getItem('usuario');
+    this.usuario= jsonUsuario ? JSON.parse(jsonUsuario) : null;    
+
     this.Categoriaserice.getCategorias().subscribe({
 
       next: (list: Categoria[]) => {

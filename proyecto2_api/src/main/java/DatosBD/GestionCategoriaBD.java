@@ -6,6 +6,7 @@ package DatosBD;
 
 import Datos.Categoria;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,10 +22,10 @@ public class GestionCategoriaBD {
     static Connection conexion = ConexionBD.getInstancia().getConexion();
     
     private static String SelectCategorias = "SELECT * FROM categorias";
+    private static String Insert = "INSERT INTO categorias (nombre, decripcion) VALUES (?, ?)";
 
     public List<Categoria> getCategorias() {
             List<Categoria> categorias = new ArrayList<>();
-
         try {
             PreparedStatement select = conexion.prepareStatement(SelectCategorias);
 
@@ -45,5 +46,35 @@ public class GestionCategoriaBD {
         
         return categorias;
     }
+    public Categoria CrearCategoria(Categoria categoria) {
+        System.out.println("esta creando la categoria");
+    try {
+   PreparedStatement insert = conexion.prepareStatement(Insert, PreparedStatement.RETURN_GENERATED_KEYS);
+     insert.setString(1, categoria.getNombre());
+        insert.setString(2, categoria.getDescripcion());
+
+        int affectedRows = insert.executeUpdate();
+
+        if (affectedRows == 0) {
+            throw new SQLException("La inserción no tuvo éxito, ningún ID generado.");
+        }
+
+        try (ResultSet generatedKeys = insert.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                int generatedID = generatedKeys.getInt(1); 
+                System.out.println("categoria Creada");
+                categoria.setCodigo(generatedID); 
+                return categoria; 
+            } else {
+                throw new SQLException("La inserción no tuvo éxito, ningún ID generado.");
+            }
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+
+    return null; 
+}
+
 
 }

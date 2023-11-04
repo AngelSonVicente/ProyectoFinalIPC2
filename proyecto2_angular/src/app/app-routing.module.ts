@@ -5,6 +5,10 @@ import { LoginComponent } from './login/login.component';
 import { ModuloAdminComponent } from './ModuloAdministrador/modulo-admin/modulo-admin.component';
 import { DashboardComponent } from './ModuloAdministrador/dashboard/dashboard.component';
 import { GestionCategoriaComponent } from './ModuloAdministrador/gestion-categoria/gestion-categoria.component';
+import { CrearCategoriaComponent } from './ModuloAdministrador/crear-categoria/crear-categoria.component';
+import { EditarCategoriaComponent } from './ModuloAdministrador/editar-categoria/editar-categoria.component';
+
+
 import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
@@ -21,22 +25,32 @@ const routes: Routes = [
   {
     path: 'login/:userRole',
     title: "Login",
-    component: LoginComponent // Componente de inicio de sesión único
+    component: LoginComponent 
   },
   {
     path: 'Proyecto2/Modulo/Administrador',
     title: "Modulo Administrador",
-    component: ModuloAdminComponent // Componente de inicio de sesión único
+    component: ModuloAdminComponent 
   },
   {
     path: 'Proyecto2/Administrador/DashBoard',
     title: "DashBorad",
-    component: DashboardComponent // Componente de inicio de sesión único
+    component: DashboardComponent 
   },
   {
     path: 'Proyecto2/Administrador/GestionCategorias',
     title: "Gestion de Categorias",
-    component: GestionCategoriaComponent // Componente de inicio de sesión único
+    component: GestionCategoriaComponent 
+  },
+  {
+    path: 'Proyecto2/Administrador/CrearCategoria',
+    title: "Crear de Categorias",
+    component: CrearCategoriaComponent 
+  },
+  {
+    path: 'Proyecto2/Administrador/EditarCategoria/:id',
+    title: "EditarCategoria",
+    component: EditarCategoriaComponent 
   },
 
 

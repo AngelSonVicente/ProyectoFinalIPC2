@@ -12,6 +12,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModuloAdminComponent } from './ModuloAdministrador/modulo-admin/modulo-admin.component';
 import { DashboardComponent } from './ModuloAdministrador/dashboard/dashboard.component';
 import { GestionCategoriaComponent } from './ModuloAdministrador/gestion-categoria/gestion-categoria.component';
+import { CrearCategoriaComponent } from './ModuloAdministrador/crear-categoria/crear-categoria.component';
+import { EditarCategoriaComponent } from './ModuloAdministrador/editar-categoria/editar-categoria.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { GestionCategoriaComponent } from './ModuloAdministrador/gestion-categor
     LoginComponent,
     ModuloAdminComponent,
     DashboardComponent,
-    GestionCategoriaComponent
+    GestionCategoriaComponent,
+    CrearCategoriaComponent,
+    EditarCategoriaComponent
   ],
   imports: [
     BrowserModule,

@@ -103,6 +103,13 @@ public class Util {
         }
         return null;
     }
+        
+        public boolean ValidarLenght(String palabra, int Lenght){
+        if(palabra.length() <= Lenght){
+        return true;
+        }
+        return false;
+        }
 
 
 }
