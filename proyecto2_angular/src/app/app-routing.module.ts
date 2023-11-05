@@ -48,7 +48,7 @@ const routes: Routes = [
     component: CrearCategoriaComponent 
   },
   {
-    path: 'Proyecto2/Administrador/EditarCategoria/:id',
+    path: 'Proyecto2/Administrador/EditarCategoria/:codigo',
     title: "EditarCategoria",
     component: EditarCategoriaComponent 
   },

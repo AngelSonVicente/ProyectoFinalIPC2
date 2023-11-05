@@ -9,6 +9,7 @@ import DatosBD.GestionCategoriaBD;
 import Service.CategoriaService;
 import com.google.gson.Gson;
 import exceptions.InvalidDataException;
+import exceptions.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -30,7 +31,9 @@ public class CategoriasServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        GestionCategoriaBD categoria = new GestionCategoriaBD();
+        String codigo = request.getParameter("codigo");
+       if( codigo==null){
+             GestionCategoriaBD categoria = new GestionCategoriaBD();
 
         // CategoriaService categoriaService = new CategoriaService( categoria);
         List<Categoria> categorias = categoria.getCategorias();
@@ -42,6 +45,29 @@ public class CategoriasServlet extends HttpServlet {
 
         // Envía el JSON como respuesta
         response.getWriter().write(json);
+       }else{
+           
+           
+           try {
+           CategoriaService categoriaService = new CategoriaService();
+           Categoria cat = categoriaService.getCategoria(codigo);
+              
+           String json = new Gson().toJson(cat);
+            // Configura la respuesta
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            // Envía el JSON como respuesta
+            response.getWriter().write(json);
+
+            response.setStatus(HttpServletResponse.SC_OK);
+           } catch (NotFoundException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    
+   }
+                
+  
 
     }
 
@@ -87,6 +113,55 @@ public class CategoriasServlet extends HttpServlet {
         
     }
 
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+                System.out.println("Entre al servlet metodo put");
+
+        var buffer = new StringBuilder();
+        var reader = request.getReader();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            buffer.append(line);
+        }
+        String payload = buffer.toString();
+        Categoria categoriaFE = gson.fromJson(payload, Categoria.class);
+
+       
+        System.out.println(categoriaFE.getNombre());
+        System.out.println(categoriaFE.getDescripcion());
+        System.out.println(categoriaFE.getCodigo());
+         
+        
+        // Usuario usuario = loginService.IsLogin(logincito.getPassword(), logincito.getUsuario());
+
+         
+        try {
+
+            CategoriaService categoriaService = new CategoriaService();
+   
+            Categoria categoria = new Categoria();
+            
+             categoria = categoriaService.actualizarCategoria(categoriaFE);
+            
+             String json = new Gson().toJson(categoria);
+            // Configura la respuesta
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            // Envía el JSON como respuesta
+            response.getWriter().write(json);
+
+            response.setStatus(HttpServletResponse.SC_OK);
+        } catch (InvalidDataException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+        
+
+        
+    }
+
+    
  
     
     
