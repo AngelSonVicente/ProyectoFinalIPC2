@@ -14,6 +14,10 @@ import { DashboardComponent } from './ModuloAdministrador/dashboard/dashboard.co
 import { GestionCategoriaComponent } from './ModuloAdministrador/gestion-categoria/gestion-categoria.component';
 import { CrearCategoriaComponent } from './ModuloAdministrador/crear-categoria/crear-categoria.component';
 import { EditarCategoriaComponent } from './ModuloAdministrador/editar-categoria/editar-categoria.component';
+import { CambiarComisionComponent } from './ModuloAdministrador/cambiar-comision/cambiar-comision.component';
+import { ReportesAdminComponent } from './ModuloAdministrador/reportes-admin/reportes-admin.component';
+import { ModuloUsuariooComponent } from './ModuloUsuario/modulo-usuarioo/modulo-usuarioo.component';
+import { BuscarOfertasEmpleoComponent } from './ModuloUsuario/BuscarEmpleo/buscar-ofertas-empleo/buscar-ofertas-empleo.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,11 @@ import { EditarCategoriaComponent } from './ModuloAdministrador/editar-categoria
     DashboardComponent,
     GestionCategoriaComponent,
     CrearCategoriaComponent,
-    EditarCategoriaComponent
+    EditarCategoriaComponent,
+    CambiarComisionComponent,
+    ReportesAdminComponent,
+    ModuloUsuariooComponent,
+    BuscarOfertasEmpleoComponent
   ],
   imports: [
     BrowserModule,

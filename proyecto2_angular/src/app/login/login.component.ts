@@ -45,7 +45,16 @@ export class LoginComponent {
             this.router.navigate(['Proyecto2/Modulo/Administrador']);
             
           }else{
-            this.router.navigate(['Proyecto2/Menu']);
+           
+            if(usuario.tipo=="Usuario"){
+             this.router.navigate(['Proyecto2/Modulo/Usuario']);
+         
+            }else{
+              this.router.navigate(['Proyecto2/Menu']);
+       
+            }
+
+           
         
 
           }

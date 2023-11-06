@@ -3,12 +3,15 @@ import { MenuComponent } from './menu/menu.component';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { ModuloAdminComponent } from './ModuloAdministrador/modulo-admin/modulo-admin.component';
-import { DashboardComponent } from './ModuloAdministrador/dashboard/dashboard.component';
-import { GestionCategoriaComponent } from './ModuloAdministrador/gestion-categoria/gestion-categoria.component';
-import { CrearCategoriaComponent } from './ModuloAdministrador/crear-categoria/crear-categoria.component';
-import { EditarCategoriaComponent } from './ModuloAdministrador/editar-categoria/editar-categoria.component';
+  import { DashboardComponent } from './ModuloAdministrador/dashboard/dashboard.component';
+  import { GestionCategoriaComponent } from './ModuloAdministrador/gestion-categoria/gestion-categoria.component';
+  import { CrearCategoriaComponent } from './ModuloAdministrador/crear-categoria/crear-categoria.component';
+  import { EditarCategoriaComponent } from './ModuloAdministrador/editar-categoria/editar-categoria.component';
+  import { CambiarComisionComponent } from './ModuloAdministrador/cambiar-comision/cambiar-comision.component';
+  import { ReportesAdminComponent } from './ModuloAdministrador/reportes-admin/reportes-admin.component';
 
-
+import { ModuloUsuariooComponent } from './ModuloUsuario/modulo-usuarioo/modulo-usuarioo.component';
+  import { BuscarOfertasEmpleoComponent } from './ModuloUsuario/BuscarEmpleo/buscar-ofertas-empleo/buscar-ofertas-empleo.component';
 import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
@@ -52,6 +55,28 @@ const routes: Routes = [
     title: "EditarCategoria",
     component: EditarCategoriaComponent 
   },
+  {
+    path: 'Proyecto2/Administrador/CambiarComision',
+    title: "CambiarComision",
+    component: CambiarComisionComponent 
+  },
+  {
+    path: 'Proyecto2/Administrador/Reportes',
+    title: "CambiarComision",
+    component: ReportesAdminComponent 
+  },
+  {
+    path: 'Proyecto2/Modulo/Usuario',
+    title: "CambiarComision",
+    component: ModuloUsuariooComponent 
+  },
+
+  { path: 'Proyecto2/Usuario',
+        children:[
+          { path: 'Ofertas', component: BuscarOfertasEmpleoComponent },
+        ] 
+      },
+
 
 
 ];
