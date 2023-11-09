@@ -13,6 +13,7 @@ import { ModuloAdminComponent } from './ModuloAdministrador/modulo-admin/modulo-
 import { ModuloUsuariooComponent } from './ModuloUsuario/modulo-usuarioo/modulo-usuarioo.component';
   import { BuscarOfertasEmpleoComponent } from './ModuloUsuario/BuscarEmpleo/buscar-ofertas-empleo/buscar-ofertas-empleo.component';
   import { DetallesOfertasComponent } from './ModuloUsuario/BuscarEmpleo/detalles-ofertas/detalles-ofertas.component';
+  import { PerfilEmpleadorComponent } from './ModuloUsuario/BuscarEmpleo/perfil-empleador/perfil-empleador.component';
 
 
   import { FormsModule } from '@angular/forms';
@@ -56,13 +57,23 @@ const rutasUsuario = [
   {
     path: 'Ofertas',
     title: 'Ofertas de Empleo',
-    component: BuscarOfertasEmpleoComponent,
+    component: BuscarOfertasEmpleoComponent
+  },
+  {
+    path: 'Ofertas/:codigoEmpresa',
+    title: 'Ofertas de Empleo',
+    component: BuscarOfertasEmpleoComponent
   },
   
   {
     path: 'DetallesOferta/:codigo',
     title: 'Detalles de Oferta',
     component: DetallesOfertasComponent,
+  },
+  {
+    path: 'Empresas/:codigo',
+    title: 'Detalles de Oferta',
+    component: PerfilEmpleadorComponent,
   },
 
   

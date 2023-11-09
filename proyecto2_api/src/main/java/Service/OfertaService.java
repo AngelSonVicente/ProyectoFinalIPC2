@@ -29,6 +29,10 @@ public class OfertaService {
         return ofertasBD.getOfertas();
     }
 
+    public List<Oferta> getOfertasEmpresa(String codigo) {
+        return ofertasBD.getOfertasEmpresa(codigo);
+    }
+
 //    public Comision crearComision(Comision comi) throws InvalidDataException {
 //
 //        LocalDate fechaActual = LocalDate.now();

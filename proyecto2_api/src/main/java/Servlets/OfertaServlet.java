@@ -32,11 +32,27 @@ public class OfertaServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String codigo = request.getParameter("codigo");
+        String codigoEmpresa = request.getParameter("empresa");
         
         System.out.println("Entramos al servlet");
         System.out.println("COdigo: " +codigo);
+        System.out.println("COdigo Empresa: " +codigoEmpresa);
         
         if (codigo == null) { 
+            if(codigoEmpresa!=null){
+                
+           List<Oferta> ofertas = ofertaService.getOfertasEmpresa(codigoEmpresa);
+
+            String json = new Gson().toJson(ofertas);
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            // Envía el JSON como respuesta
+            response.getWriter().write(json);
+                
+            }else{
+            
            List<Oferta> ofertas = ofertaService.getOfertas();
 
             String json = new Gson().toJson(ofertas);
@@ -46,6 +62,7 @@ public class OfertaServlet extends HttpServlet {
 
             // Envía el JSON como respuesta
             response.getWriter().write(json);
+            }
 
         } else {
             

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Oferta } from 'src/entities/Oferta';
 import { Usuario } from 'src/entities/Usuario';
 import { OfertaService } from 'src/services/OfertaService';
@@ -10,28 +11,46 @@ import { OfertaService } from 'src/services/OfertaService';
   styleUrls: ['./buscar-ofertas-empleo.component.css']
 })
 export class BuscarOfertasEmpleoComponent  implements OnInit{
+  @Input() codigoEmpresa!: string;
+  
+
+  empresaId!: string;
 
   ofertas: Oferta[] = [];
   usuario!: Usuario;
-  constructor(private ofertaService: OfertaService){
+  constructor(private ofertaService: OfertaService, private route: ActivatedRoute){
 
   }
   ngOnInit(): void{
+    this.route.params.subscribe(params => {
+      this.empresaId = params['codigoEmpresa'];// Luego, utiliza este ID para cargar y mostrar las ofertas de empleo relacionadas con esta empresa
+    });
+
     let jsonUsuario = localStorage.getItem('usuario');
     this.usuario= jsonUsuario ? JSON.parse(jsonUsuario) : null;    
 
-    this.ofertaService.getOfertas().subscribe({
+    if(this.codigoEmpresa==null){
+  this.ofertaService.getOfertas().subscribe({
 
       next: (list: Oferta[]) => {
         this.ofertas = list;
       }
     });
+    }else{
 
-  }
+      this.ofertaService.getOfertasEmpresa(this.codigoEmpresa).subscribe({
 
-
-  verDetalles() {
+        next: (list: Oferta[]) => {
+          this.ofertas = list;
+        }
+      });
+      
+    }
   
+
   }
+
+
+
 
 }

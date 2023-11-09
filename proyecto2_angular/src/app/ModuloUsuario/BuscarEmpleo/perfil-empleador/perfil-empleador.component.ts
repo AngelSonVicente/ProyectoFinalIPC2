@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Empresa } from 'src/entities/Empresa';
+import { EmpresaService } from 'src/services/EmpresaService';
 
 @Component({
   selector: 'app-perfil-empleador',
@@ -6,5 +9,27 @@ import { Component } from '@angular/core';
   styleUrls: ['./perfil-empleador.component.css']
 })
 export class PerfilEmpleadorComponent {
+  codigo!: string;
+  empresa!: Empresa;
 
+
+  constructor(private route: ActivatedRoute, private empresaService: EmpresaService) {}
+
+  ngOnInit() {
+    this.route.params.subscribe((params) => {
+      this.codigo = params['codigo'];
+      // Utiliza el código para cargar los detalles de la oferta
+    });
+
+    this.empresaService.getEmpresa(this.codigo).subscribe({
+      next: (empresa: Empresa) => {
+        this.empresa = empresa;
+
+  
+      }
+    });
+  
+  
+  
+  }
 }

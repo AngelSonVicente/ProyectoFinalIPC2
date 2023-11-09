@@ -19,6 +19,7 @@ public class OfertaBD {
 
         //agregar fltro de las preferencias del usuario de momento todo
     private static String SelectTodo = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.estado = 'Activo'";
+    private static String SelectTodoEmpresa = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.estado = 'Activo' AND o.codigo_empresa = ?";
     private static String SelectOfertaID = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.codigo = ?";
     
     private static String Insert = "INSERT INTO ofertas (codigo_empresa, nombre, descripcion, categoria, estado, fecha_publicacion, fecha_limite, salario, modalidad, ubicacion, detalles) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -32,6 +33,35 @@ public class OfertaBD {
             PreparedStatement select = conexion.prepareStatement(SelectTodo);
 
             ResultSet resultset = select.executeQuery();
+            while (resultset.next()) {
+                ofertas.add(new Oferta(resultset.getString("codigo"),resultset.getString("codigo_empresa"),
+                resultset.getString("nombre_empresa"),resultset.getString("nombre"), resultset.getString("descripcion"),
+                resultset.getString("categoria"), resultset.getString("nombre_categoria"), resultset.getString("estado"),
+                resultset.getString("fecha_publicacion"), resultset.getString("fecha_limite"), resultset.getFloat("salario"),
+                resultset.getString("modalidad"), resultset.getString("ubicacion"), resultset.getString("detalles"),
+                resultset.getString("usuario_elegido"), resultset.getString("nombre_usuario_elegido")        
+                ));
+
+                System.out.println("codigo:   "+ resultset.getString("codigo"));
+            }
+
+        } catch (SQLException ex) {
+            // TODO pendiente manejo
+            ex.printStackTrace();
+            
+            System.out.println(ex);
+        }
+
+        return ofertas;
+    }
+    public List<Oferta> getOfertasEmpresa(String codigo) {
+        System.out.println("entramos al getofertas");
+        List<Oferta> ofertas = new ArrayList<>();
+        try {
+            System.out.println(SelectTodoEmpresa);
+           PreparedStatement select = conexion.prepareStatement(SelectTodoEmpresa);
+            select.setString(1, codigo);
+            ResultSet resultset = select.executeQuery();  
             while (resultset.next()) {
                 ofertas.add(new Oferta(resultset.getString("codigo"),resultset.getString("codigo_empresa"),
                 resultset.getString("nombre_empresa"),resultset.getString("nombre"), resultset.getString("descripcion"),

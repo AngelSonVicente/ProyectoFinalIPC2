@@ -17,6 +17,10 @@ export class OfertaService {
         console.log('connectando con el BE: ');
         return this.httpClient.get<Oferta[]>(this.API_URL + "Ofertas");
     }
+    public getOfertasEmpresa(codigoEmpresa: String): Observable<Oferta[]> {
+        console.log('connectando con el BE: ');
+        return this.httpClient.get<Oferta[]>(this.API_URL + "Ofertas?empresa="+codigoEmpresa);
+    }
     public getOferta(codigo: string): Observable<Oferta> {
         return this.httpClient.get<Oferta>(this.API_URL + "Ofertas?codigo="+codigo);
     }
