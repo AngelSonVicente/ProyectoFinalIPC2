@@ -12,7 +12,63 @@ import { ModuloAdminComponent } from './ModuloAdministrador/modulo-admin/modulo-
 
 import { ModuloUsuariooComponent } from './ModuloUsuario/modulo-usuarioo/modulo-usuarioo.component';
   import { BuscarOfertasEmpleoComponent } from './ModuloUsuario/BuscarEmpleo/buscar-ofertas-empleo/buscar-ofertas-empleo.component';
-import { FormsModule } from '@angular/forms';
+  import { DetallesOfertasComponent } from './ModuloUsuario/BuscarEmpleo/detalles-ofertas/detalles-ofertas.component';
+
+
+  import { FormsModule } from '@angular/forms';
+
+
+const rutasAdmin = [
+  {
+    path: 'DashBoard',
+    title: 'Dashboard',
+    component: DashboardComponent,
+  },
+  {
+    path: 'GestionCategorias',
+    title: 'Gestión de Categorías',
+    component: GestionCategoriaComponent,
+  },
+  {
+    path: 'CrearCategoria',
+    title: 'Crear Categoría',
+    component: CrearCategoriaComponent,
+  },
+  {
+    path: 'EditarCategoria/:codigo',
+    title: 'Editar Categoría',
+    component: EditarCategoriaComponent,
+  },
+  {
+    path: 'CambiarComision',
+    title: 'Cambiar Comisión',
+    component: CambiarComisionComponent,
+  },
+  {
+    path: 'Reportes',
+    title: 'Reportes',
+    component: ReportesAdminComponent,
+  },
+];
+
+
+const rutasUsuario = [
+  {
+    path: 'Ofertas',
+    title: 'Ofertas de Empleo',
+    component: BuscarOfertasEmpleoComponent,
+  },
+  
+  {
+    path: 'DetallesOferta/:codigo',
+    title: 'Detalles de Oferta',
+    component: DetallesOfertasComponent,
+  },
+
+  
+];
+
+
 
 const routes: Routes = [
   {
@@ -36,34 +92,9 @@ const routes: Routes = [
     component: ModuloAdminComponent 
   },
   {
-    path: 'Proyecto2/Administrador/DashBoard',
-    title: "DashBorad",
-    component: DashboardComponent 
-  },
-  {
-    path: 'Proyecto2/Administrador/GestionCategorias',
-    title: "Gestion de Categorias",
-    component: GestionCategoriaComponent 
-  },
-  {
-    path: 'Proyecto2/Administrador/CrearCategoria',
-    title: "Crear de Categorias",
-    component: CrearCategoriaComponent 
-  },
-  {
-    path: 'Proyecto2/Administrador/EditarCategoria/:codigo',
-    title: "EditarCategoria",
-    component: EditarCategoriaComponent 
-  },
-  {
-    path: 'Proyecto2/Administrador/CambiarComision',
-    title: "CambiarComision",
-    component: CambiarComisionComponent 
-  },
-  {
-    path: 'Proyecto2/Administrador/Reportes',
-    title: "CambiarComision",
-    component: ReportesAdminComponent 
+    path: 'Proyecto2/Administrador',
+    title: 'Administrador',
+    children: rutasAdmin,
   },
   {
     path: 'Proyecto2/Modulo/Usuario',
@@ -71,15 +102,19 @@ const routes: Routes = [
     component: ModuloUsuariooComponent 
   },
 
-  { path: 'Proyecto2/Usuario',
-        children:[
-          { path: 'Ofertas', component: BuscarOfertasEmpleoComponent },
-        ] 
-      },
+{
+  path:"Proyecto2/Usuario",
+  title:"Usuario",
+  children: rutasUsuario,
+
+},
 
 
 
 ];
+
+
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

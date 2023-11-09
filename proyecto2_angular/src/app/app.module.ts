@@ -18,6 +18,9 @@ import { CambiarComisionComponent } from './ModuloAdministrador/cambiar-comision
 import { ReportesAdminComponent } from './ModuloAdministrador/reportes-admin/reportes-admin.component';
 import { ModuloUsuariooComponent } from './ModuloUsuario/modulo-usuarioo/modulo-usuarioo.component';
 import { BuscarOfertasEmpleoComponent } from './ModuloUsuario/BuscarEmpleo/buscar-ofertas-empleo/buscar-ofertas-empleo.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DetallesOfertasComponent } from './ModuloUsuario/BuscarEmpleo/detalles-ofertas/detalles-ofertas.component';
+import { PerfilEmpleadorComponent } from './ModuloUsuario/BuscarEmpleo/perfil-empleador/perfil-empleador.component';
 
 @NgModule({
   declarations: [
@@ -32,14 +35,17 @@ import { BuscarOfertasEmpleoComponent } from './ModuloUsuario/BuscarEmpleo/busca
     CambiarComisionComponent,
     ReportesAdminComponent,
     ModuloUsuariooComponent,
-    BuscarOfertasEmpleoComponent
+    BuscarOfertasEmpleoComponent,
+    DetallesOfertasComponent,
+    PerfilEmpleadorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

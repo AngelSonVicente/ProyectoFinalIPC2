@@ -39,6 +39,7 @@ public class GestionCategoriaBD {
         } catch (SQLException ex) {
             // TODO pendiente manejo
             ex.printStackTrace();
+            System.out.println("Error:  "+ex);
         }
 
         return categorias;
@@ -88,6 +89,8 @@ public class GestionCategoriaBD {
         } catch (SQLException ex) {
             // TODO pendiente manejo
             ex.printStackTrace();
+            
+            System.out.println("Error:  "+ex);
         }
 
     return null;

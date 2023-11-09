@@ -14,11 +14,7 @@ import {CategoriaService} from 'src/services/CategoriaService';
 export class GestionCategoriaComponent implements OnInit {
   categorias: Categoria[] = [];
   usuario!: Usuario;
-  constructor(private Categoriaserice: CategoriaService){
-
-    
-
-  }
+  constructor(private Categoriaserice: CategoriaService){}
   ngOnInit(): void{
     let jsonUsuario = localStorage.getItem('usuario');
     this.usuario= jsonUsuario ? JSON.parse(jsonUsuario) : null;    

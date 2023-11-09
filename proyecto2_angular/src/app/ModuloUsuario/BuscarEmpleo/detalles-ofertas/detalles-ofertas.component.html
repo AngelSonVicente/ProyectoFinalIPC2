@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h4 class="display-5">{{oferta.nombre}}</h4>
+        <p class="lead">Ubicación: {{oferta.ubicacion}}</p>
+        <p class="lead display-20">Empresa: <a [routerLink]="['/Proyecto2/Usuario/Empresas/', oferta.codigoEmpresa]">{{oferta.nombreEmpresa}}</a></p>
+        <p class="lead">Categoría: {{oferta.nombreCategoria}}</p>
+        <p class="lead">Publicado: {{oferta.fechaPublicacion}}</p>
+        <p class="lead">Fecha Límite: {{oferta.fechaLimite}}</p>
+        <p class="lead">Salario: Q{{oferta.salario}}</p>
+        <p class="lead">Modalidad: {{oferta.modadidad}}</p>
+      </div>
+    </div>
+  
+    <hr>
+  
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Descripción</h3>
+        <p>{{oferta.descripcion}}</p>
+      </div>
+    </div>
+  
+    <hr>
+  
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Detalles</h3>
+        <p>{{oferta.detalle}}</p>
+      </div>
+    </div>
+    <br/>
+
+    <a [routerLink]="['/Proyecto2/Usuario/DetallesOferta', oferta.codigo]" class="btn btn-primary">Postularme</a>
+   
+  </div>
+  

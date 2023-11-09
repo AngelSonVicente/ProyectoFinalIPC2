@@ -1,1 +1,21 @@
-<p>buscar-ofertas-empleo works!</p>
+<div class="container">
+    <h1>Ofertas de Empleo</h1>
+    <div class="row">
+      <div class="col-md-7" *ngFor="let oferta of ofertas">
+        <div class="card mb-3 border-primary" >
+          <div class="card-body">
+            <h5 class="card-title">{{ oferta.nombre }}</h5>
+            <p class="card-text">Empresa: {{ oferta.nombreEmpresa }}</p>
+            <p class="card-text">Fecha Límite: {{ oferta.fechaLimite }}</p>
+            <p class="card-text">Salario: {{ oferta.salario }}</p>
+            <p class="card-text">Descripción: {{ oferta.descripcion }}</p>
+            <p class="card-text">Categoría: {{ oferta.nombreCategoria }}</p>
+            <a [routerLink]="['/Proyecto2/Usuario/DetallesOferta', oferta.codigo]" class="btn btn-primary">Ver detalles</a>
+   
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
