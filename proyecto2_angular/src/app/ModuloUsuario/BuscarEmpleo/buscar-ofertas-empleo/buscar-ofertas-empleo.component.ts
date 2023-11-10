@@ -23,7 +23,7 @@ export class BuscarOfertasEmpleoComponent  implements OnInit{
   }
   ngOnInit(): void{
     this.route.params.subscribe(params => {
-      this.empresaId = params['codigoEmpresa'];// Luego, utiliza este ID para cargar y mostrar las ofertas de empleo relacionadas con esta empresa
+      this.empresaId = params['codigoEmpresa'];
     });
 
     let jsonUsuario = localStorage.getItem('usuario');

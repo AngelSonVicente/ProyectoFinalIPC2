@@ -18,7 +18,6 @@ export class PerfilEmpleadorComponent {
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.codigo = params['codigo'];
-      // Utiliza el código para cargar los detalles de la oferta
     });
 
     this.empresaService.getEmpresa(this.codigo).subscribe({

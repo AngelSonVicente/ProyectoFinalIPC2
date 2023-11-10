@@ -31,7 +31,13 @@
     </div>
     <br/>
 
-    <a [routerLink]="['/Proyecto2/Usuario/DetallesOferta', oferta.codigo]" class="btn btn-primary">Postularme</a>
+    <div *ngIf="!postulado; else yaPostulado">
+      <a class="btn btn-primary" (click)="abrirModal()">Postularme</a>
+    </div>
+    <ng-template #yaPostulado>
+      <p>¡Ya has sido postulado!</p>
+    </ng-template>
    
+
   </div>
   

@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { HttpClientModule } from '@angular/common/http';
 import { ModuloAdminComponent } from './ModuloAdministrador/modulo-admin/modulo-admin.component';
@@ -21,6 +21,7 @@ import { BuscarOfertasEmpleoComponent } from './ModuloUsuario/BuscarEmpleo/busca
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetallesOfertasComponent } from './ModuloUsuario/BuscarEmpleo/detalles-ofertas/detalles-ofertas.component';
 import { PerfilEmpleadorComponent } from './ModuloUsuario/BuscarEmpleo/perfil-empleador/perfil-empleador.component';
+import { PostulacionDiaglogComponent } from './ModuloUsuario/BuscarEmpleo/postulacion-diaglog/postulacion-diaglog.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,9 @@ import { PerfilEmpleadorComponent } from './ModuloUsuario/BuscarEmpleo/perfil-em
     ModuloUsuariooComponent,
     BuscarOfertasEmpleoComponent,
     DetallesOfertasComponent,
-    PerfilEmpleadorComponent
+    PerfilEmpleadorComponent,
+    
+    PostulacionDiaglogComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,9 @@ import { PerfilEmpleadorComponent } from './ModuloUsuario/BuscarEmpleo/perfil-em
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ModalModule.forRoot(),
+   
   ],
   providers: [],
   bootstrap: [AppComponent]
