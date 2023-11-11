@@ -23,6 +23,7 @@ import { DetallesOfertasComponent } from './ModuloUsuario/BuscarEmpleo/detalles-
 import { PerfilEmpleadorComponent } from './ModuloUsuario/BuscarEmpleo/perfil-empleador/perfil-empleador.component';
 import { PostulacionDiaglogComponent } from './ModuloUsuario/BuscarEmpleo/postulacion-diaglog/postulacion-diaglog.component';
 import { PostulacionesRealizadasComponent } from './ModuloUsuario/PostulacionesRealizadas/postulaciones-realizadas/postulaciones-realizadas.component';
+import { EntrevistasPendientesComponent } from './ModuloUsuario/EntrevistasPendientes/entrevistas-pendientes/entrevistas-pendientes.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { PostulacionesRealizadasComponent } from './ModuloUsuario/PostulacionesR
     PerfilEmpleadorComponent,
     
     PostulacionDiaglogComponent,
-         PostulacionesRealizadasComponent
+         PostulacionesRealizadasComponent,
+         EntrevistasPendientesComponent
   ],
   imports: [
     BrowserModule,

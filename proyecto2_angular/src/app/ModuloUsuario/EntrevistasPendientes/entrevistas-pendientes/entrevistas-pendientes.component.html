@@ -1,0 +1,35 @@
+<div class="container" *ngIf="usuario.tipo!='Usuario'">
+    <h1>Lo sentimos no tiene los permisos para poder usar esta opción</h1>
+    </div>
+    
+    <div class="container" *ngIf="usuario.tipo =='Usuario'">
+     
+
+      <h1>Usuario: {{usuario.codigo}}</h1>
+     <h1 class="text align-items-center">Entrevistas Pendientes</h1>
+    <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Oferta</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Ubicacion</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let entrevista of entrevistas">
+            <td>{{ entrevista.codigo }}</td>
+            <td><a [routerLink]="['/Proyecto2/Usuario/DetallesOferta', entrevista.codigoOferta]" >{{entrevista.nombreOferta}}</a></td>
+            <td>{{ entrevista.fecha }}</td>
+            <td>{{ entrevista.hora }}</td>
+            <td>{{ entrevista.ubicacion }}</td>
+            <td>{{ entrevista.estado }}</td>
+          </tr>
+        </tbody>
+      </table>
+    
+    
+    
+    </div>

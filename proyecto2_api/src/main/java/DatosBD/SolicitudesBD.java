@@ -23,7 +23,6 @@ public class SolicitudesBD {
    private static String SelectTodoUsuario = "SELECT s.*, o.codigo AS codigo_oferta, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo JOIN usuarios AS u ON s.codigo_usuario = u.codigo WHERE s.estado = 'Activo' AND s.codigo_usuario = ?";
     
     private static String SelectSoliID ="SELECT s.*, o.codigo AS codigo_oferta, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo JOIN usuarios AS u ON s.codigo_usuario = u.codigo WHERE s.codigo = ?";
-    private static String Update = "UPDATE categorias set nombre = ?, decripcion = ? WHERE codigo = ?";
 
     
     private static String Delete ="DELETE FROM solicitudes WHERE codigo = ?";

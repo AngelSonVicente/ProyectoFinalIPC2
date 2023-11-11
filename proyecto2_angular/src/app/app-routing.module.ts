@@ -16,7 +16,11 @@ import { ModuloUsuariooComponent } from './ModuloUsuario/modulo-usuarioo/modulo-
   import { PerfilEmpleadorComponent } from './ModuloUsuario/BuscarEmpleo/perfil-empleador/perfil-empleador.component';
 
 import { PostulacionesRealizadasComponent } from './ModuloUsuario/PostulacionesRealizadas/postulaciones-realizadas/postulaciones-realizadas.component';
-  import { FormsModule } from '@angular/forms';
+import { EntrevistasPendientesComponent } from './ModuloUsuario/EntrevistasPendientes/entrevistas-pendientes/entrevistas-pendientes.component';  
+
+
+
+import { FormsModule } from '@angular/forms';
 
 
 const rutasAdmin = [
@@ -68,6 +72,11 @@ const rutasUsuario = [
     path: 'Postulaciones',
     title: 'Postulaciones Realizadas',
     component: PostulacionesRealizadasComponent
+  },
+  {
+    path: 'Entrevistas',
+    title: 'Entrevistas Pendientes',
+    component: EntrevistasPendientesComponent
   },
   
   {
