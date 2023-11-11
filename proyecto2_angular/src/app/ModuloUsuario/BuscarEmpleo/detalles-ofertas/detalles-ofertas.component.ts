@@ -67,9 +67,6 @@ export class DetallesOfertasComponent implements OnInit {
 
       } else {
         this.postulado = false;
-
-   
-
       }
     });
   }

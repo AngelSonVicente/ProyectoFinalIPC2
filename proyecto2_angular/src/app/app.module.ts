@@ -22,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetallesOfertasComponent } from './ModuloUsuario/BuscarEmpleo/detalles-ofertas/detalles-ofertas.component';
 import { PerfilEmpleadorComponent } from './ModuloUsuario/BuscarEmpleo/perfil-empleador/perfil-empleador.component';
 import { PostulacionDiaglogComponent } from './ModuloUsuario/BuscarEmpleo/postulacion-diaglog/postulacion-diaglog.component';
+import { PostulacionesRealizadasComponent } from './ModuloUsuario/PostulacionesRealizadas/postulaciones-realizadas/postulaciones-realizadas.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { PostulacionDiaglogComponent } from './ModuloUsuario/BuscarEmpleo/postul
     DetallesOfertasComponent,
     PerfilEmpleadorComponent,
     
-    PostulacionDiaglogComponent
+    PostulacionDiaglogComponent,
+         PostulacionesRealizadasComponent
   ],
   imports: [
     BrowserModule,

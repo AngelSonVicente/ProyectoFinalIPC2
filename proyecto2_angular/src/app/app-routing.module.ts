@@ -15,7 +15,7 @@ import { ModuloUsuariooComponent } from './ModuloUsuario/modulo-usuarioo/modulo-
   import { DetallesOfertasComponent } from './ModuloUsuario/BuscarEmpleo/detalles-ofertas/detalles-ofertas.component';
   import { PerfilEmpleadorComponent } from './ModuloUsuario/BuscarEmpleo/perfil-empleador/perfil-empleador.component';
 
-
+import { PostulacionesRealizadasComponent } from './ModuloUsuario/PostulacionesRealizadas/postulaciones-realizadas/postulaciones-realizadas.component';
   import { FormsModule } from '@angular/forms';
 
 
@@ -63,6 +63,11 @@ const rutasUsuario = [
     path: 'Ofertas/:codigoEmpresa',
     title: 'Ofertas de Empleo',
     component: BuscarOfertasEmpleoComponent
+  },
+  {
+    path: 'Postulaciones',
+    title: 'Postulaciones Realizadas',
+    component: PostulacionesRealizadasComponent
   },
   
   {

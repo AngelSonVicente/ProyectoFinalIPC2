@@ -1,4 +1,9 @@
-<div class="container">
+<div *ngIf="usuario.tipo!='Usuario'">
+  <h1>Lo sentimos no tiene permisos para usar esta opcion</h1>
+
+</div>
+
+<div class="container" *ngIf="usuario.tipo=='Usuario'">
  Codigo Empresa: {{codigoEmpresa}}
     <h1>Ofertas de Empleo</h1>
     <div class="row">

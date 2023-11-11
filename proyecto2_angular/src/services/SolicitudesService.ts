@@ -17,10 +17,22 @@ export class SolicitudesService {
         return this.httpClient.post<Solicitudes>(this.API_URL + "Solicitudes", solicitud);
     }
 
+    public getSolicitudesUsuario(usuario: string): Observable<Solicitudes[]> {
+        return this.httpClient.get<Solicitudes[]>(this.API_URL + "Solicitudes?codigoSuuario="+usuario);
+    }
+
+    
    
   
 
     
+  public BorrarSolicitud(codigo: string): Observable<boolean> {
+    console.log('Conectando con el BE: ');
+    return this.httpClient.delete<HttpResponse<any>>(this.API_URL + `Solicitudes?codigo=${codigo}`, { observe: 'response' }).pipe(
+      map((response) => this.manejarRespuesta(response)),
+      catchError((error) => this.manejarError(error))
+    );
+  }
   public ExisteSolicitud(oferta: string, usuario: string): Observable<boolean> {
     console.log('Conectando con el BE: ');
     return this.httpClient.get<HttpResponse<any>>(this.API_URL + `Solicitudes?codigoOferta=${oferta}&codigoSuuario=${usuario}`, { observe: 'response' }).pipe(

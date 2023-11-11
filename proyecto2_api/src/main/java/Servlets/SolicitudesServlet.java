@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  *
@@ -33,6 +34,9 @@ public class SolicitudesServlet extends HttpServlet{
     
         String codigoOferta = request.getParameter("codigoOferta");
         String codigoUsuario = request.getParameter("codigoSuuario");
+        String Usuario = request.getParameter("usuario");
+        
+        if(codigoOferta!=null && codigoUsuario!=null){
         
         if(solicitudService.ExisteSolicitud(codigoUsuario, codigoOferta)){
                response.setStatus(HttpServletResponse.SC_OK);
@@ -42,6 +46,24 @@ public class SolicitudesServlet extends HttpServlet{
              response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
              
         }
+        
+        }
+        if(codigoUsuario!=null && codigoOferta==null){
+            
+                 
+           List<Solicitudes> solis = solicitudService.getOfertasEmpresa(codigoUsuario);
+
+            String json = new Gson().toJson(solis);
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            // Envía el JSON como respuesta
+            response.getWriter().write(json);
+        
+        }
+        
+        
         
         
     
@@ -89,6 +111,23 @@ public class SolicitudesServlet extends HttpServlet{
         
         
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+        String codigo=request.getParameter("codigo");
+        
+        if(solicitudService.borrarSolicitud(codigo)){
+              response.setStatus(HttpServletResponse.SC_OK);
+        }else{
+        
+              response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+        
+    
+    }
+    
+    
     
     
     

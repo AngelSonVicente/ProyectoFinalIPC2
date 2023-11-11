@@ -13,17 +13,19 @@ public class Solicitudes {
     private String codigoUsuario;
     private String nombreUsuario;
     private String mensaje;
+    private String estado;
 
     public Solicitudes() {
     }
 
-    public Solicitudes(String codigo, String codigoOferta, String nombreOferta, String codigoUsuario, String nombreUsuario, String mensaje) {
+    public Solicitudes(String codigo, String codigoOferta, String nombreOferta, String codigoUsuario, String nombreUsuario, String mensaje, String estado) {
         this.codigo = codigo;
         this.codigoOferta = codigoOferta;
         this.nombreOferta = nombreOferta;
         this.codigoUsuario = codigoUsuario;
         this.nombreUsuario = nombreUsuario;
         this.mensaje = mensaje;
+        this.estado = estado;
     }
 
     public String getCodigo() {
@@ -73,7 +75,15 @@ public class Solicitudes {
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
     }
-    
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     
     
 }

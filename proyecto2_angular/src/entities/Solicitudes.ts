@@ -5,5 +5,6 @@ export class Solicitudes {
     codigoUsuario!: string;
     nombreUsuario!: string;
     mensaje!: string;
+    estado!: string;
 
 }

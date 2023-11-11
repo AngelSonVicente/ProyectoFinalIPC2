@@ -64,11 +64,7 @@ public class ComisionService {
           
           if (comision.getComision()<0 ) {
             throw new InvalidDataException("No se puede ingresar un numero negativo");
-        }
-          
-
-      
-    
+        }  
     }
 
     
