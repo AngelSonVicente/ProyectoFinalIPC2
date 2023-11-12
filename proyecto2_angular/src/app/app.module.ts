@@ -28,6 +28,7 @@ import { ModuloEmpleadorComponent } from './ModuloEmpleador/modulo-empleador/mod
 import { GestionOfertasComponent } from './ModuloEmpleador/GestionOfertas/gestion-ofertas/gestion-ofertas.component';
 import { EditarOfertaComponent } from './ModuloEmpleador/GestionOfertas/editar-oferta/editar-oferta.component';
 import { CrearOfertaComponent } from './ModuloEmpleador/GestionOfertas/crear-oferta/crear-oferta.component';
+import { EliminarOfertaComponent } from './ModuloEmpleador/GestionOfertas/eliminar-oferta/eliminar-oferta.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { CrearOfertaComponent } from './ModuloEmpleador/GestionOfertas/crear-ofe
          ModuloEmpleadorComponent,
          GestionOfertasComponent,
          EditarOfertaComponent,
-         CrearOfertaComponent
+         CrearOfertaComponent,
+         EliminarOfertaComponent
   ],
   imports: [
     BrowserModule,

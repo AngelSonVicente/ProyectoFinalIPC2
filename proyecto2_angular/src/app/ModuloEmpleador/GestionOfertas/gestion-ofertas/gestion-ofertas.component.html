@@ -30,10 +30,13 @@
             <td>{{ oferta.salario }}</td>
             <td>{{ oferta.nombreUsuario }}</td>
             <td>{{ oferta.estado }}</td>
-            <td> <a class="btn btn-primary" (click)="abrirModal(oferta.codigo)">ver detalles</a>
+            <td> <a class="btn btn-outline-success" (click)="abrirModal(oferta.codigo)">ver detalles</a>
             </td>
-            <td *ngIf="oferta.estado!='Finalizado'"><a [routerLink]="['/Proyecto2/Usuario/DetallesOferta', oferta.codigo]" class="btn btn-success">Eliminar Oferta</a></td>
-          </tr>
+            <td *ngIf="oferta.estado !== 'Finalizado'">
+                <a class="btn btn-outline-danger" (click)="EliminarOferta(oferta.codigo)">Eliminar Oferta</a>
+              </td>
+                
+        </tr>
         </tbody>
       </table>
     

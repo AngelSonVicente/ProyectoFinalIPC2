@@ -3,6 +3,7 @@ package Servlets;
 import Datos.Categoria;
 import Datos.JsonUtil;
 import Datos.Oferta;
+import Datos.OfertaEliminada;
 import DatosBD.GestionCategoriaBD;
 import Service.CategoriaService;
 import Service.OfertaService;
@@ -162,5 +163,29 @@ public class OfertaServlet extends HttpServlet {
         }
 
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+        OfertaEliminada oferta = new OfertaEliminada(null,request.getParameter("codigoOferta"),request.getParameter("motivo"));
+        
+       oferta =  ofertaService.eliminarOferta(oferta);
+       
+       if(oferta.getCodigo()!=null){
+                response.setStatus(HttpServletResponse.SC_OK);
+       
+       }else{
+              response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+     
+       }
+        
+        
+        
+        
+    }
+    
+    
+    
+    
 
 }

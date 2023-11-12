@@ -143,7 +143,7 @@ public class CategoriasServlet extends HttpServlet {
             Categoria categoria = new Categoria();
             
              categoria = categoriaService.actualizarCategoria(categoriaFE);
-            
+          
              String json = new Gson().toJson(categoria);
             // Configura la respuesta
             response.setContentType("application/json");

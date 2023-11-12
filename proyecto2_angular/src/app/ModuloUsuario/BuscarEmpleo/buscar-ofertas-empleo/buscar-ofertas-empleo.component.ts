@@ -26,6 +26,7 @@ export class BuscarOfertasEmpleoComponent  implements OnInit{
       this.empresaId = params['codigoEmpresa'];
     });
 
+    
     let jsonUsuario = localStorage.getItem('usuario');
     this.usuario= jsonUsuario ? JSON.parse(jsonUsuario) : null;    
 

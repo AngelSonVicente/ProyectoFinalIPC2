@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { HttpClient, HttpParams, HttpResponse } from "@angular/common/http";
+import { Observable, catchError, map, of } from "rxjs";
 import { Oferta } from "src/entities/Oferta";
+import { OfertaEliminada } from "src/entities/OfertaEliminada";
 @Injectable({
     providedIn: 'root'
 })
@@ -10,6 +11,18 @@ export class OfertaService {
     readonly API_URL = "http://localhost:8080/proyecto2_api/v1/";
 
     constructor(private httpClient: HttpClient) {}
+
+ 
+    public eliminarOferta(oferta: OfertaEliminada): Observable<boolean> {
+        const params = new HttpParams().set('codigoOferta', oferta.codigoOferta).set('motivo', oferta.motivo);
+      
+        return this.httpClient.delete<HttpResponse<any>>(`${this.API_URL}Ofertas`, { params, observe: 'response' }).pipe(
+          map((response) => this.manejarRespuesta(response)),
+          catchError((error) => this.manejarError(error))
+        );
+      }
+      
+ 
 
     public crearOferta(oferta: Oferta): Observable<Oferta> {
         console.log('connectando con el BE: ' + oferta);
@@ -35,6 +48,20 @@ export class OfertaService {
         return this.httpClient.put<Oferta>(this.API_URL + "Ofertas", oferta);
     }
    
+
+    private manejarRespuesta(response: HttpResponse<any>): boolean {
+        if (response.status === 200) {
+          return true; 
+        } else {
+          return false;
+        }
+      }
+      
+      private manejarError(error: any): Observable<boolean> {
+        console.error(error);
+        return of(false);
+      }
+
 
  
 }

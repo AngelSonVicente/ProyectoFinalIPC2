@@ -2,6 +2,7 @@ package Service;
 
 import Datos.Comision;
 import Datos.Oferta;
+import Datos.OfertaEliminada;
 import Datos.Util;
 import DatosBD.ComisionBD;
 import DatosBD.GestionCategoriaBD;
@@ -43,9 +44,11 @@ public class OfertaService {
 
     
     public Oferta actualizarOferta(Oferta oferta) throws InvalidDataException{
-    
         validar(oferta);
-    return ofertasBD.actualizarCategoria(oferta);
+    return ofertasBD.actualizarOferta(oferta);
+    }
+    public OfertaEliminada eliminarOferta(OfertaEliminada oferta){
+        return ofertasBD.EliminarOferta(oferta);
     }
     
     

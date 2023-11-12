@@ -4,6 +4,7 @@ import { Usuario } from 'src/entities/Usuario';
 import { OfertaService } from 'src/services/OfertaService';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DetallesOfertasComponent } from 'src/app/ModuloUsuario/BuscarEmpleo/detalles-ofertas/detalles-ofertas.component';
+import { EliminarOfertaComponent } from '../eliminar-oferta/eliminar-oferta.component';
 
 @Component({
   selector: 'app-gestion-ofertas',
@@ -12,6 +13,7 @@ import { DetallesOfertasComponent } from 'src/app/ModuloUsuario/BuscarEmpleo/det
 })
 export class GestionOfertasComponent implements OnInit {
 
+  eliminado!:boolean;
   modalRef!: BsModalRef;
   ofertas: Oferta[] = [];
   usuario!: Usuario;
@@ -29,10 +31,33 @@ export class GestionOfertasComponent implements OnInit {
       }
     });
 
+
+   
+
 }
 
 
+EliminarOferta(codigoOF:string) {
+    
+  const initialState = {
+    codigoOferta: codigoOF
+  };
 
+  this.modalRef = this.modalService.show(EliminarOfertaComponent, { initialState });
+
+  this.modalRef.content.confirmado.subscribe((postuladoo: boolean) => {
+    if (postuladoo) {
+      this.eliminado = true;
+      window.location.reload();
+      
+    } else {
+      this.eliminado = false;
+    }
+  });
+
+
+
+}
 
 abrirModal(codigoOfertaa: string) {
   const initialState = {

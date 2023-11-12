@@ -1,6 +1,7 @@
 package DatosBD;
 
 import Datos.Oferta;
+import Datos.OfertaEliminada;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,9 +27,38 @@ public class OfertaBD {
 
     private static String Insert = "INSERT INTO ofertas (codigo_empresa, nombre, descripcion, categoria, estado, fecha_publicacion, fecha_limite, salario, modalidad, ubicacion, detalles) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static String Update = "UPDATE ofertas set nombre = ?, descripcion = ? , categoria = ?, estado = ?, fecha_limite = ?, salario = ?, modalidad = ?, ubicacion = ?, detalles = ? WHERE codigo = ?";
+private static String UpdateEstado = "UPDATE ofertas set estado = ? WHERE codigo = ?";
+    
+    
+    public OfertaEliminada EliminarOferta(OfertaEliminada oferta) {
+    System.out.println("Actualizando la oferta");
+    try {
+        PreparedStatement update = conexion.prepareStatement(UpdateEstado);
+        update.setString(1, "Eliminado");
+        update.setString(2, oferta.getCodigoOferta());
+      
+        int affectedRows = update.executeUpdate();
 
-       
-    public Oferta actualizarCategoria(Oferta oferta) {
+        if (affectedRows == 1) {
+            System.out.println("Categoría actualizada");
+            OfertaEliminadaBD ofertaeliminada = new OfertaEliminadaBD();
+           oferta = ofertaeliminada.crearOfertaEliminada(oferta);
+            
+            return oferta;
+        } else {
+            System.out.println("La actualización no tuvo éxito.");
+            return null;
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        System.out.println("------------------------------------------------------------------------------");
+        System.out.println(ex);
+    }
+
+    return null;
+}
+    
+    public Oferta actualizarOferta(Oferta oferta) {
     System.out.println("Actualizando la oferta");
     try {
         PreparedStatement update = conexion.prepareStatement(Update);
@@ -62,6 +92,7 @@ public class OfertaBD {
     return null;
 }
     
+       
     public List<Oferta> getOfertas() {
         System.out.println("entramos al getofertas");
         List<Oferta> ofertas = new ArrayList<>();
@@ -117,6 +148,7 @@ public class OfertaBD {
             // TODO pendiente manejo
             ex.printStackTrace();
 
+            
             System.out.println(ex);
         }
 
@@ -127,7 +159,7 @@ public class OfertaBD {
         List<Oferta> ofertas = new ArrayList<>();
         try {
             System.out.println(SelectTodoEmpresaEstado);
-            PreparedStatement select = conexion.prepareStatement(SelectTodoEmpresa);
+            PreparedStatement select = conexion.prepareStatement(SelectTodoEmpresaEstado);
             select.setString(1, Estado);
             select.setString(2, codigo);
             ResultSet resultset = select.executeQuery();

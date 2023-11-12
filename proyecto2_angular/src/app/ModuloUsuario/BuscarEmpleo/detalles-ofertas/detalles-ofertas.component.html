@@ -1,57 +1,57 @@
 <div *ngIf="usuario.tipo=='Empleador' && oferta.codigoEmpresa!=usuario.codigo.toString()">
-<h1>usted no ha publicado esta oferta de empleo </h1>
+  <h1>usted no ha publicado esta oferta de empleo </h1>
 </div>
 
-<div *ngIf="oferta.codigoEmpresa==usuario.codigo.toString()">
-<div class="container" *ngIf="usuario.tipo=='Usuario' || usuario.tipo =='Empleador'">
-  <div class="row">
-    <div class="col-md-12">
-      <h4 class="display-5">{{oferta.nombre}}</h4>
-      <p class="lead">Ubicación: {{oferta.ubicacion}}</p>
-      <p class="lead display-20">Empresa: <a
-          [routerLink]="['/Proyecto2/Usuario/Empresas/', oferta.codigoEmpresa]">{{oferta.nombreEmpresa}}</a></p>
-      <p class="lead">Categoría: {{oferta.nombreCategoria}}</p>
-      <p class="lead">Publicado: {{oferta.fechaPublicacion}}</p>
-      <p class="lead">Fecha Límite: {{oferta.fechaLimite}}</p>
-      <p class="lead">Salario: Q{{oferta.salario}}</p>
-      <p class="lead">Modalidad: {{oferta.modadidad}}</p>
+<div *ngIf="oferta.codigoEmpresa==usuario.codigo.toString() || usuario.tipo=='Usuario'">
+  <div class="container" *ngIf="usuario.tipo=='Usuario' || usuario.tipo =='Empleador'">
+    <div class="row">
+      <div class="col-md-12">
+        <h4 class="display-5">{{oferta.nombre}}</h4>
+        <p class="lead">Ubicación: {{oferta.ubicacion}}</p>
+        <p class="lead display-20">Empresa: <a
+            [routerLink]="['/Proyecto2/Usuario/Empresas/', oferta.codigoEmpresa]">{{oferta.nombreEmpresa}}</a></p>
+        <p class="lead">Categoría: {{oferta.nombreCategoria}}</p>
+        <p class="lead">Publicado: {{oferta.fechaPublicacion}}</p>
+        <p class="lead">Fecha Límite: {{oferta.fechaLimite}}</p>
+        <p class="lead">Salario: Q{{oferta.salario}}</p>
+        <p class="lead">Modalidad: {{oferta.modadidad}}</p>
+      </div>
     </div>
-  </div>
 
-  <hr>
+    <hr>
 
-  <div class="row">
-    <div class="col-md-12">
-      <h3>Descripción</h3>
-      <p>{{oferta.descripcion}}</p>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Descripción</h3>
+        <p>{{oferta.descripcion}}</p>
+      </div>
     </div>
-  </div>
 
-  <hr>
+    <hr>
 
-  <div class="row">
-    <div class="col-md-12">
-      <h3>Detalles</h3>
-      <p>{{oferta.detalle}}</p>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Detalles</h3>
+        <p>{{oferta.detalle}}</p>
+      </div>
     </div>
-  </div>
-  <br />
+    <br />
 
 
 
-  <div *ngIf="usuario.tipo=='Empleador'">
-    <a (click)="redirigirConCierreModal(oferta.codigo)" class="btn btn-success">Editar Oferta</a>
-</div>
-
-  <div *ngIf="usuario.tipo=='Usuario'">
-    <div *ngIf="!postulado; else yaPostulado">
-      <a class="btn btn-primary" (click)="abrirModal()">Postularme</a>
+    <div *ngIf="usuario.tipo=='Empleador'">
+      <a (click)="redirigirConCierreModal(oferta.codigo)" class="btn btn-success">Editar Oferta</a>
     </div>
-    <ng-template #yaPostulado>
-      <p>¡Ya has sido postulado!</p>
-    </ng-template>
-  </div>
-  <br/>
 
-</div>
+    <div *ngIf="usuario.tipo=='Usuario'">
+      <div *ngIf="!postulado; else yaPostulado">
+        <a class="btn btn-primary" (click)="abrirModal()">Postularme</a>
+      </div>
+      <ng-template #yaPostulado>
+        <p>¡Ya has sido postulado!</p>
+      </ng-template>
+    </div>
+    <br />
+
+  </div>
 </div>

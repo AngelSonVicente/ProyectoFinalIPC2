@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+          <br/>
+            <div class="alert alert-success" role="alert" *ngIf="saved">
+
+                Se ha Postulado Correctamente, ya puede cerrar la ventana
+
+            </div>
+
+
+            <div *ngIf="!saved">
+            <h4>Ingrese el motivo por el que está eliminando la oferta</h4>
+            <form [formGroup]="FormularioSolicitud" (ngSubmit)="submit()">
+                <div class="form-row">
+
+
+
+
+
+
+                    <div class="form-group">
+                        <label for="inputAddress">Motivo</label>
+                        <textarea class="form-control resizable"
+                            [class.is-invalid]="FormularioSolicitud.controls['motivo'].invalid && FormularioSolicitud.controls['motivo'].touched"
+                            id="motivo" name="motivo" formControlName="motivo"></textarea>
+
+                        <div *ngIf="FormularioSolicitud.controls['motivo'].invalid && (FormularioSolicitud.controls['motivo'].dirty || FormularioSolicitud.controls['motivo'].touched)"
+                            class="invalid-feedback">
+                            <div>
+                                Por favor ingrese motivo, máximo 200 caracteres
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <br />
+                    <button class="btn btn-success" type="submit"
+                        [disabled]="FormularioSolicitud.invalid">Enviar!</button>
+
+                    <br />
+                </div>
+            </form>
+
+        </div>
+
+        </div>
+    </div>
+</div>
