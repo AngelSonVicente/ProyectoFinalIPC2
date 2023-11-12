@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Oferta } from 'src/entities/Oferta';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { OfertaService } from 'src/services/OfertaService';
@@ -22,16 +22,19 @@ export class DetallesOfertasComponent implements OnInit {
 
 
 
-  constructor(private route: ActivatedRoute, private ofertaService: OfertaService, private modalService: BsModalService, private solicitudService:SolicitudesService) {}
+  constructor(private route: ActivatedRoute, private ofertaService: OfertaService, private modalService: BsModalService, private solicitudService:SolicitudesService, private router: Router) {}
 
   ngOnInit() {
 
     let jsonUsuario = localStorage.getItem('usuario');
     this.usuario= jsonUsuario ? JSON.parse(jsonUsuario) : null;    
 
-    this.route.params.subscribe((params) => {
+    if(this.codigo==null){
+          this.route.params.subscribe((params) => {
       this.codigo = params['codigo'];
     });
+    }
+
   
     this.ofertaService.getOferta(this.codigo).subscribe({
       next: (oferta: Oferta) => {
@@ -55,6 +58,7 @@ export class DetallesOfertasComponent implements OnInit {
   }
 
   abrirModal() {
+    
     const initialState = {
       codigoOferta: this.oferta.codigo
     };
@@ -69,10 +73,21 @@ export class DetallesOfertasComponent implements OnInit {
         this.postulado = false;
       }
     });
+
+
+
   }
 
 
- 
+  redirigirConCierreModal(codigoOferta?: string) {
+
+    // Cierra el modal
+   
+    this.router.navigate(['/Proyecto2/Empleador/EditarOferta', codigoOferta]);
+    console.log('Redirigiendo con cierre de modal. Código de oferta:', codigoOferta);
+    // Redirige a la ruta deseada con el código de la oferta  
+    this.modalService.hide();  
+  }
 
 
 }

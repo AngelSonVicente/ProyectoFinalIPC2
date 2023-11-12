@@ -24,6 +24,10 @@ import { PerfilEmpleadorComponent } from './ModuloUsuario/BuscarEmpleo/perfil-em
 import { PostulacionDiaglogComponent } from './ModuloUsuario/BuscarEmpleo/postulacion-diaglog/postulacion-diaglog.component';
 import { PostulacionesRealizadasComponent } from './ModuloUsuario/PostulacionesRealizadas/postulaciones-realizadas/postulaciones-realizadas.component';
 import { EntrevistasPendientesComponent } from './ModuloUsuario/EntrevistasPendientes/entrevistas-pendientes/entrevistas-pendientes.component';
+import { ModuloEmpleadorComponent } from './ModuloEmpleador/modulo-empleador/modulo-empleador.component';
+import { GestionOfertasComponent } from './ModuloEmpleador/GestionOfertas/gestion-ofertas/gestion-ofertas.component';
+import { EditarOfertaComponent } from './ModuloEmpleador/GestionOfertas/editar-oferta/editar-oferta.component';
+import { CrearOfertaComponent } from './ModuloEmpleador/GestionOfertas/crear-oferta/crear-oferta.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +48,11 @@ import { EntrevistasPendientesComponent } from './ModuloUsuario/EntrevistasPendi
     
     PostulacionDiaglogComponent,
          PostulacionesRealizadasComponent,
-         EntrevistasPendientesComponent
+         EntrevistasPendientesComponent,
+         ModuloEmpleadorComponent,
+         GestionOfertasComponent,
+         EditarOfertaComponent,
+         CrearOfertaComponent
   ],
   imports: [
     BrowserModule,

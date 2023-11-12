@@ -21,6 +21,10 @@ import { EntrevistasPendientesComponent } from './ModuloUsuario/EntrevistasPendi
 
 
 import { FormsModule } from '@angular/forms';
+import { ModuloEmpleadorComponent } from './ModuloEmpleador/modulo-empleador/modulo-empleador.component';
+import { GestionOfertasComponent } from './ModuloEmpleador/GestionOfertas/gestion-ofertas/gestion-ofertas.component';
+import { EditarOfertaComponent } from './ModuloEmpleador/GestionOfertas/editar-oferta/editar-oferta.component';
+import { CrearOfertaComponent } from './ModuloEmpleador/GestionOfertas/crear-oferta/crear-oferta.component';
 
 
 const rutasAdmin = [
@@ -92,6 +96,25 @@ const rutasUsuario = [
 
   
 ];
+const rutasEmpleador = [
+  {
+    path: 'GestionOfertas',
+    title: 'Gestion Ofertas de Empleo',
+    component: GestionOfertasComponent
+  },
+  {
+    path: 'EditarOferta/:codigo',
+    title: 'Editar Ofertas de Empleo',
+    component: EditarOfertaComponent
+  },
+  {
+    path: 'CrearOferta',
+    title: 'CrearOferta',
+    component: CrearOfertaComponent
+  },
+  
+  
+];
 
 
 
@@ -131,6 +154,19 @@ const routes: Routes = [
   path:"Proyecto2/Usuario",
   title:"Usuario",
   children: rutasUsuario,
+
+},
+
+
+{
+  path: 'Proyecto2/Modulo/Empleador',
+  title: "Modulo Empleador",
+  component: ModuloEmpleadorComponent 
+},
+{
+  path:"Proyecto2/Empleador",
+  title:"Empleador",
+  children: rutasEmpleador,
 
 },
 

@@ -1,0 +1,4 @@
+.resizable {
+    height: 100px; /* Establece la altura fija que desees */
+    resize: none; /* Evita que el textarea sea redimensionable */
+}

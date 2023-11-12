@@ -38,7 +38,7 @@ export class BuscarOfertasEmpleoComponent  implements OnInit{
     });
     }else{
 
-      this.ofertaService.getOfertasEmpresa(this.codigoEmpresa).subscribe({
+      this.ofertaService.getOfertasEmpresaEstado(this.codigoEmpresa,"Activo").subscribe({
 
         next: (list: Oferta[]) => {
           this.ofertas = list;

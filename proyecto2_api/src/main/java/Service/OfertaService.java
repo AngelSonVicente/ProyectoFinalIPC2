@@ -32,20 +32,25 @@ public class OfertaService {
     public List<Oferta> getOfertasEmpresa(String codigo) {
         return ofertasBD.getOfertasEmpresa(codigo);
     }
+    public List<Oferta> getOfertasEmpresaEstados(String codigo, String estado) {
+        return ofertasBD.getOfertasEmpresaEstados(codigo,estado);
+    }
 
-//    public Comision crearComision(Comision comi) throws InvalidDataException {
-//
-//        LocalDate fechaActual = LocalDate.now();
-//        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Formato para obtener solo la fecha
-//        String fecha = fechaActual.format(formato);
-//        System.out.println(fecha);
-//        comi.setFecha(fecha);
-//
-//        validar(comi);
-//
-//        return comision.CrearComision(comi);
-//    }
+    public Oferta crearOferta(Oferta oferta) throws InvalidDataException {
+        validar(oferta);
+        return ofertasBD.crearOferta(oferta);
+    }
 
+    
+    public Oferta actualizarOferta(Oferta oferta) throws InvalidDataException{
+    
+        validar(oferta);
+    return ofertasBD.actualizarCategoria(oferta);
+    }
+    
+    
+    
+    
     public Oferta getOferta(String codigo) throws NotFoundException {
     
         Oferta oferta = ofertasBD.getOferta(codigo);
@@ -61,12 +66,12 @@ public class OfertaService {
     
     }
 
-    public void validar(Comision comision) throws InvalidDataException {
-        if (comision.getComision() == 0 || comision.getFecha().isEmpty()) {
+    public void validar(Oferta oferta) throws InvalidDataException {
+        if (oferta.getNombre().isEmpty() || oferta.getDescripcion().isEmpty() ||oferta.getFechaLimite().isEmpty()  || oferta.getModadidad().isEmpty() ||  oferta.getUbicacion().isEmpty() || oferta.getDetalle().isEmpty()) {
             throw new InvalidDataException("Faltan Datos");
         }
 
-        if (comision.getComision() < 0) {
+        if (oferta.getSalario()< 0) {
             throw new InvalidDataException("No se puede ingresar un numero negativo");
         }
 
