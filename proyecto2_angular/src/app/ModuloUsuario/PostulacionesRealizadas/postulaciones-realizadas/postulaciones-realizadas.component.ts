@@ -43,6 +43,9 @@ export class PostulacionesRealizadasComponent implements OnInit{
       }
     });
 
+
+
+    
   }
 
 }

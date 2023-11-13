@@ -19,6 +19,7 @@ import java.util.Optional;
 public class UsuarioBD {
     
      private static final String SelectUsuario = "SELECT * FROM usuarios WHERE usuario = ?";
+     private static final String SelectUsuarioID = "SELECT * FROM usuarios WHERE codigo = ?";
 
     
        static Connection conexion = ConexionBD.getInstancia().getConexion();
@@ -29,6 +30,31 @@ public class UsuarioBD {
             PreparedStatement select = conexion.prepareStatement(SelectUsuario);
             select.setString(1, usuario);
             ResultSet resultset = select.executeQuery();
+            
+            if (resultset.next()) {
+                return new Usuario(resultset.getInt("codigo"),
+                resultset.getString("nombre"),resultset.getString("usuario"),
+                resultset.getString("direccion"),resultset.getString("correo"),"",
+                resultset.getString("cui"),resultset.getString("birth"),resultset.getString("tipo"),
+                resultset.getBytes("cv"));
+            }
+            
+            return null;
+        } catch (SQLException ex) {
+            // TODO pendiente manejo
+            ex.printStackTrace();
+        }
+        
+        return null;
+    }
+     public static Usuario getUsuarioCodigo(String codigo) {
+        // validateCarnet not null
+        try {
+            PreparedStatement select = conexion.prepareStatement(SelectUsuarioID);
+            select.setString(1, codigo);
+            ResultSet resultset = select.executeQuery();
+            System.out.println("----------------------------------------------------");
+            System.out.println(select.toString());
             
             if (resultset.next()) {
                 return new Usuario(resultset.getInt("codigo"),

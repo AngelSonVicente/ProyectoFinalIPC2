@@ -5,6 +5,7 @@
 package Servlets;
 
 import Datos.Comision;
+import Datos.JsonUtil;
 import Datos.Solicitudes;
 import Service.SolicitudesService;
 import com.google.gson.Gson;
@@ -21,37 +22,37 @@ import java.util.List;
  *
  * @author MSI
  */
-    @WebServlet(name = "SolicitudesController", urlPatterns = {"/v1/Solicitudes"})
+@WebServlet(name = "SolicitudesController", urlPatterns = {"/v1/Solicitudes"})
 
-public class SolicitudesServlet extends HttpServlet{
+public class SolicitudesServlet extends HttpServlet {
 
-        private SolicitudesService solicitudService = new SolicitudesService();
+    private SolicitudesService solicitudService = new SolicitudesService();
 
-     private final Gson gson = new Gson();
+    JsonUtil jsonUtil = new JsonUtil();
+    private final Gson gson = new Gson();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    
+
         String codigoOferta = request.getParameter("codigoOferta");
         String codigoUsuario = request.getParameter("codigoSuuario");
         String Usuario = request.getParameter("usuario");
-        
-        if(codigoOferta!=null && codigoUsuario!=null){
-        
-        if(solicitudService.ExisteSolicitud(codigoUsuario, codigoOferta)){
-               response.setStatus(HttpServletResponse.SC_OK);
-     
-        }else{
-            
-             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-             
+
+        if (codigoOferta != null && codigoUsuario != null) {
+
+            if (solicitudService.ExisteSolicitud(codigoUsuario, codigoOferta)) {
+                response.setStatus(HttpServletResponse.SC_OK);
+
+            } else {
+
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+            }
+
         }
-        
-        }
-        if(codigoUsuario!=null && codigoOferta==null){
-            
-                 
-           List<Solicitudes> solis = solicitudService.getOfertasEmpresa(codigoUsuario);
+        if (codigoUsuario != null && codigoOferta == null) {
+
+            List<Solicitudes> solis = solicitudService.getOfertasEmpresa(codigoUsuario);
 
             String json = new Gson().toJson(solis);
 
@@ -60,23 +61,28 @@ public class SolicitudesServlet extends HttpServlet{
 
             // Envía el JSON como respuesta
             response.getWriter().write(json);
-        
+
         }
-        
-        
-        
-        
-    
+        if (codigoUsuario == null && codigoOferta != null) {
+            List<Solicitudes> solis = solicitudService.getOfertasOferta(codigoOferta);
+
+            String json = new Gson().toJson(solis);
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            // Envía el JSON como respuesta
+            response.getWriter().write(json);
+        }
+
     }
-     
-     
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    
+
         System.out.println("entramos el Servlet SOlicitudes");
-        
-          var buffer = new StringBuilder();
+
+        var buffer = new StringBuilder();
         var reader = request.getReader();
         String line;
         while ((line = reader.readLine()) != null) {
@@ -92,10 +98,10 @@ public class SolicitudesServlet extends HttpServlet{
 
         //   response.setStatus(HttpServletResponse.SC_OK);
         try {
-            
-          Solicitudes  solicitud =solicitudService.crearSOlicitud(solicitudFE);
-            
-             String json = new Gson().toJson(solicitud);
+
+            Solicitudes solicitud = solicitudService.crearSOlicitud(solicitudFE);
+
+            String json = new Gson().toJson(solicitud);
             // Configura la respuesta
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
@@ -108,27 +114,20 @@ public class SolicitudesServlet extends HttpServlet{
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
 
-        
-        
     }
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    
-        String codigo=request.getParameter("codigo");
-        
-        if(solicitudService.borrarSolicitud(codigo)){
-              response.setStatus(HttpServletResponse.SC_OK);
-        }else{
-        
-              response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+        String codigo = request.getParameter("codigo");
+
+        if (solicitudService.borrarSolicitud(codigo)) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
-        
-    
+
     }
-    
-    
-    
-    
-    
+
 }

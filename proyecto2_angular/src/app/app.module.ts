@@ -29,6 +29,12 @@ import { GestionOfertasComponent } from './ModuloEmpleador/GestionOfertas/gestio
 import { EditarOfertaComponent } from './ModuloEmpleador/GestionOfertas/editar-oferta/editar-oferta.component';
 import { CrearOfertaComponent } from './ModuloEmpleador/GestionOfertas/crear-oferta/crear-oferta.component';
 import { EliminarOfertaComponent } from './ModuloEmpleador/GestionOfertas/eliminar-oferta/eliminar-oferta.component';
+import { RevisionPostulacionesComponent } from './ModuloEmpleador/RevisionPostulaciones/revision-postulaciones/revision-postulaciones.component';
+import { PostulacionesOfertaComponent } from './ModuloEmpleador/RevisionPostulaciones/postulaciones-oferta/postulaciones-oferta.component';
+import { InformacionUsuarioComponent } from './ModuloEmpleador/RevisionPostulaciones/informacion-usuario/informacion-usuario.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -54,7 +60,10 @@ import { EliminarOfertaComponent } from './ModuloEmpleador/GestionOfertas/elimin
          GestionOfertasComponent,
          EditarOfertaComponent,
          CrearOfertaComponent,
-         EliminarOfertaComponent
+         EliminarOfertaComponent,
+         RevisionPostulacionesComponent,
+         PostulacionesOfertaComponent,
+         InformacionUsuarioComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +73,8 @@ import { EliminarOfertaComponent } from './ModuloEmpleador/GestionOfertas/elimin
     HttpClientModule,
     BrowserAnimationsModule,
     ModalModule.forRoot(),
+    NgxExtendedPdfViewerModule,
+    PdfViewerModule,
    
   ],
   providers: [],

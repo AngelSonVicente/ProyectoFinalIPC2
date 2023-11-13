@@ -9,4 +9,5 @@ export class Usuario {
     birth!: string;
     tipo!: string;
     cv!: number[]
+
 }

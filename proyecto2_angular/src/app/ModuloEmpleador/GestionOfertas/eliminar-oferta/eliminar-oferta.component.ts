@@ -8,6 +8,7 @@ import { SolicitudesService } from 'src/services/SolicitudesService';
 import { OfertaEliminada } from 'src/entities/OfertaEliminada';
 import { OfertaService } from 'src/services/OfertaService';
 import { BsModalService } from 'ngx-bootstrap/modal';
+
 @Component({
   selector: 'app-eliminar-oferta',
   templateUrl: './eliminar-oferta.component.html',
@@ -43,7 +44,7 @@ export class EliminarOfertaComponent implements OnInit {
     
     let jsonUsuario = localStorage.getItem('usuario');
     this.usuario= jsonUsuario ? JSON.parse(jsonUsuario) : null;    
-
+    
     this.FormularioSolicitud = this.formBuilder.group({
       motivo: [null, [Validators.required, Validators.maxLength(200)]],
     

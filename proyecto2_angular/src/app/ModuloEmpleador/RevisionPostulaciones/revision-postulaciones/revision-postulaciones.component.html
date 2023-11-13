@@ -1,5 +1,5 @@
 <div class="container" *ngIf="usuario.tipo!='Empleador'">
-    <h1>Lo sentimos no tiene los permisos para poder usar esta opción, inicie sesión como Empleador</h1>
+    <h1>Lo sentimos no tiene los permisos para poder usar esta opción, inicie sesión como Administrador</h1>
     </div>
     
     <div class="container" *ngIf="usuario.tipo =='Empleador'">
@@ -18,7 +18,7 @@
             <th>usuario Elegido</th>
             <th>estado</th>
             <th>Editar</th>
-            <th>Eliminar</th>
+            <th>Postulaciones</th>
           </tr>
         </thead>
         <tbody>
@@ -32,17 +32,14 @@
             <td>{{ oferta.estado }}</td>
             <td> <a class="btn btn-outline-success" (click)="abrirModal(oferta.codigo)">ver detalles</a>
             </td>
-            <td *ngIf="oferta.estado == 'Activo'  || oferta.estado == 'Seleccion' || oferta.estado=='Entrevista'">
-                <a class="btn btn-outline-danger" (click)="EliminarOferta(oferta.codigo)">Eliminar Oferta</a>
-              </td>
+            <td *ngIf="oferta.estado == 'Seleccion' ">
+                <a [routerLink]="['/Proyecto2/Empleador/PostulacionesOferta', oferta.codigo]" class="btn btn-outline-info">Postulaciones</a> </td>
                 
         </tr>
         </tbody>
       </table>
     
-      <a routerLink="/Proyecto2/Empleador/CrearOferta" class="btn btn-primary">Crear Oferta</a>
-    
+      
     
     </div>
-      
       

@@ -21,7 +21,7 @@ public class SolicitudesBD {
 
     private static String SelectExiste = "SELECT * FROM solicitudes WHERE codigo_usuario = ? AND codigo_oferta = ?";
    private static String SelectTodoUsuario = "SELECT s.*, o.codigo AS codigo_oferta, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo JOIN usuarios AS u ON s.codigo_usuario = u.codigo WHERE s.estado = 'Activo' AND s.codigo_usuario = ?";
-    
+    private static String SelectTodoOferta="SELECT s.*, o.codigo AS codigo_oferta, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo JOIN usuarios AS u ON s.codigo_usuario = u.codigo WHERE s.codigo_oferta = ?";
     private static String SelectSoliID ="SELECT s.*, o.codigo AS codigo_oferta, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo JOIN usuarios AS u ON s.codigo_usuario = u.codigo WHERE s.codigo = ?";
 
     
@@ -83,7 +83,6 @@ public class SolicitudesBD {
     }
     
     
-    
         public List<Solicitudes> getSolicitudesUsuario(String codigo) {
         List<Solicitudes> solicitudes = new ArrayList<>();
         try {
@@ -109,6 +108,32 @@ public class SolicitudesBD {
 
         return solicitudes;
     }
+        public List<Solicitudes> getSolicitudesOferta(String codigo) {
+        List<Solicitudes> solicitudes = new ArrayList<>();
+        try {
+            System.out.println(SelectTodoUsuario);
+            PreparedStatement select = conexion.prepareStatement(SelectTodoOferta);
+            select.setString(1, codigo);
+            ResultSet resultset = select.executeQuery();
+            while (resultset.next()) {
+                solicitudes.add(new Solicitudes(resultset.getString("codigo"), resultset.getString("codigo_oferta"),
+                        resultset.getString("nombre_oferta"), resultset.getString("codigo_usuario"), resultset.getString("nombre_usuario"),
+                        resultset.getString("mensaje"), resultset.getString("estado")
+                ));
+
+                System.out.println("codigo:   " + resultset.getString("codigo"));
+            }
+
+        } catch (SQLException ex) {
+            // TODO pendiente manejo
+            ex.printStackTrace();
+
+            System.out.println(ex);
+        }
+
+        return solicitudes;
+    }
+    
     
     public boolean borrarSolicitud(String codigoSolicitud) {
     try {

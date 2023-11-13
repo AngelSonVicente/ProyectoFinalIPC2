@@ -43,6 +43,10 @@ public class SolicitudesService {
     return solicitudBD.borrarSolicitud(codigo);
     }
     
+     public List<Solicitudes> getOfertasOferta(String codigo) {
+        return solicitudBD.getSolicitudesOferta(codigo);
+    }
+    
      public List<Solicitudes> getOfertasEmpresa(String codigo) {
         return solicitudBD.getSolicitudesUsuario(codigo);
     }

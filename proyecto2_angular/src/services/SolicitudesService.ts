@@ -17,6 +17,9 @@ export class SolicitudesService {
         return this.httpClient.post<Solicitudes>(this.API_URL + "Solicitudes", solicitud);
     }
 
+    public getSolicitudesOferta(oferta: string): Observable<Solicitudes[]> {
+        return this.httpClient.get<Solicitudes[]>(this.API_URL + "Solicitudes?codigoOferta="+oferta);
+    }
     public getSolicitudesUsuario(usuario: string): Observable<Solicitudes[]> {
         return this.httpClient.get<Solicitudes[]>(this.API_URL + "Solicitudes?codigoSuuario="+usuario);
     }
