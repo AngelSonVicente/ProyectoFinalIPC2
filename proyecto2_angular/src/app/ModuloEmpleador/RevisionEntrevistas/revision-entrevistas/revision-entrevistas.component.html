@@ -1,6 +1,7 @@
 <div class="container" *ngIf="usuario.tipo!='Empleador'">
     <h1>Lo sentimos no tiene los permisos para poder usar esta opción, inicie sesión como Administrador</h1>
     </div>
+    
     <div class="container" *ngIf="usuario.tipo =='Empleador'">
     
       <h1>Usuario: {{usuario.nombre}}</h1>
@@ -31,8 +32,8 @@
             <td>{{ oferta.estado }}</td>
             <td> <a class="btn btn-outline-success" (click)="abrirModal(oferta.codigo)">ver detalles</a>
             </td>
-            <td *ngIf="oferta.estado=='Seleccion'" >
-                <a [routerLink]="['/Proyecto2/Empleador/PostulacionesOferta', oferta.codigo]" class="btn btn-outline-info">Postulaciones</a> </td>
+            <td *ngIf="oferta.estado == 'Entrevista' ">
+                <a [routerLink]="['/Proyecto2/Empleador/EntrevistasOFerta', oferta.codigo]" class="btn btn-outline-info">Entrevistas</a> </td>
                 
         </tr>
         </tbody>

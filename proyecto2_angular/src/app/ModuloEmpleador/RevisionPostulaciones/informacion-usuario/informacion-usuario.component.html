@@ -1,5 +1,4 @@
 
-codigo solicitud {{codigoSolicitud}}
 <div class="alert alert-succes" role="alert" *ngIf="rechazado">
    Se se ha rechazado la solicitud Exitosamente 
   </div>
@@ -29,7 +28,7 @@ codigo solicitud {{codigoSolicitud}}
     <hr>
 
 
-    <form [formGroup]="FomularioEntrevista" (ngSubmit)="submit()">
+    <form [formGroup]="FomularioEntrevista" (ngSubmit)="submit()" *ngIf="agendarEntrevista">
 
 
         <div class="form-group">
@@ -86,8 +85,12 @@ codigo solicitud {{codigoSolicitud}}
         <button class="btn btn-success" type="submit" [disabled]="FomularioEntrevista.invalid">Agendar Entrevista</button>
 
     </form>
-    <br><button class="btn btn-outline-danger" (click)="rechazarPostulacion()">Rechazar Solicitante</button>
+    <div *ngIf="agendarEntrevista">
+  <br><button class="btn btn-outline-danger" (click)="rechazarPostulacion()">Rechazar Solicitante</button>
 
+        
+    </div>
+  
     <h2>Curriculum Vitae (PDF)</h2>
     <iframe [src]="pdfSrc" width="100%" height="400px"></iframe>
 

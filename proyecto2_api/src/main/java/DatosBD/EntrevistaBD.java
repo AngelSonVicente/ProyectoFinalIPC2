@@ -29,13 +29,38 @@ public class EntrevistaBD {
     private static String SelectExiste = "SELECT * FROM solicitudes WHERE codigo_usuario = ? AND codigo_oferta = ?";
     private static String SelectTodoUsuario = "SELECT e.*, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM entrevistas AS e JOIN ofertas AS o ON e.codigo_oferta = o.codigo JOIN usuarios AS u ON e.usuario = u.codigo WHERE e.estado = 'Pendiente' AND e.usuario = ?";
     private static String SelectEntevistasFecha = "SELECT e.*, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM entrevistas AS e JOIN ofertas AS o ON e.codigo_oferta = o.codigo JOIN usuarios AS u ON e.usuario = u.codigo WHERE e.estado = 'Pendiente' AND e.usuario = ?";
-      private static String Insert = "INSERT INTO entrevistas (codigo_oferta, usuario, fecha, hora, ubicacion, estado) VALUES (?, ?, ?, ?, ?, 'Pendiente')";
- 
+    private static String Insert = "INSERT INTO entrevistas (codigo_oferta, usuario, fecha, hora, ubicacion, estado) VALUES (?, ?, ?, ?, ?, 'Pendiente')";
+
+    private static String FinalizarEntrevista = "UPDATE entrevistas SET estado = 'Finalizado', notas = ? WHERE codigo = ?";
+    private static String SelectEntrevistasOferta="SELECT e.*, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM entrevistas AS e JOIN ofertas AS o ON e.codigo_oferta = o.codigo JOIN usuarios AS u ON e.usuario = u.codigo WHERE e.codigo_oferta = ?";
+    
+      
+    public Entrevista finalizarEntrevista(Entrevista entrevista) {
+    System.out.println("Actualizando la categoría");
+    try {
+        PreparedStatement update = conexion.prepareStatement(FinalizarEntrevista);
+        update.setString(1, entrevista.getNota());
+        update.setString(2, entrevista.getCodigo());
+        System.out.println("QueryFinalizacion : " + update.toString());
+        int affectedRows = update.executeUpdate();
+
+        if (affectedRows == 1) {
+            System.out.println("Categoría actualizada");
+            return entrevista;
+        } else {
+            System.out.println("La actualización no tuvo éxito.");
+            return null;
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        System.out.println(ex);
+    }
+
+    return null;
+}
+    
     public Entrevista crearEntrevista(Entrevista entrevista) {
-//        System.out.println("esta creando la entrevista");
-//        LocalDate fechaActual = LocalDate.now();
-//        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Formato para obtener solo la fecha
-//        String fecha = fechaActual.format(formato);
+
         try {
             PreparedStatement insert = conexion.prepareStatement(Insert, PreparedStatement.RETURN_GENERATED_KEYS);
             insert.setString(1, entrevista.getCodigoOferta());
@@ -43,7 +68,7 @@ public class EntrevistaBD {
             insert.setString(3, entrevista.getFecha());
             insert.setString(4, entrevista.getHora());
             insert.setString(5, entrevista.getUbicacion());
-        
+
             System.out.println(insert.toString());
             int affectedRows = insert.executeUpdate();
 
@@ -71,10 +96,37 @@ public class EntrevistaBD {
     public List<Entrevista> getEntrevistasUsuario(String codigo) {
         List<Entrevista> entrevistas = new ArrayList<>();
         try {
-            System.out.println(SelectTodoUsuario);
+      //      System.out.println(SelectTodoUsuario);
             PreparedStatement select = conexion.prepareStatement(SelectTodoUsuario);
             select.setString(1, codigo);
             ResultSet resultset = select.executeQuery();
+            while (resultset.next()) {
+                entrevistas.add(new Entrevista(resultset.getString("codigo"), resultset.getString("codigo_oferta"),
+                        resultset.getString("nombre_oferta"), resultset.getString("usuario"), resultset.getString("nombre_usuario"),
+                        resultset.getString("fecha"), resultset.getString("hora"), resultset.getString("ubicacion"),
+                        resultset.getString("estado"), resultset.getString("notas")
+                ));
+            }
+
+        } catch (SQLException ex) {
+            // TODO pendiente manejo
+            ex.printStackTrace();
+
+            System.out.println(ex);
+        }
+
+        return entrevistas;
+    }
+
+    public List<Entrevista> getEntrevistasOferta(String codigo) {
+        List<Entrevista> entrevistas = new ArrayList<>();
+        try {
+        //    System.out.println(SelectTodoUsuario);
+            PreparedStatement select = conexion.prepareStatement(SelectEntrevistasOferta);
+            select.setString(1, codigo);
+            ResultSet resultset = select.executeQuery();
+           // System.out.println("Query: " + select.toString());
+            
             while (resultset.next()) {
                 entrevistas.add(new Entrevista(resultset.getString("codigo"), resultset.getString("codigo_oferta"),
                         resultset.getString("nombre_oferta"), resultset.getString("usuario"), resultset.getString("nombre_usuario"),

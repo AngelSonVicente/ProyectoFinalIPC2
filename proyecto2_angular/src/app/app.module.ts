@@ -35,6 +35,9 @@ import { InformacionUsuarioComponent } from './ModuloEmpleador/RevisionPostulaci
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { RevisionEntrevistasComponent } from './ModuloEmpleador/RevisionEntrevistas/revision-entrevistas/revision-entrevistas.component';
+import { EntrevistasOfertasComponent } from './ModuloEmpleador/RevisionEntrevistas/entrevistas-ofertas/entrevistas-ofertas.component';
+import { FinalizarEntrevistaComponent } from './ModuloEmpleador/RevisionEntrevistas/finalizar-entrevista/finalizar-entrevista.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +66,10 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
          EliminarOfertaComponent,
          RevisionPostulacionesComponent,
          PostulacionesOfertaComponent,
-         InformacionUsuarioComponent
+         InformacionUsuarioComponent,
+         RevisionEntrevistasComponent,
+         EntrevistasOfertasComponent,
+         FinalizarEntrevistaComponent
   ],
   imports: [
     BrowserModule,

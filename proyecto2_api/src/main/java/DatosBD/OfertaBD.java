@@ -25,101 +25,100 @@ public class OfertaBD {
     private static String SelectTodoEmpresaEstado = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.estado = ? AND o.codigo_empresa = ?";
     private static String SelectOfertaID = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.codigo = ?";
 
+    private static String Existe="SELECT * FROM ofertas WHERE codigo = ? AND estado = 'Finalizado'";
     private static String Insert = "INSERT INTO ofertas (codigo_empresa, nombre, descripcion, categoria, estado, fecha_publicacion, fecha_limite, salario, modalidad, ubicacion, detalles) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static String Update = "UPDATE ofertas set nombre = ?, descripcion = ? , categoria = ?, estado = ?, fecha_limite = ?, salario = ?, modalidad = ?, ubicacion = ?, detalles = ? WHERE codigo = ?";
-private static String UpdateEstado = "UPDATE ofertas set estado = ? WHERE codigo = ?";
-    
-    
+    private static String UpdateEstado = "UPDATE ofertas set estado = ? WHERE codigo = ?";
+
     public OfertaEliminada EliminarOferta(OfertaEliminada oferta) {
-    System.out.println("Actualizando la oferta");
-    try {
-        PreparedStatement update = conexion.prepareStatement(UpdateEstado);
-        update.setString(1, "Eliminado");
-        update.setString(2, oferta.getCodigoOferta());
-      
-        int affectedRows = update.executeUpdate();
+        System.out.println("Actualizando la oferta");
+        try {
+            PreparedStatement update = conexion.prepareStatement(UpdateEstado);
+            update.setString(1, "Eliminado");
+            update.setString(2, oferta.getCodigoOferta());
 
-        if (affectedRows == 1) {
-            System.out.println("Categoría actualizada");
-            OfertaEliminadaBD ofertaeliminada = new OfertaEliminadaBD();
-           oferta = ofertaeliminada.crearOfertaEliminada(oferta);
-            
-            return oferta;
-        } else {
-            System.out.println("La actualización no tuvo éxito.");
-            return null;
+            int affectedRows = update.executeUpdate();
+
+            if (affectedRows == 1) {
+                System.out.println("Categoría actualizada");
+                OfertaEliminadaBD ofertaeliminada = new OfertaEliminadaBD();
+                oferta = ofertaeliminada.crearOfertaEliminada(oferta);
+
+                return oferta;
+            } else {
+                System.out.println("La actualización no tuvo éxito.");
+                return null;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("------------------------------------------------------------------------------");
+            System.out.println(ex);
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        System.out.println("------------------------------------------------------------------------------");
-        System.out.println(ex);
+
+        return null;
     }
 
-    return null;
-}
-    
     public Oferta actualizarOferta(Oferta oferta) {
-    System.out.println("Actualizando la oferta");
-    try {
-        PreparedStatement update = conexion.prepareStatement(Update);
-  
-                update.setString(1, oferta.getNombre());
-        update.setString(2, oferta.getDescripcion());
-        update.setString(3, oferta.getCategoria());
-        update.setString(4, oferta.getEstado());
-        update.setString(5, oferta.getFechaLimite());
-        update.setFloat(6, oferta.getSalario());
-        update.setString(7, oferta.getModadidad());
-        update.setString(8, oferta.getUbicacion());
-        update.setString(9, oferta.getDetalle());
-        
-        update.setString(10, oferta.getCodigo());
-        
-        int affectedRows = update.executeUpdate();
+        System.out.println("Actualizando la oferta");
+        try {
+            PreparedStatement update = conexion.prepareStatement(Update);
 
-        if (affectedRows == 1) {
-            System.out.println("Oferta actualizada");
-            return oferta;
-        } else {
-            System.out.println("La actualización no tuvo éxito.");
-            return null;
+            update.setString(1, oferta.getNombre());
+            update.setString(2, oferta.getDescripcion());
+            update.setString(3, oferta.getCategoria());
+            update.setString(4, oferta.getEstado());
+            update.setString(5, oferta.getFechaLimite());
+            update.setFloat(6, oferta.getSalario());
+            update.setString(7, oferta.getModadidad());
+            update.setString(8, oferta.getUbicacion());
+            update.setString(9, oferta.getDetalle());
+
+            update.setString(10, oferta.getCodigo());
+
+            int affectedRows = update.executeUpdate();
+
+            if (affectedRows == 1) {
+                System.out.println("Oferta actualizada");
+                return oferta;
+            } else {
+                System.out.println("La actualización no tuvo éxito.");
+                return null;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("------------------------------------------------------------------------------");
+            System.out.println(ex);
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        System.out.println("------------------------------------------------------------------------------");
-        System.out.println(ex);
+
+        return null;
     }
 
-    return null;
-}
     public Oferta actualizarEstadoOferta(Oferta oferta) {
-    System.out.println("Actualizando la oferta");
-    try {
-        PreparedStatement update = conexion.prepareStatement(UpdateEstado);
-        update.setString(1, oferta.getEstado());
-      
-        update.setString(2, oferta.getCodigo());
+        System.out.println("Actualizando la oferta");
+        try {
+            PreparedStatement update = conexion.prepareStatement(UpdateEstado);
+            update.setString(1, oferta.getEstado());
 
+            update.setString(2, oferta.getCodigo());
 
-        int affectedRows = update.executeUpdate();
+            int affectedRows = update.executeUpdate();
 
-        if (affectedRows == 1) {
-            System.out.println("Categoría actualizada");
-            return oferta;
-        } else {
-            System.out.println("La actualización no tuvo éxito.");
-            return null;
+            if (affectedRows == 1) {
+                System.out.println("Categoría actualizada");
+                return oferta;
+            } else {
+                System.out.println("La actualización no tuvo éxito.");
+                return null;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("------------------------------------------------------------------------------");
+            System.out.println(ex);
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        System.out.println("------------------------------------------------------------------------------");
-        System.out.println(ex);
+
+        return null;
     }
 
-    return null;
-}
-    
-       
     public List<Oferta> getOfertas() {
         System.out.println("entramos al getofertas");
         List<Oferta> ofertas = new ArrayList<>();
@@ -128,7 +127,7 @@ private static String UpdateEstado = "UPDATE ofertas set estado = ? WHERE codigo
             PreparedStatement select = conexion.prepareStatement(SelectTodo);
 
             ResultSet resultset = select.executeQuery();
-            
+
             while (resultset.next()) {
                 ofertas.add(new Oferta(resultset.getString("codigo"), resultset.getString("codigo_empresa"),
                         resultset.getString("nombre_empresa"), resultset.getString("nombre"), resultset.getString("descripcion"),
@@ -175,12 +174,12 @@ private static String UpdateEstado = "UPDATE ofertas set estado = ? WHERE codigo
             // TODO pendiente manejo
             ex.printStackTrace();
 
-            
             System.out.println(ex);
         }
 
         return ofertas;
     }
+
     public List<Oferta> getOfertasEmpresaEstados(String codigo, String Estado) {
         System.out.println("entramos al getofertas");
         List<Oferta> ofertas = new ArrayList<>();
@@ -204,7 +203,7 @@ private static String UpdateEstado = "UPDATE ofertas set estado = ? WHERE codigo
 
         } catch (SQLException ex) {
             // TODO pendiente manejo
-            
+
             System.out.println("-----------------------------------------------------------------");
             System.out.println(ex);
         }
@@ -214,9 +213,9 @@ private static String UpdateEstado = "UPDATE ofertas set estado = ? WHERE codigo
 
     public Oferta crearOferta(Oferta oferta) {
         System.out.println("esta creando la categoria");
-              LocalDate fechaActual = LocalDate.now();
+        LocalDate fechaActual = LocalDate.now();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Formato para obtener solo la fecha
-        String fecha= fechaActual.format(formato);
+        String fecha = fechaActual.format(formato);
         try {
             PreparedStatement insert = conexion.prepareStatement(Insert, PreparedStatement.RETURN_GENERATED_KEYS);
             insert.setString(1, oferta.getCodigoEmpresa());
@@ -279,6 +278,25 @@ private static String UpdateEstado = "UPDATE ofertas set estado = ? WHERE codigo
         }
 
         return null;
+    }
+
+    public boolean OfertaFinalizada(String codigoOferta) {
+        try {
+            PreparedStatement select = conexion.prepareStatement(Existe);
+            select.setString(1, codigoOferta);
+            ResultSet resultset = select.executeQuery();
+
+            if (resultset.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            // TODO pendiente manejo
+            ex.printStackTrace();
+
+            System.out.println("Error:  " + ex);
+        }
+
+        return false;
     }
 
 }

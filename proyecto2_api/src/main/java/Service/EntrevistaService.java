@@ -14,9 +14,18 @@ public class EntrevistaService {
     private EntrevistaBD entrevistaBD = new EntrevistaBD();
     
     
+      public List<Entrevista> getEntrevistasOferta(String codigo) {
+        return entrevistaBD.getEntrevistasOferta(codigo);
+    }
+      public Entrevista finalizarEntrevista(Entrevista entrevista) throws InvalidDataException{
+          validarFinalizacion(entrevista);
+      return entrevistaBD.finalizarEntrevista(entrevista);
+      }
+      
       public List<Entrevista> getEntrevistasUsuario(String codigo) {
         return entrevistaBD.getEntrevistasUsuario(codigo);
     }
+      
     public Entrevista crearEntrevista(Entrevista entrevista) throws InvalidDataException{
     validar(entrevista);
     return entrevistaBD.crearEntrevista(entrevista);
@@ -29,8 +38,15 @@ public class EntrevistaService {
                   entrevista.getUbicacion()==null ) {
             throw new InvalidDataException("Faltan Datos");
         }
+     
           
  
     }
     
+        public void validarFinalizacion(Entrevista entrevista) throws InvalidDataException{
+          if (entrevista.getCodigo().isEmpty() || entrevista.getNota().isEmpty() || entrevista.getCodigo()==null ||
+                  entrevista.getNota()==null ) {
+            throw new InvalidDataException("Faltan Datos");
+        }
+        }
 }

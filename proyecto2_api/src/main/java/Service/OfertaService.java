@@ -29,6 +29,9 @@ public class OfertaService {
     public List<Oferta> getOfertas() {
         return ofertasBD.getOfertas();
     }
+    public boolean OfertaFinalizada(String codigoOferta){
+    return ofertasBD.OfertaFinalizada(codigoOferta);
+    }
 
     public List<Oferta> getOfertasEmpresa(String codigo) {
         return ofertasBD.getOfertasEmpresa(codigo);

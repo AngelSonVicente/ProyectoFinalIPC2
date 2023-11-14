@@ -16,6 +16,10 @@ export class EntrevistasService {
 
 
 
+    public getEntrevistasOferta(codigoOferta: string): Observable<Entrevista[]> {
+        return this.httpClient.get<Entrevista[]>(this.API_URL + "Entrevistas?codigoOferta="+codigoOferta);
+    }
+
     public getEntrevistasUsuario(usuario: string): Observable<Entrevista[]> {
         return this.httpClient.get<Entrevista[]>(this.API_URL + "Entrevistas?codigoUsuario="+usuario);
     }
@@ -25,6 +29,10 @@ export class EntrevistasService {
         return this.httpClient.post<Entrevista>(this.API_URL + "Entrevistas", entrevista);
     }
 
+    public finalizarEntrevista(entrevista: Entrevista): Observable<Entrevista> {
+        return this.httpClient.put<Entrevista>(this.API_URL + "Entrevistas", entrevista);
+    }
+   
     
 
 

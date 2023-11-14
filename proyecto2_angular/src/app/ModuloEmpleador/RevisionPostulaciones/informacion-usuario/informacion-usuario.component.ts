@@ -24,7 +24,9 @@ export class InformacionUsuarioComponent {
 
   codigoSolicitud!:  string;
   codigoCreado!:string;
-  
+  agendarEntrevista!: boolean;
+
+
   entrevista!: Entrevista;
   solicitud!: Solicitudes ;
   horasDisponibles: HoraDisponible[] = [];

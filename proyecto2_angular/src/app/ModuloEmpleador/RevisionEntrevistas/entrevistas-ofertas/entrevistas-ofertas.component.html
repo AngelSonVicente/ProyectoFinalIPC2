@@ -1,0 +1,48 @@
+<div class="container" *ngIf="usuario.tipo!='Empleador'">
+    <h1>Lo sentimos no tiene los permisos para poder usar esta opción</h1>
+</div>
+
+<div class="container" *ngIf="usuario.tipo =='Empleador'">
+
+
+    <h1>Usuario: {{usuario.codigo}}</h1>
+     
+    <h1 class="text align-items-center">Entrevistas Pendientes</h1>
+    <h1 class="text align-items-center">Oferta de Empleo {{nombreOferta}}</h1>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Ubicacion</th>
+                <th>Estado</th>
+                <th>Detalles Oferta</th>
+                <th>Detalle Usuario</th>
+                <th>Entrevistar</th>
+                <th *ngIf="ofertaFinalizada && !Finalizado">Contratar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let entrevista of entrevistas">
+                <td>{{ entrevista.codigo }}</td>
+                <td>{{ entrevista.nombreUsuario }}</td>
+                <td>{{ entrevista.fecha }}</td>
+                <td>{{ entrevista.hora }}</td>
+                <td>{{ entrevista.ubicacion }}</td>
+                <td>{{ entrevista.estado }}</td>
+                <td> <a class="btn btn-outline-success" (click)="abrirModal(entrevista.codigoOferta)">ver detalles</a>
+                <td> <a class="btn btn-outline-info" (click)="informacionUsuario(entrevista.codigoUsuario)">info Usuario</a> </td>
+                <td *ngIf="entrevista.estado=='Pendiente'"> <a class="btn btn-outline-primary" (click)="FinalizarEntrevista(entrevista.codigo)">Notas</a> </td>
+                <td *ngIf="entrevista.estado=='Finalizado'"> <a class="btn btn-outline-primary" (click)="MostrarNotas(entrevista.nota)">Notas</a> </td>
+                <td *ngIf="ofertaFinalizada && !Finalizado"> <a class="btn btn-outline-dark" (click)="solicitarConfirmacion(entrevista.codigoUsuario)">Elegir</a> </td>
+
+            </tr>
+
+        </tbody>
+    </table>
+
+
+
+</div>

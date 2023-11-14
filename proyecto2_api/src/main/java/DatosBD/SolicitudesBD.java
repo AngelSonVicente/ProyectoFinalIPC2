@@ -28,6 +28,7 @@ public class SolicitudesBD {
     private static String Delete = "DELETE FROM solicitudes WHERE codigo = ?";
     private static String Insert = "INSERT INTO solicitudes (codigo_oferta, codigo_usuario, mensaje, estado) VALUES (?, ?, ?, 'Activo')";
 
+    private static String SelectUsuarioOferta ="SELECT * FROM solicitudes WHERE codigo_oferta = ? AND codigo_usuario = ?";
     //
     public Solicitudes crearSolicitud(Solicitudes solicitud) {
         System.out.println("esta creando la solicitud");
@@ -60,7 +61,6 @@ public class SolicitudesBD {
 
         return null;
     }
-
     public Solicitudes getSolicitud(String codigo) {
         try {
             PreparedStatement select = conexion.prepareStatement(SelectSoliID);
@@ -83,6 +83,29 @@ public class SolicitudesBD {
 
         return null;
     }
+    public String getSolicitudOU(String codigo, String Oferta) {
+        try {
+            PreparedStatement select = conexion.prepareStatement(SelectUsuarioOferta);
+            select.setString(1, Oferta);
+            select.setString(2, codigo);
+            System.out.println("Query hecha: " + select.toString());
+            ResultSet resultset = select.executeQuery();
+            
+
+            if (resultset.next()) {
+                return resultset.getString("codigo");
+            }
+        } catch (SQLException ex) {
+
+            // TODO pendiente manejo
+            ex.printStackTrace();
+
+            System.out.println(ex);
+        }
+
+        return null;
+    }
+
 
       public Solicitudes actualizarEstadoSolicitud(Solicitudes solicitud) {
     System.out.println("Actualizando la oferta");

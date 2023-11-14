@@ -72,7 +72,8 @@ export class PostulacionesOfertaComponent implements OnInit, OnDestroy {
     const initialState = {
       codigo: codigousuario,
       codigoOferta: this.codigo,
-      codigoSolicitud: codigoSoli
+      codigoSolicitud: codigoSoli,
+      agendarEntrevista:true,
     };
 
     this.modalRef = this.modalService.show(InformacionUsuarioComponent, { initialState });

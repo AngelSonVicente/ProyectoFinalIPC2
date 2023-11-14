@@ -27,6 +27,8 @@ import { EditarOfertaComponent } from './ModuloEmpleador/GestionOfertas/editar-o
 import { CrearOfertaComponent } from './ModuloEmpleador/GestionOfertas/crear-oferta/crear-oferta.component';
 import { RevisionPostulacionesComponent } from './ModuloEmpleador/RevisionPostulaciones/revision-postulaciones/revision-postulaciones.component';
 import { PostulacionesOfertaComponent } from './ModuloEmpleador/RevisionPostulaciones/postulaciones-oferta/postulaciones-oferta.component';
+import { RevisionEntrevistasComponent } from './ModuloEmpleador/RevisionEntrevistas/revision-entrevistas/revision-entrevistas.component';
+import { EntrevistasOfertasComponent } from './ModuloEmpleador/RevisionEntrevistas/entrevistas-ofertas/entrevistas-ofertas.component';
 
 
 const rutasAdmin = [
@@ -123,6 +125,16 @@ const rutasEmpleador = [
     path: 'PostulacionesOferta/:codigo',
     title: 'Postulaciones de Oferta',
     component: PostulacionesOfertaComponent
+  },
+  {
+    path: 'RevisionEntrevistas',
+    title: 'Revision de Entrevistas',
+    component: RevisionEntrevistasComponent
+  },
+  {
+    path: 'EntrevistasOFerta/:codigo',
+    title: 'Entrevistas de Oferta',
+    component: EntrevistasOfertasComponent
   },
   
   
