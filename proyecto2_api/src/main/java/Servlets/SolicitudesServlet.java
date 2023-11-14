@@ -130,4 +130,19 @@ public class SolicitudesServlet extends HttpServlet {
 
     }
 
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+        System.out.println("Entrando al put de solicitudes");
+        String codigoSolicitud=request.getParameter("codigoSoli");
+        String codigoOferta=request.getParameter("codigoOferta");
+        String Estado=request.getParameter("estado");
+        Solicitudes soli = new Solicitudes(codigoSolicitud, codigoOferta, null, null, null, null, Estado);
+       Solicitudes soliCreada= solicitudService.actualizarEstadoSolicitud(soli);
+       jsonUtil.EnviarJson(response, soliCreada);
+    
+    }
+    
+    
+
 }

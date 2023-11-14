@@ -3,6 +3,7 @@ package Service;
 
 import Datos.Entrevista;
 import DatosBD.EntrevistaBD;
+import exceptions.InvalidDataException;
 import java.util.List;
 
 /**
@@ -16,6 +17,20 @@ public class EntrevistaService {
       public List<Entrevista> getEntrevistasUsuario(String codigo) {
         return entrevistaBD.getEntrevistasUsuario(codigo);
     }
+    public Entrevista crearEntrevista(Entrevista entrevista) throws InvalidDataException{
+    validar(entrevista);
+    return entrevistaBD.crearEntrevista(entrevista);
+    }
     
+    
+       public void validar(Entrevista entrevista) throws InvalidDataException{
+          if (entrevista.getCodigoOferta().isEmpty() || entrevista.getCodigoUsuario().isEmpty() ||  entrevista.getFecha().isEmpty()|| entrevista.getHora().isEmpty() ||
+                  entrevista.getUbicacion().isEmpty() || entrevista.getCodigoOferta()==null || entrevista.getCodigoUsuario()==null ||  entrevista.getFecha()==null|| entrevista.getHora()==null ||
+                  entrevista.getUbicacion()==null ) {
+            throw new InvalidDataException("Faltan Datos");
+        }
+          
+ 
+    }
     
 }

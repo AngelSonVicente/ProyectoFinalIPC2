@@ -32,6 +32,8 @@ public class UsuarioServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String codigo=request.getParameter("codigoUsuario");
+        
+        System.out.println("codigo usuario: " + codigo);
         try {
           Usuario usuario =  usuarioService.getUsuarioID(codigo);
             jsonUtil.EnviarJson(response, usuario);

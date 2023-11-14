@@ -1,173 +1,167 @@
+<div class="container align-items-center" *ngIf="usuario.tipo!='Empleador'">
+  <h1>Lo sentimos no tiene los permisos para poder usar esta opción, inicie sesión como Empleador</h1>
+</div>
 
-    
-    <div class="container align-items-center" *ngIf="usuario.tipo!='Empleador'">
-        <h1>Lo sentimos no tiene los permisos para poder usar esta opción, inicie sesión como Empleador</h1>
-        </div>
-    
-    <div class="container" *ngIf="usuario.tipo =='Empleador' ">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="alert alert-success" role="alert" *ngIf="saved">
-              Oferta creada exitosamente. <br/>
-              Codigo Oferta Creada: {{codigoCreado}}
+<div class="container" *ngIf="usuario.tipo =='Empleador' ">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-success" role="alert" *ngIf="saved">
+        Oferta creada exitosamente. <br />
+        Codigo Oferta Creada: {{codigoCreado}}
 
-            </div>
-            <h1>Crear Oferta de empleo</h1>
-            <form [formGroup]="FormularioOferta" (ngSubmit)="submit()">
-              <div class="form-row">
-              
-      
-            
-                <div class="form-group">
-                  <label for="inputAddress">Nombre</label>
-                  <input class="form-control"
-                    [class.is-invalid]="FormularioOferta.controls['nombre'].invalid && FormularioOferta.controls['nombre'].touched"
-                    id="nombre" name="nombre" formControlName="nombre" />
-      
-                  <div
-                    *ngIf="FormularioOferta.controls['nombre'].invalid && (FormularioOferta.controls['nombre'].dirty || FormularioOferta.controls['nombre'].touched)"
-                    class="invalid-feedback">
-                    <div>
-                      Por favor ingrese el nombre, maximo 100 carateres
-                    </div>
-                  </div>
-                </div>
-      
-      
-               
-    
-                
-                <div class="form-group">
-                    <label for="inputAddress">Descripcion</label>
-                    <textarea class="form-control resizable"
-                        [class.is-invalid]="FormularioOferta.controls['descripcion'].invalid && FormularioOferta.controls['descripcion'].touched"
-                        id="descripcion" name="descripcion" formControlName="descripcion"></textarea>
-    
-                    <div *ngIf="FormularioOferta.controls['descripcion'].invalid && (FormularioOferta.controls['descripcion'].dirty || FormularioOferta.controls['descripcion'].touched)"
-                        class="invalid-feedback">
-                        <div>
-                            Por favor ingrese una descripcion, máximo 200 caracteres
-                        </div>
-                    </div>
-                </div>
-      
-                <div class="form-group">
-                    <label for="inputAddress">Categoría</label>
-                    <select
-                      class="form-control"
-                      [class.is-invalid]="FormularioOferta.controls['categoria'].invalid && FormularioOferta.controls['categoria'].touched"
-                      id="categoria"
-                      name="categoria"
-                      formControlName="categoria"
-                    >
-                      <option *ngFor="let categoria of categorias" [value]="categoria.codigo">
-                        {{ categoria.nombre }}  -  Descripcion: {{categoria.descripcion}}
-                      </option>
-                    </select>
-                  
-                    <div
-                      *ngIf="FormularioOferta.controls['categoria'].invalid && (FormularioOferta.controls['categoria'].dirty || FormularioOferta.controls['categoria'].touched)"
-                      class="invalid-feedback"
-                    >
-                      <div>
-                        Por favor elija una categoría
-                      </div>
-                    </div>
-                  </div>
-                  
-                
-                <div class="form-group">
-                  <label for="inputAddress">Fecha Limite</label>
-                  <input class="form-control" type="date"
-                    [class.is-invalid]="FormularioOferta.controls['fechaLimite'].invalid && FormularioOferta.controls['fechaLimite'].touched"
-                    id="fechaLimite" name="fechaLimite" formControlName="fechaLimite" />
-      
-                  <div
-                    *ngIf="FormularioOferta.controls['fechaLimite'].invalid && (FormularioOferta.controls['fechaLimite'].dirty || FormularioOferta.controls['fechaLimite'].touched)"
-                    class="invalid-feedback">
-                    <div>
-                      Por favor, ingrese o elija una Fecha
-                    </div>
-                  </div>
-                </div>
-    
-                
-                <div class="form-group">
-                  <label for="inputAddress">Salario</label>
-                  <input class="form-control"
-                    [class.is-invalid]="FormularioOferta.controls['salario'].invalid && FormularioOferta.controls['salario'].touched"
-                    id="salario" name="salario" formControlName="salario" />
-      
-                  <div
-                    *ngIf="FormularioOferta.controls['salario'].invalid && (FormularioOferta.controls['salario'].dirty || FormularioOferta.controls['salario'].touched)"
-                    class="invalid-feedback">
-                    <div>
-                      Por favor ingrese un salario
-                    </div>
-                  </div>
-                </div>
-    
-                <div class="form-group">
-                    <label for="inputAddress">Modalidad</label>
-                    <select
-                      class="form-control"
-                      [class.is-invalid]="FormularioOferta.controls['modadidad'].invalid && FormularioOferta.controls['modadidad'].touched"
-                      id="modadidad"
-                      name="modadidad"
-                      formControlName="modadidad"
-                    >
-                      <option value="Presencial">Presencial</option>
-                      <option value="Virtual">Virtual</option>
-                      <option value="Hibrido">Hibrido</option>
-                    </select>
-                  
-                    <div
-                      *ngIf="FormularioOferta.controls['modadidad'].invalid && (FormularioOferta.controls['modadidad'].dirty || FormularioOferta.controls['modadidad'].touched)"
-                      class="invalid-feedback"
-                    >
-                      <div>
-                        Por favor elija  una modalidad
-                      </div>
-                    </div>
-                  </div>
-                  
-      
-    
-    
-                <div class="form-group">
-                  <label for="inputAddress">Ubicacion</label>
-                  <input class="form-control"
-                    [class.is-invalid]="FormularioOferta.controls['ubicacion'].invalid && FormularioOferta.controls['ubicacion'].touched"
-                    id="ubicacion" name="ubicacion" formControlName="ubicacion" />
-      
-                  <div
-                    *ngIf="FormularioOferta.controls['ubicacion'].invalid && (FormularioOferta.controls['ubicacion'].dirty || FormularioOferta.controls['ubicacion'].touched)"
-                    class="invalid-feedback">
-                    <div>
-                      Por favor ingrese una Ubicacion
-                    </div>
-                  </div>
-                </div>
-    
-    
-      
-                <div class="form-group">
-                    <label for="inputAddress">Detalle</label>
-                    <textarea class="form-control resizable"
-                        [class.is-invalid]="FormularioOferta.controls['detalle'].invalid && FormularioOferta.controls['detalle'].touched"
-                        id="detalle" name="detalle" formControlName="detalle"></textarea>
-    
-                    <div *ngIf="FormularioOferta.controls['detalle'].invalid && (FormularioOferta.controls['detalle'].dirty || FormularioOferta.controls['detalle'].touched)"
-                        class="invalid-feedback">
-                        <div>
-                            Por favor ingrese motivo, máximo 200 caracteres
-                        </div>
-                    </div>
-                </div>
-      
-      
-                 <br/>
-                <button class="btn btn-success" type="submit" [disabled]="FormularioOferta.invalid">Crear</button>
+      </div>
+      <h1>Crear Oferta de empleo</h1>
+      <form [formGroup]="FormularioOferta" (ngSubmit)="submit()">
+        <div class="form-row">
+
+
+
+          <div class="form-group">
+            <label for="inputAddress">Nombre</label>
+            <input class="form-control"
+              [class.is-invalid]="FormularioOferta.controls['nombre'].invalid && FormularioOferta.controls['nombre'].touched"
+              id="nombre" name="nombre" formControlName="nombre" />
+
+            <div
+              *ngIf="FormularioOferta.controls['nombre'].invalid && (FormularioOferta.controls['nombre'].dirty || FormularioOferta.controls['nombre'].touched)"
+              class="invalid-feedback">
+              <div>
+                Por favor ingrese el nombre, maximo 100 carateres
               </div>
-            </form>
+            </div>
           </div>
+
+
+
+
+
+          <div class="form-group">
+            <label for="inputAddress">Descripcion</label>
+            <textarea class="form-control resizable"
+              [class.is-invalid]="FormularioOferta.controls['descripcion'].invalid && FormularioOferta.controls['descripcion'].touched"
+              id="descripcion" name="descripcion" formControlName="descripcion"></textarea>
+
+            <div
+              *ngIf="FormularioOferta.controls['descripcion'].invalid && (FormularioOferta.controls['descripcion'].dirty || FormularioOferta.controls['descripcion'].touched)"
+              class="invalid-feedback">
+              <div>
+                Por favor ingrese una descripcion, máximo 200 caracteres
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="form-group">
+            <label for="inputAddress">Categoría</label>
+            <select class="form-control"
+              [class.is-invalid]="FormularioOferta.controls['categoria'].invalid && FormularioOferta.controls['categoria'].touched"
+              id="categoria" name="categoria" formControlName="categoria">
+              <option *ngFor="let categoria of categorias" [value]="categoria.codigo">
+                {{ categoria.nombre }} - Descripcion: {{categoria.descripcion}}
+              </option>
+            </select>
+
+            <div
+              *ngIf="FormularioOferta.controls['categoria'].invalid && (FormularioOferta.controls['categoria'].dirty || FormularioOferta.controls['categoria'].touched)"
+              class="invalid-feedback">
+              <div>
+                Por favor elija una categoría
+              </div>
+            </div>
+          </div>
+
+
+          
+
+          <div class="form-group">
+            <label for="inputAddress">Fecha Limite</label>
+            <input class="form-control" type="date"
+              [class.is-invalid]="FormularioOferta.controls['fechaLimite'].invalid && FormularioOferta.controls['fechaLimite'].touched"
+              id="fechaLimite" name="fechaLimite" formControlName="fechaLimite" />
+
+            <div
+              *ngIf="FormularioOferta.controls['fechaLimite'].invalid && (FormularioOferta.controls['fechaLimite'].dirty || FormularioOferta.controls['fechaLimite'].touched)"
+              class="invalid-feedback">
+              <div>
+                Por favor, ingrese o elija una Fecha
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <label for="inputAddress">Salario</label>
+            <input class="form-control"
+              [class.is-invalid]="FormularioOferta.controls['salario'].invalid && FormularioOferta.controls['salario'].touched"
+              id="salario" name="salario" formControlName="salario" />
+
+            <div
+              *ngIf="FormularioOferta.controls['salario'].invalid && (FormularioOferta.controls['salario'].dirty || FormularioOferta.controls['salario'].touched)"
+              class="invalid-feedback">
+              <div>
+                Por favor ingrese un salario
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="inputAddress">Modalidad</label>
+            <select class="form-control"
+              [class.is-invalid]="FormularioOferta.controls['modadidad'].invalid && FormularioOferta.controls['modadidad'].touched"
+              id="modadidad" name="modadidad" formControlName="modadidad">
+              <option value="Presencial">Presencial</option>
+              <option value="Virtual">Virtual</option>
+              <option value="Hibrido">Hibrido</option>
+            </select>
+
+            <div
+              *ngIf="FormularioOferta.controls['modadidad'].invalid && (FormularioOferta.controls['modadidad'].dirty || FormularioOferta.controls['modadidad'].touched)"
+              class="invalid-feedback">
+              <div>
+                Por favor elija una modalidad
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <div class="form-group">
+            <label for="inputAddress">Ubicacion</label>
+            <input class="form-control"
+              [class.is-invalid]="FormularioOferta.controls['ubicacion'].invalid && FormularioOferta.controls['ubicacion'].touched"
+              id="ubicacion" name="ubicacion" formControlName="ubicacion" />
+
+            <div
+              *ngIf="FormularioOferta.controls['ubicacion'].invalid && (FormularioOferta.controls['ubicacion'].dirty || FormularioOferta.controls['ubicacion'].touched)"
+              class="invalid-feedback">
+              <div>
+                Por favor ingrese una Ubicacion
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="form-group">
+            <label for="inputAddress">Detalle</label>
+            <textarea class="form-control resizable"
+              [class.is-invalid]="FormularioOferta.controls['detalle'].invalid && FormularioOferta.controls['detalle'].touched"
+              id="detalle" name="detalle" formControlName="detalle"></textarea>
+
+            <div
+              *ngIf="FormularioOferta.controls['detalle'].invalid && (FormularioOferta.controls['detalle'].dirty || FormularioOferta.controls['detalle'].touched)"
+              class="invalid-feedback">
+              <div>
+                Por favor ingrese motivo, máximo 200 caracteres
+              </div>
+            </div>
+          </div>
+
+
+          <br />
+          <button class="btn btn-success" type="submit" [disabled]="FormularioOferta.invalid">Crear</button>
+        </div>
+      </form>
+    </div>

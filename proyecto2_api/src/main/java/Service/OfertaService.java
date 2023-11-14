@@ -42,11 +42,15 @@ public class OfertaService {
         return ofertasBD.crearOferta(oferta);
     }
 
-    
+    public Oferta actualizarEstadoOferta(Oferta oferta) throws InvalidDataException{
+        validar(oferta);
+    return ofertasBD.actualizarEstadoOferta(oferta);
+    }
     public Oferta actualizarOferta(Oferta oferta) throws InvalidDataException{
         validar(oferta);
     return ofertasBD.actualizarOferta(oferta);
     }
+    
     public OfertaEliminada eliminarOferta(OfertaEliminada oferta){
         return ofertasBD.EliminarOferta(oferta);
     }

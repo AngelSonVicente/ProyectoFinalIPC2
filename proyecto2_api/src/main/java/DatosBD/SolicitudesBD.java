@@ -17,16 +17,17 @@ import java.util.List;
  * @author MSI
  */
 public class SolicitudesBD {
+
     static Connection conexion = ConexionBD.getInstancia().getConexion();
 
     private static String SelectExiste = "SELECT * FROM solicitudes WHERE codigo_usuario = ? AND codigo_oferta = ?";
-   private static String SelectTodoUsuario = "SELECT s.*, o.codigo AS codigo_oferta, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo JOIN usuarios AS u ON s.codigo_usuario = u.codigo WHERE s.estado = 'Activo' AND s.codigo_usuario = ?";
-    private static String SelectTodoOferta="SELECT s.*, o.codigo AS codigo_oferta, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo JOIN usuarios AS u ON s.codigo_usuario = u.codigo WHERE s.codigo_oferta = ?";
-    private static String SelectSoliID ="SELECT s.*, o.codigo AS codigo_oferta, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo JOIN usuarios AS u ON s.codigo_usuario = u.codigo WHERE s.codigo = ?";
-
-    
-    private static String Delete ="DELETE FROM solicitudes WHERE codigo = ?";
+    private static String SelectTodoUsuario = "SELECT s.*, o.codigo AS codigo_oferta, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo JOIN usuarios AS u ON s.codigo_usuario = u.codigo WHERE s.estado = 'Activo' AND s.codigo_usuario = ?";
+    private static String SelectTodoOferta = "SELECT s.*, o.codigo AS codigo_oferta, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo JOIN usuarios AS u ON s.codigo_usuario = u.codigo WHERE s.codigo_oferta = ?";
+    private static String SelectSoliID = "SELECT s.*, o.codigo AS codigo_oferta, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo JOIN usuarios AS u ON s.codigo_usuario = u.codigo WHERE s.codigo = ?";
+    private static String ActualizarEstado="UPDATE solicitudes SET estado = ? WHERE codigo = ?";
+    private static String Delete = "DELETE FROM solicitudes WHERE codigo = ?";
     private static String Insert = "INSERT INTO solicitudes (codigo_oferta, codigo_usuario, mensaje, estado) VALUES (?, ?, ?, 'Activo')";
+
     //
     public Solicitudes crearSolicitud(Solicitudes solicitud) {
         System.out.println("esta creando la solicitud");
@@ -54,12 +55,13 @@ public class SolicitudesBD {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            System.out.println("error: " +ex);
+            System.out.println("error: " + ex);
         }
 
         return null;
     }
-       public Solicitudes getSolicitud(String codigo) {
+
+    public Solicitudes getSolicitud(String codigo) {
         try {
             PreparedStatement select = conexion.prepareStatement(SelectSoliID);
             select.setString(1, codigo);
@@ -81,9 +83,34 @@ public class SolicitudesBD {
 
         return null;
     }
+
+      public Solicitudes actualizarEstadoSolicitud(Solicitudes solicitud) {
+    System.out.println("Actualizando la oferta");
+    try {
+        PreparedStatement update = conexion.prepareStatement(ActualizarEstado);
+        update.setString(1, solicitud.getEstado());
+        update.setString(2, solicitud.getCodigo());
+       
+        int affectedRows = update.executeUpdate();
+
+        if (affectedRows == 1) {
+            System.out.println("Categoría actualizada");
+            
+            return solicitud;
+        } else {
+            System.out.println("La actualización no tuvo éxito.");
+            return null;
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        System.out.println("------------------------------------------------------------------------------");
+        System.out.println(ex);
+    }
+
+    return null;
+}
     
-    
-        public List<Solicitudes> getSolicitudesUsuario(String codigo) {
+    public List<Solicitudes> getSolicitudesUsuario(String codigo) {
         List<Solicitudes> solicitudes = new ArrayList<>();
         try {
             System.out.println(SelectTodoUsuario);
@@ -108,7 +135,8 @@ public class SolicitudesBD {
 
         return solicitudes;
     }
-        public List<Solicitudes> getSolicitudesOferta(String codigo) {
+
+    public List<Solicitudes> getSolicitudesOferta(String codigo) {
         List<Solicitudes> solicitudes = new ArrayList<>();
         try {
             System.out.println(SelectTodoUsuario);
@@ -133,29 +161,26 @@ public class SolicitudesBD {
 
         return solicitudes;
     }
-    
-    
+
     public boolean borrarSolicitud(String codigoSolicitud) {
-    try {
-        PreparedStatement delete = conexion.prepareStatement(Delete);
-        delete.setString(1, codigoSolicitud);
-        int filasAfectadas = delete.executeUpdate();
+        try {
+            PreparedStatement delete = conexion.prepareStatement(Delete);
+            delete.setString(1, codigoSolicitud);
+            int filasAfectadas = delete.executeUpdate();
 
-        if (filasAfectadas > 0) {
-           return true;
-        } 
+            if (filasAfectadas > 0) {
+                return true;
+            }
 
-    } catch (SQLException ex) {
-        // TODO: Manejar la excepción según tus necesidades
-        ex.printStackTrace();
-        System.out.println(ex);
+        } catch (SQLException ex) {
+            // TODO: Manejar la excepción según tus necesidades
+            ex.printStackTrace();
+            System.out.println(ex);
+        }
+        return false;
     }
-    return false;
-}
 
-    
-    
-      public boolean ExisteSolicitud(String codigoUsuario, String codigoOferta) {
+    public boolean ExisteSolicitud(String codigoUsuario, String codigoOferta) {
         try {
             PreparedStatement select = conexion.prepareStatement(SelectExiste);
             select.setString(1, codigoUsuario);
@@ -168,15 +193,11 @@ public class SolicitudesBD {
         } catch (SQLException ex) {
             // TODO pendiente manejo
             ex.printStackTrace();
-            
-            System.out.println("Error:  "+ex);
+
+            System.out.println("Error:  " + ex);
         }
 
-    return false;
+        return false;
     }
-  
 
-    
-    
-    
 }

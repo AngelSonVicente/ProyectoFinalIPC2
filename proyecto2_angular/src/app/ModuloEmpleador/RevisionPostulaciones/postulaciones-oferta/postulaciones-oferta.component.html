@@ -23,14 +23,14 @@
             <td>{{ solicitud.nombreUsuario }}</td>
             <td>{{ solicitud.mensaje }}</td>
             <td>{{ solicitud.estado }}</td>
-            <td> <a class="btn btn-outline-info" (click)="informacionUsuario(solicitud.codigoUsuario)">ver detalles</a>
+            <td *ngIf="solicitud.estado=='Activo'" > <a class="btn btn-outline-info" (click)="informacionUsuario(solicitud.codigoUsuario,solicitud.codigo)">ver detalles</a>
             </td>
           
         </tbody>
       </table>
     
-      <a routerLink="/Proyecto2/Empleador/CrearOferta" class="btn btn-primary">Crear Oferta</a>
-   <br>
+   
+      <br>
  
     
     </div>

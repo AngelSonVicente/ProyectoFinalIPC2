@@ -1,9 +1,94 @@
-<div>
-    codigo: {{postulante.codigo}}<br>
-    nombre: {{postulante.nombre}}<br>
-    cui: {{postulante.cui}}<br>
 
-<h2>Curriculum Vitae (PDF)</h2>
-<iframe [src]="pdfSrc" width="100%" height="400px"></iframe>
+codigo solicitud {{codigoSolicitud}}
+<div class="alert alert-succes" role="alert" *ngIf="rechazado">
+   Se se ha rechazado la solicitud Exitosamente 
+  </div>
+
+<div class="alert alert-success" role="alert" *ngIf="saved">
+    Entrevista agendada exitosamente. <br />
+    Codigo Entrevista Agendada: {{codigoCreado}} <br>
+    Ya puede cerrar la ventana!
+
+  </div>
+
+<div class="container" *ngIf="!saved && !rechazado">
+
+    <br>
+   <div class="card" style="width: 18rem; align-items: center;">
+  <div class="card-body">
+    <h5 class="card-title">{{postulante.nombre}}</h5>
+    <p class="card-text"> Direccion: {{postulante.direccion}}</p>
+    <p class="card-text"> Correo: {{postulante.correo}}</p>
+    <p class="card-text"> Fecha de nacimiento: {{postulante.birth}}</p>
+  
+
+</div>
+</div>
+    
+    
+    <hr>
+
+
+    <form [formGroup]="FomularioEntrevista" (ngSubmit)="submit()">
+
+
+        <div class="form-group">
+            <label for="inputAddress">Fecha Entrevista</label>
+            <input class="form-control" type="date" (change)="onFechaUbicacionChange()"
+                [class.is-invalid]="FomularioEntrevista.controls['fecha'].invalid && FomularioEntrevista.controls['fecha'].touched"
+                id="fecha" name="fecha" formControlName="fecha" />
+
+            <div *ngIf="FomularioEntrevista.controls['fecha'].invalid && (FomularioEntrevista.controls['fecha'].dirty || FomularioEntrevista.controls['fecha'].touched)"
+                class="invalid-feedback">
+                <div>
+                    Por favor, ingrese o seleccione una Fecha valida
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="inputAddress">Ubicacion</label>
+            <input class="form-control"  (change)="onFechaUbicacionChange()"
+                [class.is-invalid]="FomularioEntrevista.controls['ubicacion'].invalid && FomularioEntrevista.controls['ubicacion'].touched"
+                id="ubicacion" name="ubicacion" formControlName="ubicacion" />
+
+            <div *ngIf="FomularioEntrevista.controls['ubicacion'].invalid && (FomularioEntrevista.controls['ubicacion'].dirty || FomularioEntrevista.controls['ubicacion'].touched)"
+                class="invalid-feedback">
+                <div>
+                    Por favor ingrese una Ubicacion
+                </div>
+            </div>
+        </div>
+
+
+            <label for="inputAddress">Horas Disponibles</label>
+        <select class="form-control"
+        [class.is-invalid]="FomularioEntrevista.controls['hora'].invalid && FomularioEntrevista.controls['hora'].touched"
+        id="hora" name="hora" formControlName="hora">
+        <option *ngFor="let hora of horasDisponibles" [value]="hora.hora">
+            {{ hora.hora}}
+        </option>
+    </select>
+    
+    <div
+        *ngIf="FomularioEntrevista.controls['hora'].invalid && (FomularioEntrevista.controls['hora'].dirty || FomularioEntrevista.controls['hora'].touched)"
+        class="invalid-feedback">
+        <div>
+            Por favor seleccione una hora
+        </div>
+    </div>
+    
+
+
+
+        <br>
+        <button class="btn btn-success" type="submit" [disabled]="FomularioEntrevista.invalid">Agendar Entrevista</button>
+
+    </form>
+    <br><button class="btn btn-outline-danger" (click)="rechazarPostulacion()">Rechazar Solicitante</button>
+
+    <h2>Curriculum Vitae (PDF)</h2>
+    <iframe [src]="pdfSrc" width="100%" height="400px"></iframe>
 
 </div>

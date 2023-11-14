@@ -112,6 +112,7 @@ public class OfertaServlet extends HttpServlet {
              Oferta ofertaaa = ofertaService.crearOferta(oferta);
           
              jsonUtil.EnviarJson(response, ofertaaa);
+             
 //             String json = new Gson().toJson(ofertaaa);
 //            // Configura la respuesta
 //            response.setContentType("application/json");
@@ -121,7 +122,8 @@ public class OfertaServlet extends HttpServlet {
 //            response.getWriter().write(json);
 
             response.setStatus(HttpServletResponse.SC_OK);
-        } catch (InvalidDataException e) {
+       
+    } catch (InvalidDataException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
         

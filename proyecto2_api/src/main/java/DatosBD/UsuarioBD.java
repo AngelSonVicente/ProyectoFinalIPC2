@@ -47,6 +47,7 @@ public class UsuarioBD {
         
         return null;
     }
+     
      public static Usuario getUsuarioCodigo(String codigo) {
         // validateCarnet not null
         try {

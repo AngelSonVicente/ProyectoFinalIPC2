@@ -62,7 +62,8 @@ private static String UpdateEstado = "UPDATE ofertas set estado = ? WHERE codigo
     System.out.println("Actualizando la oferta");
     try {
         PreparedStatement update = conexion.prepareStatement(Update);
-        update.setString(1, oferta.getNombre());
+  
+                update.setString(1, oferta.getNombre());
         update.setString(2, oferta.getDescripcion());
         update.setString(3, oferta.getCategoria());
         update.setString(4, oferta.getEstado());
@@ -73,6 +74,32 @@ private static String UpdateEstado = "UPDATE ofertas set estado = ? WHERE codigo
         update.setString(9, oferta.getDetalle());
         
         update.setString(10, oferta.getCodigo());
+        
+        int affectedRows = update.executeUpdate();
+
+        if (affectedRows == 1) {
+            System.out.println("Oferta actualizada");
+            return oferta;
+        } else {
+            System.out.println("La actualización no tuvo éxito.");
+            return null;
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        System.out.println("------------------------------------------------------------------------------");
+        System.out.println(ex);
+    }
+
+    return null;
+}
+    public Oferta actualizarEstadoOferta(Oferta oferta) {
+    System.out.println("Actualizando la oferta");
+    try {
+        PreparedStatement update = conexion.prepareStatement(UpdateEstado);
+        update.setString(1, oferta.getEstado());
+      
+        update.setString(2, oferta.getCodigo());
+
 
         int affectedRows = update.executeUpdate();
 

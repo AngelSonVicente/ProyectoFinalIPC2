@@ -5,12 +5,14 @@
 package Service;
 
 import Datos.Comision;
+import Datos.Oferta;
 import Datos.SolicitudRetirada;
 import Datos.Solicitudes;
 import Datos.Util;
 import DatosBD.SolicitudesBD;
 import DatosBD.SolicitudesRetiradasBD;
 import exceptions.InvalidDataException;
+import exceptions.NotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.List;
 public class SolicitudesService {
 
     SolicitudesBD solicitudBD = new SolicitudesBD();
+    OfertaService ofertaService = new OfertaService();
     SolicitudesRetiradasBD soliretirada = new SolicitudesRetiradasBD();
     Util util = new Util();
     
@@ -50,6 +53,51 @@ public class SolicitudesService {
      public List<Solicitudes> getOfertasEmpresa(String codigo) {
         return solicitudBD.getSolicitudesUsuario(codigo);
     }
+     public Solicitudes actualizarEstadoSolicitud(Solicitudes solicitud) {
+         //cambiar el estado de la oferta a Entrevista
+       Solicitudes soli = solicitudBD.actualizarEstadoSolicitud(solicitud);
+         
+         List<Solicitudes> solicitudesOferta = getOfertasOferta(solicitud.getCodigoOferta());
+                  System.out.println("codigo OFerta kjndkjnsadkjs_: " + solicitud.getCodigoOferta());
+        
+         if(SolicitudesEnEntrevista(solicitudesOferta)) {
+              // cambiar el estado de oferta a Entrevista
+              try {
+                  System.out.println("actualizando la onda esta");
+                  
+              Oferta oferta = ofertaService.getOferta(solicitud.getCodigoOferta());
+                  oferta.setEstado("Entrevista");
+              ofertaService.actualizarEstadoOferta(oferta);
+              } catch (Exception e) {
+                  System.out.println("-----------------------");
+                  System.out.println(e);
+              }
+          }
+          
+          
+     return soli;
+    
+     
+     }
+     
+     public boolean SolicitudesEnEntrevista(List<Solicitudes> solicitudesOferta) {
+    for (Solicitudes solicitud : solicitudesOferta) {
+        System.out.println("codigo: " + solicitud.getCodigo());
+        System.out.println("Estado: " + solicitud.getEstado());
+        if ("Activo".equals(solicitud.getEstado())) {
+            // Si alguna solicitud no está en estado "Entrevista", retorna false
+          
+            System.out.println("Todavia hay un Activo, no cambiar");
+            return false;
+        }
+        if(solicitudesOferta.isEmpty() || solicitudesOferta ==null){
+            return true;
+        }
+    }
+     System.out.println("ya no hay ningun activo cambiar");
+    // Si todas las solicitudes están en estado "Entrevista", retorna true
+    return true;
+}
     
     
     public void validar(Solicitudes solicitud) throws InvalidDataException{
