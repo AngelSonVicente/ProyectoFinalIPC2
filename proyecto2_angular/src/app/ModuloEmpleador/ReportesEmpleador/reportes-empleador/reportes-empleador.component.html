@@ -1,0 +1,38 @@
+<div class="container " style="height: 100vh;">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="text-center">Reportes Empleador</h1><br>
+            <h3 class="text-center">{{selectedReport}}</h3>
+            <hr>
+        </div>
+        <div class="card-body">
+            <div class="card-head">
+            </div>
+
+            <br>
+            <div class="mt-2">
+                <select [(ngModel)]="selectedReport" class="form-select mx-auto" style="width: auto;">
+                    <option value="">Selecciona un reporte</option>
+                    <option value="Ofertas Publicadas">Ofertas Publicadas</option>
+                    <option value="Entrevistas para una fecha">Entrevistas para una fecha</option>
+                    <option value="Reporte de costos totales por todas las ofertas finalizadas">Reporte de costos totales por todas las ofertas finalizadas.
+                </option>
+                
+                </select>
+            </div>
+          
+
+         
+
+            <br>
+            <app-reporte-e1 *ngIf="selectedReport === 'Ofertas Publicadas'"></app-reporte-e1>
+            <app-reporte-e2 *ngIf="selectedReport === 'Entrevistas para una fecha'"></app-reporte-e2>
+            <app-reporte-e3 *ngIf="selectedReport === 'Reporte de costos totales por todas las ofertas finalizadas'"></app-reporte-e3>
+            
+      
+        </div>
+
+    </div>
+
+
+</div>

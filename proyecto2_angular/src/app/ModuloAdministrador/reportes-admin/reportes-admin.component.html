@@ -1,1 +1,39 @@
-<p>reportes-admin works!</p>
+<div class="container " style="height: 100vh;">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="text-center">Reportes Administrador</h1><br>
+            <h3 class="text-center">{{selectedReport}}</h3>
+            <hr>
+        </div>
+        <div class="card-body">
+            <div class="card-head">
+            </div>
+
+            <br>
+            <div class="mt-2">
+                <select [(ngModel)]="selectedReport" class="form-select mx-auto" style="width: auto;">
+                    <option value="">Selecciona un reporte</option>
+                    <option value="Historial de las comisiones">Historial de las comisiones</option>
+                    <option value="Top 5 empleadores que más ofertas de empleo publicas">Top 5 empleadores que más
+                        ofertas de empleo publicadas</option>
+                    <option value="Top 5 empleadores que más ingresos han generado a la aplicación">Top 5 empleadores que más ingresos han generado a la aplicación</option>
+                    <option value="Total de ingresos registrados en un intervalo de tiempo por categoría">Total de ingresos registrados en un intervalo de tiempo por categoría</option>
+                </select>
+            </div>
+          
+
+         
+
+            <br>
+            <app-reporte1 *ngIf="selectedReport === 'Historial de las comisiones'"></app-reporte1>
+            <app-reporte2 *ngIf="selectedReport === 'Top 5 empleadores que más ofertas de empleo publicas'"></app-reporte2>
+            <app-reporte3 *ngIf="selectedReport === 'Top 5 empleadores que más ingresos han generado a la aplicación'"></app-reporte3>
+            <app-reporte4 *ngIf="selectedReport === 'Total de ingresos registrados en un intervalo de tiempo por categoría'"></app-reporte4>
+      
+      
+        </div>
+
+    </div>
+
+
+</div>

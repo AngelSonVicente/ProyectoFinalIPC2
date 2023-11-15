@@ -11,15 +11,20 @@ package Datos;
 public class OfertaEliminada {
     private String codigo;
     private String codigoOferta;
+    private String nombreOferta;
     private String motivo;
+    private String fecha;
+    
 
     public OfertaEliminada() {
     }
 
-    public OfertaEliminada(String codigo, String codigoOferta, String motivo) {
+    public OfertaEliminada(String codigo, String codigoOferta, String nombreOferta, String motivo, String fecha) {
         this.codigo = codigo;
         this.codigoOferta = codigoOferta;
+        this.nombreOferta = nombreOferta;
         this.motivo = motivo;
+        this.fecha = fecha;
     }
 
     public String getCodigo() {
@@ -38,12 +43,28 @@ public class OfertaEliminada {
         this.codigoOferta = codigoOferta;
     }
 
+    public String getNombreOferta() {
+        return nombreOferta;
+    }
+
+    public void setNombreOferta(String nombreOferta) {
+        this.nombreOferta = nombreOferta;
+    }
+
     public String getMotivo() {
         return motivo;
     }
 
     public void setMotivo(String motivo) {
         this.motivo = motivo;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
     
     

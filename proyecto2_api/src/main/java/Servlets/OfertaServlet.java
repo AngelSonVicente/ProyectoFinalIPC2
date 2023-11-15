@@ -169,7 +169,7 @@ public class OfertaServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     
-        OfertaEliminada oferta = new OfertaEliminada(null,request.getParameter("codigoOferta"),request.getParameter("motivo"));
+        OfertaEliminada oferta = new OfertaEliminada(null,request.getParameter("codigoOferta"),null,request.getParameter("motivo"),null);
         
        oferta =  ofertaService.eliminarOferta(oferta);
        

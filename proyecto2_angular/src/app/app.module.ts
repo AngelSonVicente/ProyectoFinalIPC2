@@ -38,6 +38,19 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { RevisionEntrevistasComponent } from './ModuloEmpleador/RevisionEntrevistas/revision-entrevistas/revision-entrevistas.component';
 import { EntrevistasOfertasComponent } from './ModuloEmpleador/RevisionEntrevistas/entrevistas-ofertas/entrevistas-ofertas.component';
 import { FinalizarEntrevistaComponent } from './ModuloEmpleador/RevisionEntrevistas/finalizar-entrevista/finalizar-entrevista.component';
+import { Reporte1Component } from './ModuloAdministrador/reporte1/reporte1.component';
+import { Reporte2Component } from './ModuloAdministrador/reporte2/reporte2.component';
+import { Reporte3Component } from './ModuloAdministrador/reporte3/reporte3.component';
+import { Reporte4Component } from './ModuloAdministrador/reporte4/reporte4.component';
+import { ReportesComponent } from './ModuloUsuario/ReportesUsuario/reportes/reportes.component';
+import { Reporte1UComponent } from './ModuloUsuario/ReportesUsuario/reporte1-u/reporte1-u.component';
+import { Reporte2UComponent } from './ModuloUsuario/ReportesUsuario/reporte2-u/reporte2-u.component';
+import { Reporte3UComponent } from './ModuloUsuario/ReportesUsuario/reporte3-u/reporte3-u.component';
+import { Reporte4UComponent } from './ModuloUsuario/ReportesUsuario/reporte4-u/reporte4-u.component';
+import { ReportesEmpleadorComponent } from './ModuloEmpleador/ReportesEmpleador/reportes-empleador/reportes-empleador.component';
+import { ReporteE1Component } from './ModuloEmpleador/ReportesEmpleador/reporte-e1/reporte-e1.component';
+import { ReporteE2Component } from './ModuloEmpleador/ReportesEmpleador/reporte-e2/reporte-e2.component';
+import { ReporteE3Component } from './ModuloEmpleador/ReportesEmpleador/reporte-e3/reporte-e3.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +82,20 @@ import { FinalizarEntrevistaComponent } from './ModuloEmpleador/RevisionEntrevis
          InformacionUsuarioComponent,
          RevisionEntrevistasComponent,
          EntrevistasOfertasComponent,
-         FinalizarEntrevistaComponent
+         FinalizarEntrevistaComponent,
+         Reporte1Component,
+         Reporte2Component,
+         Reporte3Component,
+         Reporte4Component,
+         ReportesComponent,
+         Reporte1UComponent,
+         Reporte2UComponent,
+         Reporte3UComponent,
+         Reporte4UComponent,
+         ReportesEmpleadorComponent,
+         ReporteE1Component,
+         ReporteE2Component,
+         ReporteE3Component,
   ],
   imports: [
     BrowserModule,

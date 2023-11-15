@@ -5,6 +5,5 @@ export class FinalizarOferta {
     codigoEmpresa!: string;
     } 
     
-    //codigo oferta, codigoUsuarioElegido
-    //codigoSolicitud, codigoEmpresa
+
   

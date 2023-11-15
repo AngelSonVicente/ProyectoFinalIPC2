@@ -11,17 +11,22 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
  * @author MSI
  */
 public class FinalizarOfertaBD {
-
+  LocalDate fechaActual = LocalDate.now();
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Formato para obtener solo la fecha
+        String fecha = fechaActual.format(formato);
+    
     static Connection conexion = ConexionBD.getInstancia().getConexion();
     private static String FinalizarOferta = "UPDATE ofertas set estado = 'Finalizado', usuario_elegido = ? WHERE codigo = ?";
     private static String FinalizarSolicitudes = "UPDATE solicitudes set estado = 'Elegido' WHERE codigo = ?";
-    private static String Pago = "INSERT INTO historial_cobros (codigo_empresa, monto) VALUES (?,  (SELECT comision FROM parametros ORDER BY codigo DESC LIMIT 1));";
+    private static String Pago = "INSERT INTO historial_cobros (codigo_empresa, monto, fecha, codigo_oferta) VALUES (?,  (SELECT comision FROM parametros ORDER BY codigo DESC LIMIT 1), ?, ?);";
 
     
     public FinalizarOferta realizarPago(FinalizarOferta finalizarOferta) {
@@ -29,6 +34,8 @@ public class FinalizarOfertaBD {
         try {
             PreparedStatement insert = conexion.prepareStatement(Pago, PreparedStatement.RETURN_GENERATED_KEYS);
                insert.setString(1, finalizarOferta.getCodigoEmpresa());
+               insert.setString(2, fecha);
+               insert.setString(2, finalizarOferta.getCodigoOferta());
 
 
             System.out.println(insert.toString());

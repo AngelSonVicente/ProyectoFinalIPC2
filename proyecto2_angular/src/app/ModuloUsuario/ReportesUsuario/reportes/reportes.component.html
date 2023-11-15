@@ -1,0 +1,39 @@
+
+<div class="container " style="height: 100vh;">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="text-center">Reportes usuario</h1><br>
+            <h3 class="text-center">{{selectedReport}}</h3>
+            <hr>
+        </div>
+        <div class="card-body">
+            <div class="card-head">
+            </div>
+
+            <br>
+            <div class="mt-2">
+                <select [(ngModel)]="selectedReport" class="form-select mx-auto" style="width: auto;">
+                    <option value="">Selecciona un reporte</option>
+                    <option value="ofertas de las que ha retirado la postulación">ofertas de las que ha retirado la postulación</option>
+                    <option value="Ofertas en las que ha quedado en la fase de entrevista">Ofertas en las que ha quedado en la fase de entrevista</option>
+                    <option value="Ofertas en las que ha quedado en la fase de selección">Ofertas en las que ha quedado en la fase de selección</option>
+                    <option value="Cantidad total de ofertas a las que ha aplicado pero no ha obtenido el empleo">Cantidad total de ofertas a las que ha aplicado pero no ha obtenido el empleo</option>
+                </select>
+            </div>
+          
+
+         
+
+            <br>
+            <app-reporte1-u *ngIf="selectedReport === 'ofertas de las que ha retirado la postulación'"></app-reporte1-u>
+            <app-reporte2-u *ngIf="selectedReport === 'Ofertas en las que ha quedado en la fase de entrevista'"></app-reporte2-u>
+            <app-reporte3-u *ngIf="selectedReport === 'Ofertas en las que ha quedado en la fase de selección'"></app-reporte3-u>
+            <app-reporte4-u *ngIf="selectedReport === 'Cantidad total de ofertas a las que ha aplicado pero no ha obtenido el empleo'"></app-reporte4-u>
+      
+      
+        </div>
+
+    </div>
+
+
+</div>

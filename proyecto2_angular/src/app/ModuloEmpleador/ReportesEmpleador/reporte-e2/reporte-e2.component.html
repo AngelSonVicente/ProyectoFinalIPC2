@@ -1,0 +1,33 @@
+<
+<div>
+    <form #miFormulario="ngForm" (ngSubmit)="realizarAccion(miFormulario.value)">
+      <label for="fecha1">Fecha 1:</label>
+      <input type="date" id="fecha1" name="fecha1" ngModel>
+  
+
+      <button type="submit">Ver Ofertas</button>
+    </form>
+  </div>
+
+  <table class="table table-striped table-bordered">
+    <thead>
+        <tr *ngFor="let item of reporte2; index as i">     <th scope="col">#</th>
+            <th scope="col">Nombre Oferta</th>
+            <th scope="col" *ngIf="item.estado=='Pendiente'">Fecha y Hora</th>
+            <th scope="col">estado</th>
+            <th scope="col" *ngIf="item.estado=='Finalizado'">notas</th>
+            
+          
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of reporte2; index as i">
+            <td>{{item.codigo}}</td>
+            <td>{{item.nombreOferta}}</td>
+            <td *ngIf="item.estado=='Pendiente'">{{item.fecha }} {{ item.hora}}</td>
+            <td>{{item.estado}}</td>
+            <td>{{item.nota}}</td>
+            
+        </tr>
+    </tbody>
+</table>

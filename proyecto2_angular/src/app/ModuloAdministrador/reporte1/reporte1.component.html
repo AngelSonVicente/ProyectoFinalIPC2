@@ -1,0 +1,19 @@
+<table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">codigo</th>
+        <th scope="col">comision</th>
+        <th scope="col">fecha Inicial</th>
+        <th scope="col">fecha Final</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reporte of reporte1; index as i">
+        <td>{{reporte.codigo}}</td>
+        <td>{{reporte.comision}}</td>
+        <td>{{reporte.fechaInial}}</td>
+        <td>{{reporte.fechaFinal}}</td>
+        <!-- Agrega más celdas según los atributos de HistorialComision -->
+      </tr>
+    </tbody>
+  </table>

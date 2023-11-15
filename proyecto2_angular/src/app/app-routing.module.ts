@@ -29,7 +29,8 @@ import { RevisionPostulacionesComponent } from './ModuloEmpleador/RevisionPostul
 import { PostulacionesOfertaComponent } from './ModuloEmpleador/RevisionPostulaciones/postulaciones-oferta/postulaciones-oferta.component';
 import { RevisionEntrevistasComponent } from './ModuloEmpleador/RevisionEntrevistas/revision-entrevistas/revision-entrevistas.component';
 import { EntrevistasOfertasComponent } from './ModuloEmpleador/RevisionEntrevistas/entrevistas-ofertas/entrevistas-ofertas.component';
-
+import { ReportesComponent } from './ModuloUsuario/ReportesUsuario/reportes/reportes.component';
+import { ReportesEmpleadorComponent } from './ModuloEmpleador/ReportesEmpleador/reportes-empleador/reportes-empleador.component';
 
 const rutasAdmin = [
   {
@@ -97,6 +98,11 @@ const rutasUsuario = [
     title: 'Detalles de Oferta',
     component: PerfilEmpleadorComponent,
   },
+  {
+    path: 'Reportes',
+    title: 'Reportes',
+    component: ReportesComponent,
+  },
 
   
 ];
@@ -135,6 +141,12 @@ const rutasEmpleador = [
     path: 'EntrevistasOFerta/:codigo',
     title: 'Entrevistas de Oferta',
     component: EntrevistasOfertasComponent
+  },
+  
+  {
+    path: 'Reportes',
+    title: 'Reportes Empleador',
+    component: ReportesEmpleadorComponent
   },
   
   

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+
 import { Oferta } from 'src/entities/Oferta';
 import { Usuario } from 'src/entities/Usuario';
 import { OfertaService } from 'src/services/OfertaService';
@@ -17,13 +19,24 @@ export class RevisionEntrevistasComponent implements OnInit{
   
   eliminado!:boolean;
   modalRef!: BsModalRef;
+
+//declaras tu lista de objetos que vas a usar
+
   ofertas: Oferta[] = [];
+  
+  
   usuario!: Usuario;
+
+  //instancias el service del modal
   constructor(private ofertaService: OfertaService,  private modalService: BsModalService, private sanitizer: DomSanitizer){}
+  
+  //codigo que al inciar el el componente se llene la lista de objetos
   ngOnInit(): void{
+
     let jsonUsuario = localStorage.getItem('usuario');
     this.usuario= jsonUsuario ? JSON.parse(jsonUsuario) : null;    
 
+    //mandas a llamar el servlet y llenas tus objtos
     this.ofertaService.getOfertasEmpresaEstado(this.usuario.codigo.toString(),"Entrevista").subscribe({
 
       next: (list: Oferta[]) => {
@@ -70,14 +83,16 @@ mostrarPDF(pdfData: ArrayBuffer | null): any {
   return null;
 }
 
-
+//aqui abris tu modal y mandas toda las variables u objetos que querras mandar de este componente al modal
 abrirModal(codigoOfertaa: string) {
+  //manda todas las variables al modal
   const initialState = {
     codigo: codigoOfertaa
+  
   };
+  //abre el modal
 
   this.modalRef = this.modalService.show(DetallesOfertasComponent, { initialState });
-
 
 }
 

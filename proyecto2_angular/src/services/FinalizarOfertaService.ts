@@ -26,18 +26,11 @@ export class FinalizarcionOfertaService {
  
 
       public FinalizarOFerta(oferta: string, usuario: string, empresa: string): Observable<FinalizarOferta> {
-        console.log('Conectando con el BE Oferta: ' + oferta);
-        console.log('Conectando con el BE Usuario: ' + usuario);
-        console.log('Conectando con el BE Empresa: ' + empresa);
-    
-        // Crear un objeto que represente los parámetros a enviar
         const body = {
             codigoOferta: oferta,
             codigoUsuarioElegido: usuario,
             codigoEmpresa: empresa
-        };
-    
-        // Enviar la solicitud POST con los parámetros en el cuerpo
+        };   
         return this.httpClient.post<FinalizarOferta>(this.API_URL + 'TerminarOferta', body);
     }
     

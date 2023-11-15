@@ -15,8 +15,13 @@ import { Usuario } from 'src/entities/Usuario';
 })
 export class DetallesOfertasComponent implements OnInit {
   usuario!: Usuario;
+ //variable que va a recibir la variable que mandaste del componente donde lo mandaste a llamar 
+ //se llena solito digamos, no tenes que hacer nada
+
   codigo!: string;
+
   oferta!: Oferta;
+
   modalRef!: BsModalRef;
   postulado!:boolean;
 
@@ -29,13 +34,20 @@ export class DetallesOfertasComponent implements OnInit {
     let jsonUsuario = localStorage.getItem('usuario');
     this.usuario= jsonUsuario ? JSON.parse(jsonUsuario) : null;    
 
+    //en mi caso yo utilizo este componente para mostrarlo con el Usuario y el EMpleador
+    //meti un if para que si se manda llamar desde el usuario, en ese caso lo mando a llamar como una ruta 
+    //si es mandado a llamar desde una ruta, la variable codigo va a estar como null, pero si es del modal, se inicializa automaticamente
+   //entonces si lo manda a llamar el USuario, tengo que jalar el codigo desde la URL 
     if(this.codigo==null){
+
+      //jalar de la URL
           this.route.params.subscribe((params) => {
       this.codigo = params['codigo'];
     });
     }
 
   
+    //manda a llamar al servlet y llena el objeto
     this.ofertaService.getOferta(this.codigo).subscribe({
       next: (oferta: Oferta) => {
         this.oferta = oferta;
@@ -57,6 +69,8 @@ export class DetallesOfertasComponent implements OnInit {
   
   }
 
+  // aca tambien mando a llamar a otro modal, pero como solo lo uso para el Usuario, lo desabilito para el empleador
+  // lo desabilito en el HTML
   abrirModal() {
     
     const initialState = {
@@ -78,6 +92,7 @@ export class DetallesOfertasComponent implements OnInit {
 
   }
 
+  //aqui lo que hace es cerrar el modal y redigirilo a otra pestaña, entonces se cierra este y manda al usuario a otra pagina
 
   redirigirConCierreModal(codigoOferta?: string) {
 

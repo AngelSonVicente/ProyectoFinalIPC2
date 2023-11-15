@@ -18,8 +18,12 @@ import java.time.format.DateTimeFormatter;
  * @author MSI
  */
 public class OfertaEliminadaBD {
+      LocalDate fechaActual = LocalDate.now();
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Formato para obtener solo la fecha
+        String fecha = fechaActual.format(formato);
+      
     
-     private static String Insert = "INSERT INTO ofertas_eliminadas (codigo_oferta, motivo) VALUES (?, ?)";
+     private static String Insert = "INSERT INTO ofertas_eliminadas (codigo_oferta, motivo, fecha) VALUES (?, ?, ?)";
    
     
         public OfertaEliminada crearOfertaEliminada(OfertaEliminada oferta) {
@@ -27,6 +31,7 @@ public class OfertaEliminadaBD {
             PreparedStatement insert = conexion.prepareStatement(Insert, PreparedStatement.RETURN_GENERATED_KEYS);
             insert.setString(1, oferta.getCodigoOferta());
             insert.setString(2, oferta.getMotivo());
+            insert.setString(2, fecha);
           
 
             System.out.println(insert.toString());
