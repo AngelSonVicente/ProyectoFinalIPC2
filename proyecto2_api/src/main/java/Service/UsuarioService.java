@@ -15,6 +15,11 @@ import exceptions.NotFoundException;
 public class UsuarioService {
     UsuarioBD usuarioBD = new UsuarioBD();
     
+    public Usuario CrearUsuario (Usuario usuario) throws NotFoundException{
+     
+    return usuarioBD.crearUsuario(usuario);
+    }
+    
     public Usuario getUsuarioID(String codigo) throws NotFoundException{
     
         Usuario usuario = usuarioBD.getUsuarioCodigo(codigo);

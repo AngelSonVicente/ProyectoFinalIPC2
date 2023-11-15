@@ -31,6 +31,8 @@ import { RevisionEntrevistasComponent } from './ModuloEmpleador/RevisionEntrevis
 import { EntrevistasOfertasComponent } from './ModuloEmpleador/RevisionEntrevistas/entrevistas-ofertas/entrevistas-ofertas.component';
 import { ReportesComponent } from './ModuloUsuario/ReportesUsuario/reportes/reportes.component';
 import { ReportesEmpleadorComponent } from './ModuloEmpleador/ReportesEmpleador/reportes-empleador/reportes-empleador.component';
+import { CargaJsonComponent } from './carga-json/carga-json.component';
+import { RegistrarseComponent } from './registrarse/registrarse.component';
 
 const rutasAdmin = [
   {
@@ -203,6 +205,18 @@ const routes: Routes = [
   path:"Proyecto2/Empleador",
   title:"Empleador",
   children: rutasEmpleador,
+
+},
+{
+  path:"Proyecto2/CargaDatos",
+  title:"Carga de Datos",
+  component: CargaJsonComponent
+
+},
+{
+  path:"Proyecto2/Registrarse",
+  title:"registro Usuario",
+  component: RegistrarseComponent
 
 },
 

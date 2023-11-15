@@ -1,0 +1,18 @@
+<div class="container">
+    <h1>Carga de Archivos JSon</h1>
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="inputPdf">Subir pdf</label>
+                    <input type="file" (change)="processFile($event)"/>
+                    <button class="btn btn-primary" (click)="uploadToServer()">Subir</button>
+                    <div *ngIf="fileUploaded">
+                        Archivo subido correctamente
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

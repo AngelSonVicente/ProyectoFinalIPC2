@@ -24,32 +24,39 @@ import java.util.logging.Logger;
  */
 @WebServlet(name = "UsuarioController", urlPatterns = {"/v1/Usuario"})
 public class UsuarioServlet extends HttpServlet {
+
     JsonUtil<Usuario> jsonUtil = new JsonUtil<Usuario>();
     UsuarioService usuarioService = new UsuarioService();
-    
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String codigo=request.getParameter("codigoUsuario");
-        
+        String codigo = request.getParameter("codigoUsuario");
+
         System.out.println("codigo usuario: " + codigo);
         try {
-          Usuario usuario =  usuarioService.getUsuarioID(codigo);
+            Usuario usuario = usuarioService.getUsuarioID(codigo);
             jsonUtil.EnviarJson(response, usuario);
-            
+
         } catch (NotFoundException ex) {
             System.out.println(ex);
-          response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
         }
-        
-        
-        
-        
-        
+
     }
-    
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        System.out.println("Entramos al servlet");
+        var UsuarioFE = jsonUtil.JsonAObjeto(request, Usuario.class);
+        Usuario user = (Usuario) UsuarioFE;
 
+        Usuario usuarioCreado = usuarioService.CrearUsuario(user);
+            jsonUtil.EnviarJson(response, usuarioCreado);
+        
+             response.setStatus(HttpServletResponse.SC_OK);
+
+    }
 }

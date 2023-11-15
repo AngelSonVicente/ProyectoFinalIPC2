@@ -51,6 +51,8 @@ import { ReportesEmpleadorComponent } from './ModuloEmpleador/ReportesEmpleador/
 import { ReporteE1Component } from './ModuloEmpleador/ReportesEmpleador/reporte-e1/reporte-e1.component';
 import { ReporteE2Component } from './ModuloEmpleador/ReportesEmpleador/reporte-e2/reporte-e2.component';
 import { ReporteE3Component } from './ModuloEmpleador/ReportesEmpleador/reporte-e3/reporte-e3.component';
+import { CargaJsonComponent } from './carga-json/carga-json.component';
+import { RegistrarseComponent } from './registrarse/registrarse.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +98,8 @@ import { ReporteE3Component } from './ModuloEmpleador/ReportesEmpleador/reporte-
          ReporteE1Component,
          ReporteE2Component,
          ReporteE3Component,
+         CargaJsonComponent,
+         RegistrarseComponent,
   ],
   imports: [
     BrowserModule,

@@ -13,6 +13,10 @@ export class UsuarioService {
 
     constructor(private httpClient: HttpClient) {}
 
+    public crearUsuario(usuario: Usuario): Observable<Usuario> {
+      console.log('connectando con el BE: ' + usuario);
+      return this.httpClient.post<Usuario>(this.API_URL + "Usuario", usuario);
+  }
 
 
     public getUsuarioID(codigo: string): Observable<Usuario> {

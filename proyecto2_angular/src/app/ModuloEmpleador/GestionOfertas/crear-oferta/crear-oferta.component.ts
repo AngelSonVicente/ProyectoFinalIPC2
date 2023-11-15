@@ -13,6 +13,7 @@ import { OfertaService } from 'src/services/OfertaService';
   styleUrls: ['./crear-oferta.component.css']
 })
 export class CrearOfertaComponent implements OnInit {
+  
   FormularioOferta!: FormGroup;
   saved : boolean=false;
   oferta!:Oferta;
