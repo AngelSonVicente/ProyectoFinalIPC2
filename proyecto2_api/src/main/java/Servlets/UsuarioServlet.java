@@ -4,6 +4,7 @@
  */
 package Servlets;
 
+import Datos.DashBoard;
 import Datos.JsonUtil;
 import Datos.Usuario;
 import Service.UsuarioService;
@@ -26,15 +27,26 @@ import java.util.logging.Logger;
 public class UsuarioServlet extends HttpServlet {
 
     JsonUtil<Usuario> jsonUtil = new JsonUtil<Usuario>();
+    JsonUtil<DashBoard> jsonUtil2 = new JsonUtil<DashBoard>();
     UsuarioService usuarioService = new UsuarioService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String codigo = request.getParameter("codigoUsuario");
+        String dash = request.getParameter("dash");
 
         System.out.println("codigo usuario: " + codigo);
-        try {
+        
+        if(dash!=null){
+            
+            DashBoard dashito = usuarioService.getDasg();
+             jsonUtil2.EnviarJson(response, dashito);
+
+        
+        }
+        else{
+               try {
             Usuario usuario = usuarioService.getUsuarioID(codigo);
             jsonUtil.EnviarJson(response, usuario);
 
@@ -43,6 +55,8 @@ public class UsuarioServlet extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
         }
+        }
+ 
 
     }
 

@@ -4,6 +4,7 @@
  */
 package DatosBD;
 
+import Datos.DashBoard;
 import DatosBD.ConexionBD;
 import Datos.Usuario;
 import Datos.Util;
@@ -23,6 +24,7 @@ public class UsuarioBD {
      private static final String SelectUsuarioID = "SELECT * FROM usuarios WHERE codigo = ?";
      private static final String Insert = "INSERT INTO usuarios(nombre, usuario, password, direccion, correo, cui, birth, tipo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
+     private static final String Dashboard=  "SELECT COUNT(CASE WHEN tipo = 'Empleador' THEN 1 END) AS total_empleadores, COUNT(CASE WHEN tipo = 'Usuario' THEN 1 END) AS total_usuarios FROM usuarios;";
      private Util util = new Util();
     
        static Connection conexion = ConexionBD.getInstancia().getConexion();
@@ -65,6 +67,25 @@ public class UsuarioBD {
         return null;
     }
        
+     public  DashBoard getDash() {
+        // validateCarnet not null
+        try {
+            PreparedStatement select = conexion.prepareStatement(Dashboard);
+            ResultSet resultset = select.executeQuery();
+            
+            if (resultset.next()) {
+                return new DashBoard(resultset.getString("total_empleadores"),
+                resultset.getString("total_usuarios"));
+            }
+            
+            return null;
+        } catch (SQLException ex) {
+            // TODO pendiente manejo
+            ex.printStackTrace();
+        }
+        
+        return null;
+    }
      public static Usuario getUsuarioByUser(String usuario) {
         // validateCarnet not null
         try {

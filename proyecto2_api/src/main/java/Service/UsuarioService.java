@@ -4,6 +4,7 @@
  */
 package Service;
 
+import Datos.DashBoard;
 import Datos.Usuario;
 import DatosBD.UsuarioBD;
 import exceptions.NotFoundException;
@@ -15,9 +16,11 @@ import exceptions.NotFoundException;
 public class UsuarioService {
     UsuarioBD usuarioBD = new UsuarioBD();
     
-    public Usuario CrearUsuario (Usuario usuario) throws NotFoundException{
-     
+    public Usuario CrearUsuario (Usuario usuario){
     return usuarioBD.crearUsuario(usuario);
+    }
+    public DashBoard getDasg (){
+    return usuarioBD.getDash();
     }
     
     public Usuario getUsuarioID(String codigo) throws NotFoundException{
