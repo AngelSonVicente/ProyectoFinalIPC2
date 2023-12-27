@@ -1,10 +1,13 @@
-<div *ngIf="usuario.tipo!='Usuario'">
-  <h1>Lo sentimos no tiene permisos para usar esta opcion</h1>
+<app-navbar></app-navbar>
+<div class="container" *ngIf="usuario.tipo!='Invitado'">
+
+  <div *ngIf="usuario.tipo!='Usuario'">
+    <h1>Lo sentimos no tiene permiss para usar esta opcion</h1>
+  </div>
 
 </div>
 
-<div class="container" *ngIf="usuario.tipo=='Usuario'">
- Codigo Empresa: {{codigoEmpresa}}
+<div class="container" *ngIf="usuario.tipo=='Usuario' || usuario.tipo =='Invitado'">
     <h1>Ofertas de Empleo</h1>
     <div class="row">
       <div class="col-md-7" *ngFor="let oferta of ofertas">

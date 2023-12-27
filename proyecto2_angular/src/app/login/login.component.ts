@@ -16,6 +16,7 @@ import { LoginService } from '../../services/LoginService';
 
 export class LoginComponent {
   usuario!: Usuario;
+  invitado!:boolean;
 
   error: boolean = false;
 
@@ -39,14 +40,18 @@ export class LoginComponent {
   onSubmit() {
     this.loginService.logear(this.usuario).subscribe(
       usuario => {
+      
+
         if (usuario) {
           localStorage.setItem('usuario', JSON.stringify(usuario));
+          this.invitado=false;
+          console.log("Tipo de Usuario en el Local Storage: " + usuario.tipo);
           if (usuario.tipo == "Admin") {
             this.router.navigate(['Proyecto2/Modulo/Administrador']);
 
           }
 
-          if (usuario.tipo == "Usuario") {
+          if (usuario.tipo == "Usuario" || usuario.tipo == "Invitado" ) {
             this.router.navigate(['Proyecto2/Modulo/Usuario']);
 
           }
@@ -68,6 +73,13 @@ export class LoginComponent {
         this.error = true;
       }
     );
+  }
+
+  Invitado(){
+    this.usuario.tipo="Invitado";
+     
+    this.invitado=true;
+    this.onSubmit();
   }
 
 

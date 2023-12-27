@@ -53,6 +53,7 @@ import { ReporteE2Component } from './ModuloEmpleador/ReportesEmpleador/reporte-
 import { ReporteE3Component } from './ModuloEmpleador/ReportesEmpleador/reporte-e3/reporte-e3.component';
 import { CargaJsonComponent } from './carga-json/carga-json.component';
 import { RegistrarseComponent } from './registrarse/registrarse.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { RegistrarseComponent } from './registrarse/registrarse.component';
          ReporteE3Component,
          CargaJsonComponent,
          RegistrarseComponent,
+         NavbarComponent,
   ],
   imports: [
     BrowserModule,

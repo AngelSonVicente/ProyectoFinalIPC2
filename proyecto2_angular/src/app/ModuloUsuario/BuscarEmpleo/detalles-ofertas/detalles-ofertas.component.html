@@ -1,9 +1,11 @@
+<app-navbar></app-navbar>
+
 <div *ngIf="usuario.tipo=='Empleador' && oferta.codigoEmpresa!=usuario.codigo.toString()">
   <h1>usted no ha publicado esta oferta de empleo </h1>
 </div>
 
-<div *ngIf="oferta.codigoEmpresa==usuario.codigo.toString() || usuario.tipo=='Usuario'">
-  <div class="container" *ngIf="usuario.tipo=='Usuario' || usuario.tipo =='Empleador'">
+<div *ngIf="oferta.codigoEmpresa==usuario.codigo.toString() || usuario.tipo=='Usuario' || usuario.tipo=='Invitado' ">
+  <div class="container" *ngIf="usuario.tipo=='Usuario' || usuario.tipo =='Empleador' || usuario.tipo=='Invitado'">
     <div class="row">
       <div class="col-md-12">
         <h4 class="display-5">{{oferta.nombre}}</h4>

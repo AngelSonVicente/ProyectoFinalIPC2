@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Categoria } from 'src/entities/Categoria';
 import { CategoriaService } from 'src/services/CategoriaService';
 import { Usuario } from 'src/entities/Usuario';
+declare var bootstrap: any;
+
 
 @Component({
   selector: 'app-crear-categoria',
   templateUrl: './crear-categoria.component.html',
   styleUrls: ['./crear-categoria.component.css']
 })
-export class CrearCategoriaComponent implements OnInit {
+export class CrearCategoriaComponent implements OnInit  {
   usuario!: Usuario;
- 
 
   codigoCreado!: number;
   FormularioCategoria!: FormGroup;
@@ -24,7 +25,10 @@ export class CrearCategoriaComponent implements OnInit {
 
   }
 
+
   ngOnInit(): void {
+    
+  
     let jsonUsuario = localStorage.getItem('usuario');
     this.usuario= jsonUsuario ? JSON.parse(jsonUsuario) : null;    
 
@@ -35,7 +39,10 @@ export class CrearCategoriaComponent implements OnInit {
     });
   }
 
-  submit(): void {
+
+  submit(){
+  
+
     if (this.FormularioCategoria.valid) {
       this.categoria = this.FormularioCategoria.value as Categoria;
       this.categoriaService.crearCategoria(this.categoria).subscribe({

@@ -15,6 +15,7 @@ export class LoginService {
     public logear(usuario: Usuario): Observable<Usuario> {
 
         console.log('connectando con el BE: ' + usuario);
+        console.log('Tipo: ' + usuario.tipo);
         return this.httpClient.post<Usuario>(this.API_URL + "login", usuario);
     }
 

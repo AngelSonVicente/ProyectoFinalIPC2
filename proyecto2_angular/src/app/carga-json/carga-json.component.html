@@ -1,18 +1,44 @@
+<br>
 <div class="container">
-    <h1>Carga de Archivos JSon</h1>
+    <h1>Carga de Archivos Json</h1>
+    <br>
     <div class="row">
 
+        <div class="alert alert-danger" role="alert" *ngIf="archivoInvalido">
+            El Archivo que ha seleccionado no es un archivo JSON! <br>
+            Porfavor, seleccione un archivo JSON.
+        </div>
+        <div class="alert alert-success" role="alert" *ngIf="fileUploaded">
+            Archivo Json Cargado Correctamente
+        </div>
+        <br>
+
+
         <div class="col-md-12">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="inputPdf">Subir pdf</label>
-                    <input type="file" (change)="processFile($event)"/>
-                    <button class="btn btn-primary" (click)="uploadToServer()">Subir</button>
-                    <div *ngIf="fileUploaded">
-                        Archivo subido correctamente
+
+            <div class="card">
+                <div class="card-header">
+                    Seleccione un archivo Json
+                </div>
+                <div class="card-body">
+
+                    <br>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="file" accept=".json" class="form-control form-control-lg"
+                                (change)="processFile($event) " />
+                        </div>
                     </div>
+
+                    <br>
+                    <button class="btn btn-primary" [disabled]="!archivoValido"
+                        (click)="uploadToServer()">Subir</button>
+                        <br>
                 </div>
             </div>
+
+
+
         </div>
     </div>
 </div>

@@ -63,10 +63,13 @@ public class UsuarioServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-        System.out.println("Entramos al servlet");
+        System.out.println("----------------Entramos al servlet Crear Usuario-----------------------");
         var UsuarioFE = jsonUtil.JsonAObjeto(request, Usuario.class);
         Usuario user = (Usuario) UsuarioFE;
-
+        System.out.println("usuario"+user.getUsuario());
+        System.out.println("nombre"+user.getNombre());
+        System.out.println("contraseña"+user.getPassword());
+        
         Usuario usuarioCreado = usuarioService.CrearUsuario(user);
             jsonUtil.EnviarJson(response, usuarioCreado);
         

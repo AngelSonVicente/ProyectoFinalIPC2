@@ -118,6 +118,13 @@ public class Usuario {
         this.cv = cv;
     }
 
+    @Override
+    public String toString() {
+        return "Usuario{" + "codigo=" + codigo + ", nombre=" + nombre + ", usuario=" + usuario + ", direccion=" + direccion + ", correo=" + correo + ", password=" + password + ", cui=" + cui + ", birth=" + birth + ", tipo=" + tipo + ", cv=" + cv + '}';
+    }
+    
+    
+
     
 
 }

@@ -33,7 +33,7 @@ public class FinalizarOfertaServlet extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
      
            
-
+        String BODY=jsonUtil.getBody(request);
 BufferedReader reader = request.getReader();
 StringBuilder stringBuilder = new StringBuilder();
 String line;

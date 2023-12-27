@@ -176,6 +176,12 @@ public class Oferta {
         this.nombreUsuario = nombreUsuario;
     }
 
+    @Override
+    public String toString() {
+        return "Oferta{" + "codigo=" + codigo + ", codigoEmpresa=" + codigoEmpresa + ", nombreEmpresa=" + nombreEmpresa + ", nombre=" + nombre + ", descripcion=" + descripcion + ", categoria=" + categoria + ", nombreCategoria=" + nombreCategoria + ", estado=" + estado + ", fechaPublicacion=" + fechaPublicacion + ", fechaLimite=" + fechaLimite + ", salario=" + salario + ", modadidad=" + modadidad + ", ubicacion=" + ubicacion + ", detalle=" + detalle + ", usuarioElegido=" + usuarioElegido + ", nombreUsuario=" + nombreUsuario + '}';
+    }
+
+    
     
 
     

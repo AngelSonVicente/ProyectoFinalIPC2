@@ -1,0 +1,72 @@
+<nav class="navbar navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 16 16">
+        <g fill="#ffffff">
+          <path d="M11 6a3 3 0 1 1-6 0a3 3 0 0 1 6 0z" />
+          <path fill-rule="evenodd"
+            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+        </g>
+      </svg>
+      {{getNombreUsuario()}} </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
+      aria-controls="offcanvasDarkNavbar">
+      <span class="navbar-toggler-icon"></span>
+      Menú
+    </button>
+    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+      aria-labelledby="offcanvasDarkNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menú</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+
+          <li class="nav-item" *ngIf="getTipoUsuario() === 'Admin'">
+            <a class="nav-link active"  href="/Proyecto2/Modulo/Administrador">Modulo</a>
+            <a class="nav-link" href="/Proyecto2/Administrador/DashBoard">DashBoard</a>
+            <a class="nav-link" href="/Proyecto2/Administrador/GestionCategorias">Gestion de Categorias</a>
+            <a class="nav-link" href="/Proyecto2/Administrador/CambiarComision">Cambiar Comision</a>
+            <a class="nav-link" href="/Proyecto2/Administrador/Reportes">Reportes</a>
+          </li>
+
+          
+          <li class="nav-item" *ngIf="getTipoUsuario() === 'Usuario'">
+            <a class="nav-link active"  href="/Proyecto2/Modulo/Usuario">Modulo</a>
+            <a class="nav-link" href="/Proyecto2/Usuario/Ofertas">Ofertas de empleo</a>
+            <a class="nav-link" href="/Proyecto2/Usuario/Postulaciones">Postulaciones Realizadas</a>
+            <a class="nav-link" href="/Proyecto2/Usuario/Entrevistas">Entrevistas Pendientes</a>
+            <a class="nav-link" href="/Proyecto2/Usuario/Reportes">Reportes</a>
+          </li>
+          <li class="nav-item" *ngIf="getTipoUsuario() === 'Empleador'">
+            <a class="nav-link active"  href="/Proyecto2/Modulo/Empleador">Modulo</a>
+            <a class="nav-link" href="/Proyecto2/Empleador/GestionOfertas">Gestion de ofertas</a>
+            <a class="nav-link" href="/Proyecto2/Empleador/RevisionPostulaciones">Revision de postulaciones</a>
+            <a class="nav-link" href="/Proyecto2/Empleador/RevisionEntrevistas">Revision de entrevistas</a>
+            <a class="nav-link" href="/Proyecto2/Empleador/Reportes">Reportes</a>
+          </li>
+
+
+
+
+        </ul>
+
+
+      </div>
+
+      <button class="btn btn-dark" (click)="CerrarSesion()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24">
+          <path fill="#ffffff"
+            d="M18 16h-4v2h4v2l3-3l-3-3v2M11 4C8.8 4 7 5.8 7 8s1.8 4 4 4s4-1.8 4-4s-1.8-4-4-4m0 10c-4.4 0-8 1.8-8 4v2h9.5c-.3-.8-.5-1.6-.5-2.5c0-1.2.3-2.3.9-3.4c-.6 0-1.2-.1-1.9-.1" />
+        </svg>
+        Cerrar Sesión
+      </button>
+    </div>
+
+  </div>
+
+</nav>
+<br>
+<br>
+<br>
