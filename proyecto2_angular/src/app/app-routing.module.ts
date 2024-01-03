@@ -33,6 +33,8 @@ import { ReportesComponent } from './ModuloUsuario/ReportesUsuario/reportes/repo
 import { ReportesEmpleadorComponent } from './ModuloEmpleador/ReportesEmpleador/reportes-empleador/reportes-empleador.component';
 import { CargaJsonComponent } from './carga-json/carga-json.component';
 import { RegistrarseComponent } from './registrarse/registrarse.component';
+import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+import { CompletarInformacionComponent } from './completar-informacion/completar-informacion.component';
 
 const rutasAdmin = [
   {
@@ -64,6 +66,11 @@ const rutasAdmin = [
     path: 'Reportes',
     title: 'Reportes',
     component: ReportesAdminComponent,
+  },
+  {
+    path: 'Perfil',
+    title: 'Perfil',
+    component: PerfilUsuarioComponent,
   },
 ];
 
@@ -217,6 +224,12 @@ const routes: Routes = [
   path:"Proyecto2/Registrarse",
   title:"registro Usuario",
   component: RegistrarseComponent
+
+},
+{
+  path:"Proyecto2/CompletarInformacion",
+  title:"Completar Informacion",
+  component: CompletarInformacionComponent
 
 },
 

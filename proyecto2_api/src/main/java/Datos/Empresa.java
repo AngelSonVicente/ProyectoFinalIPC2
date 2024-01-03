@@ -4,30 +4,37 @@
  */
 package Datos;
 
+import java.util.List;
+
 /**
  *
  * @author MSI
  */
 public class Empresa {
+
     private String codigo;
     private String codigoEmpresa;
     private String nombreEmpresa;
     private String mision;
     private String vision;
     private String titularTarjeta;
+    private String numeroTarjeta;
     private String codigoSeguridad;
+    private List<String> telefonos;
 
     public Empresa() {
     }
 
-    public Empresa(String codigo, String codigoEmpresa, String nombreEmpresa, String mision, String vision, String titularTarjeta, String codigoSeguridad) {
+    public Empresa(String codigo, String codigoEmpresa, String nombreEmpresa, String mision, String vision, String titularTarjeta, String numeroTarjeta, String codigoSeguridad, List<String> telefonos) {
         this.codigo = codigo;
         this.codigoEmpresa = codigoEmpresa;
         this.nombreEmpresa = nombreEmpresa;
         this.mision = mision;
         this.vision = vision;
         this.titularTarjeta = titularTarjeta;
+        this.numeroTarjeta = numeroTarjeta;
         this.codigoSeguridad = codigoSeguridad;
+        this.telefonos = telefonos;
     }
 
     public String getCodigo() {
@@ -78,6 +85,14 @@ public class Empresa {
         this.titularTarjeta = titularTarjeta;
     }
 
+    public String getNumeroTarjeta() {
+        return numeroTarjeta;
+    }
+
+    public void setNumeroTarjeta(String numeroTarjeta) {
+        this.numeroTarjeta = numeroTarjeta;
+    }
+
     public String getCodigoSeguridad() {
         return codigoSeguridad;
     }
@@ -85,6 +100,21 @@ public class Empresa {
     public void setCodigoSeguridad(String codigoSeguridad) {
         this.codigoSeguridad = codigoSeguridad;
     }
+
+    public List<String> getTelefonos() {
+        return telefonos;
+    }
+
+    public void setTelefonos(List<String> telefonos) {
+        this.telefonos = telefonos;
+    }
+
+    @Override
+    public String toString() {
+        return "Empresa{" + "codigo=" + codigo + ", codigoEmpresa=" + codigoEmpresa + ", nombreEmpresa=" + nombreEmpresa + ", mision=" + mision + ", vision=" + vision + ", titularTarjeta=" + titularTarjeta + ", numeroTarjeta=" + numeroTarjeta + ", codigoSeguridad=" + codigoSeguridad + ", telefonos=" + telefonos + '}';
+    }
+
+   
     
     
     

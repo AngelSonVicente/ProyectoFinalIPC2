@@ -27,6 +27,9 @@ export class UsuarioService {
     public getUsuarioID(codigo: string): Observable<Usuario> {
         return this.httpClient.get<Usuario>(this.API_URL + "Usuario?codigoUsuario="+codigo);
     }
+    public actualizarUsuario(usuario: Usuario): Observable<Usuario> {
+      return this.httpClient.put<Usuario>(this.API_URL + "Usuario", usuario);
+  }
 
 
     

@@ -28,7 +28,8 @@ public class UsuarioBD {
      private Util util = new Util();
     
        static Connection conexion = ConexionBD.getInstancia().getConexion();
-   public Usuario crearUsuario(Usuario usuario) {
+  
+       public Usuario crearUsuario(Usuario usuario) {
         System.out.println("esta creando el usuario");
         try {
             PreparedStatement insert = conexion.prepareStatement(Insert, PreparedStatement.RETURN_GENERATED_KEYS);

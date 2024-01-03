@@ -31,8 +31,8 @@ public class EmpresaBD {
             if (resultset.next()) {
                 return new Empresa(resultset.getString("codigo"), resultset.getString("cod_usuario"),
                         resultset.getString("nombre_usuario"), resultset.getString("mision"),
-                        resultset.getString("vision"), resultset.getString("titular_tarjeta"),
-                        resultset.getString("codigo_seguridad")
+                        resultset.getString("vision"), resultset.getString("titular_tarjeta"),resultset.getString("no_tarjeta"),
+                        null,null
                 
                 );
             }

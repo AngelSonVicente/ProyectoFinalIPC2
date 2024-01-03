@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 @WebServlet(name = "UsuarioController", urlPatterns = {"/v1/Usuario"})
 public class UsuarioServlet extends HttpServlet {
 
-    JsonUtil<Usuario> jsonUtil = new JsonUtil<Usuario>();
+    JsonUtil jsonUtil = new JsonUtil<Usuario>();
     JsonUtil<DashBoard> jsonUtil2 = new JsonUtil<DashBoard>();
     UsuarioService usuarioService = new UsuarioService();
 
@@ -76,4 +76,13 @@ public class UsuarioServlet extends HttpServlet {
              response.setStatus(HttpServletResponse.SC_OK);
 
     }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String body=jsonUtil.getBody(request);
+        
+        System.out.println(body);
+        
+    }
+    
 }

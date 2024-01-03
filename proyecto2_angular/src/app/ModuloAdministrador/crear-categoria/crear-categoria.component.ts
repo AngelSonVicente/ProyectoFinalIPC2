@@ -18,6 +18,8 @@ export class CrearCategoriaComponent implements OnInit  {
   FormularioCategoria!: FormGroup;
   categoria!: Categoria;
   saved: boolean;
+  error:boolean=false;
+  yaExiste:boolean=false;
 
   constructor(private formBuilder: FormBuilder,
     private categoriaService: CategoriaService) {
@@ -51,9 +53,11 @@ export class CrearCategoriaComponent implements OnInit  {
           console.log("creado " + created);
           this.limpiar();
           this.saved = true;
+          this.error=false;
         },
         error: (error: any) => {
-          console.log("error");
+        this.error=true;
+        this.saved=false;
         }
       });
     }

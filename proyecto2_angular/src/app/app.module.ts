@@ -54,6 +54,8 @@ import { ReporteE3Component } from './ModuloEmpleador/ReportesEmpleador/reporte-
 import { CargaJsonComponent } from './carga-json/carga-json.component';
 import { RegistrarseComponent } from './registrarse/registrarse.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+import { CompletarInformacionComponent } from './completar-informacion/completar-informacion.component';
 
 @NgModule({
   declarations: [
@@ -102,6 +104,8 @@ import { NavbarComponent } from './navbar/navbar.component';
          CargaJsonComponent,
          RegistrarseComponent,
          NavbarComponent,
+         PerfilUsuarioComponent,
+         CompletarInformacionComponent,
   ],
   imports: [
     BrowserModule,

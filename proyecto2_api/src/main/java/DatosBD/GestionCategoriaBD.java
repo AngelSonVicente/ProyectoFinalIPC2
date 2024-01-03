@@ -19,7 +19,8 @@ public class GestionCategoriaBD {
 
     private static String SelectCategorias = "SELECT * FROM categorias";
     private static String SelectCategoriasID = "SELECT * FROM categorias WHERE codigo = ?";
-    private static String Insert = "INSERT INTO categorias (nombre, decripcion) VALUES (?, ?)";
+    private static String ExisteNombre = "SELECT * FROM categorias WHERE nombre = ?";
+    private static String Insert = "INSERT INTO categorias (codigo, nombre, decripcion) VALUES (?, ?, ?)";
     private static String Update = "UPDATE categorias set nombre = ?, decripcion = ? WHERE codigo = ?";
 
     public List<Categoria> getCategorias() {
@@ -49,8 +50,9 @@ public class GestionCategoriaBD {
         System.out.println("esta creando la categoria");
         try {
             PreparedStatement insert = conexion.prepareStatement(Insert, PreparedStatement.RETURN_GENERATED_KEYS);
-            insert.setString(1, categoria.getNombre());
-            insert.setString(2, categoria.getDescripcion());
+            insert.setInt(1, categoria.getCodigo());
+            insert.setString(2, categoria.getNombre());
+            insert.setString(3, categoria.getDescripcion());
 
             int affectedRows = insert.executeUpdate();
 
@@ -75,6 +77,25 @@ public class GestionCategoriaBD {
         return null;
     }
 
+    
+    public boolean ExiteCategoria(String nombre) {
+        try {
+            PreparedStatement select = conexion.prepareStatement(ExisteNombre);
+            select.setString(1, nombre);
+            ResultSet resultset = select.executeQuery();
+
+            if (resultset.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            // TODO pendiente manejo
+            ex.printStackTrace();
+            
+            System.out.println("Error:  "+ex);
+        }
+
+    return false;
+    }
     public Categoria getCategoria(String codigo) {
         try {
             PreparedStatement select = conexion.prepareStatement(SelectCategoriasID);
@@ -95,7 +116,6 @@ public class GestionCategoriaBD {
 
     return null;
     }
-    
     
     
     

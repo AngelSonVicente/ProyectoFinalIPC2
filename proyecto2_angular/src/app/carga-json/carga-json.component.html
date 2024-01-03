@@ -6,13 +6,12 @@
 
         <div class="alert alert-danger" role="alert" *ngIf="archivoInvalido">
             El Archivo que ha seleccionado no es un archivo JSON! <br>
-            Porfavor, seleccione un archivo JSON.
+            Por favor, seleccione un archivo JSON.
         </div>
         <div class="alert alert-success" role="alert" *ngIf="fileUploaded">
             Archivo Json Cargado Correctamente
         </div>
         <br>
-
 
         <div class="col-md-12">
 
@@ -21,24 +20,56 @@
                     Seleccione un archivo Json
                 </div>
                 <div class="card-body">
-
                     <br>
                     <div class="form-row">
                         <div class="form-group">
                             <input type="file" accept=".json" class="form-control form-control-lg"
-                                (change)="processFile($event) " />
+                                (change)="onJsonFileSelected($event)" />
                         </div>
                     </div>
-
-                    <br>
-                    <button class="btn btn-primary" [disabled]="!archivoValido"
-                        (click)="uploadToServer()">Subir</button>
-                        <br>
                 </div>
             </div>
 
+            <br>
+            <div class="card">
+                <div class="card-header">
+                    Ingrese los archivos PDF de los Curriculum
+                </div>
+
+                <div class="card-body">
+                    <div>
+                        <h4>Archivos PDF:</h4>
+                        <ul>
+                            <li *ngFor="let archivo of pdfFiles.flat()">{{ archivo.name }}</li>
+                        </ul>
+                    </div>
+                    <div id="inputs-archivos">
+                        <div *ngFor="let inputFiles of pdfFiles; let i = index">
+                          <label for="fileInput{{i}}" class="file-input-label">
+                            <button class="file-input-button" (click)="seleccionarArchivo(i)">Seleccionar Archivo</button>
+                            <strong>Archivos seleccionados:</strong>
+                            <span *ngFor="let archivo of inputFiles">{{ archivo.name }} </span>
+                          </label>
+                          <input type="file" accept=".pdf" id="fileInput{{i}}" style="display: none" (change)="onPdfFileSelected($event, i)">
+                          <button (click)="eliminarPdf(i)">Eliminar Input</button>
+                        </div>
+                      </div>
+                      
+                      
+                      
 
 
+
+
+
+                    <br>
+                    <button (click)="agregarInputArchivo()">Agregar más archivos PDF</button>
+                </div>
+            </div>
+            <br>
+            <button class="btn btn-primary" [disabled]="!archivoValido || pdfFiles.flat().length === 0"
+                (click)="uploadToServer()">Subir</button>
+            <br>
         </div>
     </div>
 </div>

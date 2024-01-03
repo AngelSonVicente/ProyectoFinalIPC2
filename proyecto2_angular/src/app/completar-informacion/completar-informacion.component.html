@@ -1,0 +1,80 @@
+<div class="container">
+    <br>
+    <div class="alert alert-primary" role="alert">
+        <h2>Para Continuar Necesita completar su perfil!</h2>
+    </div>
+
+
+    <div class="row">
+
+        <div >
+            <label   for="telefono">Teléfono</label>
+            <input class="form-control" id="telefono" type="number" [(ngModel)]="telefono" />
+            <br>
+            <button class="btn btn-success" (click)="agregarTelefono()">Agregar Teléfono</button>
+          </div>
+          <br>
+          <br>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Teléfono</th>
+                <th>Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let telefono of telefonos; let i = index">
+                <td>{{ telefono }}</td>
+                <td><button class="btn btn-outline-danger" (click)="eliminarTelefono(i)">Eliminar</button></td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <div>
+            <label for="categoria">Categoría</label>
+            <select class="form-select" id="categoria" [(ngModel)]="categoriaSeleccionada">
+              <option *ngFor="let categoria of categorias" [value]="categoria.codigo">
+                {{ categoria.nombre }} - Descripcion: {{ categoria.descripcion }}
+              </option>
+            </select>
+            <button class="btn btn-success" (click)="agregarCategoria()">Agregar Categoría</button>
+          </div>
+          
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Categoría</th>
+                <th>Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let categoria of categoriasSeleccionadas; let i = index">
+                  <td>{{ obtenerNombreCategoria(categoria) }}</td>
+                  <td><button class="btn btn-outline-danger" (click)="eliminarCategoria(i)">Eliminar</button></td>
+                </tr>
+              </tbody>
+          </table>
+
+          <br>
+          <br>
+          <div class="alert alert-danger" role="alert" *ngIf="archivoInvalido">
+            El Archivo que ha seleccionado no es un archivo PDF! <br>
+            Por favor, seleccione un archivo PDF.
+        </div>
+        <br>
+          <div class="form-row">
+            <div class="form-group">
+                <input type="file" accept=".pdf" class="form-control form-control-lg"
+                    (change)="onJsonFileSelected($event)" />
+            </div>
+            <br>
+            <br>
+            <br>
+        </div>
+     
+          <button  class="btn btn-primary" [disabled]="(telefonos.length == 0 || categoriasSeleccionadas.length == 0) || !archivoValido" (click)="CompletarPerfilUsuario()">Completar Perfil</button>
+        <br>
+    </div>
+    <br>
+    <br>
+    <br>

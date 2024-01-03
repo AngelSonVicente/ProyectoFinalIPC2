@@ -14,6 +14,7 @@ export class NavbarComponent implements OnInit{
   ngOnInit(): void{
     let jsonUsuario = localStorage.getItem('usuario');
     this.usuario= jsonUsuario ? JSON.parse(jsonUsuario) : null;    
+  
   }
 
   
@@ -28,6 +29,19 @@ CerrarSesion() {
 
 getTipoUsuario(): string {
   return this.usuario ? this.usuario.tipo : 'Invitado';
+}
+getLinkPerfil(): string {
+  if(this.usuario.tipo=='Admin'){
+    return '/Proyecto2/Administrador/Perfil';
+  } 
+  if(this.usuario.tipo=='Usuario'){
+    return '/Proyecto2/Usuario/Perfil';
+  }
+  if(this.usuario.tipo=='Empleador'){
+    return '/Proyecto2/Empleador/Perfil';
+  }
+
+  return '#';
 }
 
 getNombreUsuario() {

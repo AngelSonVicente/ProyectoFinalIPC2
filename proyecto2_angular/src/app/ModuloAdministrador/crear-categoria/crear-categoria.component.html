@@ -4,14 +4,25 @@
 
 
 <app-navbar></app-navbar>
+<br>
+<br>
+<br>
 
 <div class="container" *ngIf="usuario.tipo =='Admin'">
   <div class="row">
     <div class="col-md-12">
+      
       <div class="alert alert-success" role="alert" *ngIf="saved">
         Categoria creado exitosamente.
         Codigo de Categoria Creada: {{codigoCreado}}
       </div>
+
+      <div class="alert alert-danger" role="alert" *ngIf="error">
+
+     Error al crear la categoria, Verifique los datos Ingresados.
+      </div>
+
+
       <h1>Crear nueva categoria</h1>
       <form [formGroup]="FormularioCategoria" (ngSubmit)="submit()">
         <div class="form-row">
@@ -53,14 +64,14 @@
 
           <br />
 
-      <button class="btn btn-success" type="submit" [disabled]="FormularioCategoria.invalid">Crear</button>
-   
-    
-    
+          <button class="btn btn-success" type="submit" [disabled]="FormularioCategoria.invalid">Crear</button>
 
-    
-    
-    
+
+
+
+
+
+
 
 
 
