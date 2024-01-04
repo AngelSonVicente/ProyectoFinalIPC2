@@ -24,7 +24,7 @@ public class TelefonosBD {
     }
     private String Insert = "INSERT INTO telefonos (cod_usuario, telefono) VALUES (?,?)";
 
-    public CompletarPerfilUsuario ingresarTelefonos(CompletarPerfilUsuario perfilUsuario) {
+    public CompletarPerfilUsuario ingresarTelefonos(String codigoUsuario, List<String> telefonos) {
         try {
             System.out.println("Entramos al try de ingresar telefonos");
             System.out.println("Conexion en el Telefonos BD: " +conexion );
@@ -32,11 +32,10 @@ public class TelefonosBD {
             PreparedStatement insert = conexion.prepareStatement(Insert, PreparedStatement.RETURN_GENERATED_KEYS);
 
             // Configuramos el código de usuario
-            insert.setString(1, perfilUsuario.getCodigoUsuario());
+            insert.setString(1, codigoUsuario);
 
             // Obtener la lista de teléfonos
-            List<String> telefonos = perfilUsuario.getTelefonos();
-
+           
             // Iterar sobre la lista de teléfonos
             for (int i = 0; i < telefonos.size(); i++) {
                 // Configuramos cada teléfono en la posición 'i+2' (ya que la posición 1 es para el código de usuario)

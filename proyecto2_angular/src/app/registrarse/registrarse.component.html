@@ -117,7 +117,7 @@
 
 
 
-           
+
 
 
                     <div class="form-group">
@@ -137,20 +137,19 @@
                     <div class="form-group">
                         <label for="inputAddress">tipo de usuario</label>
                         <select class="form-control"
-                          [class.is-invalid]="FormularioOferta.controls['tipo'].invalid && FormularioOferta.controls['tipo'].touched"
-                          id="tipo" name="tipo" formControlName="tipo">
-                          <option value="Empleador">Empleador</option>
-                          <option value="Usuario">Solicitante</option>
+                            [class.is-invalid]="FormularioOferta.controls['tipo'].invalid && FormularioOferta.controls['tipo'].touched"
+                            id="tipo" name="tipo" formControlName="tipo">
+                            <option value="Empleador">Empleador</option>
+                            <option value="Usuario">Solicitante</option>
                         </select>
-            
-                        <div
-                          *ngIf="FormularioOferta.controls['tipo'].invalid && (FormularioOferta.controls['tipo'].dirty || FormularioOferta.controls['tipo'].touched)"
-                          class="invalid-feedback">
-                          <div>
-                            Por favor seleccione un tipo
-                          </div>
+
+                        <div *ngIf="FormularioOferta.controls['tipo'].invalid && (FormularioOferta.controls['tipo'].dirty || FormularioOferta.controls['tipo'].touched)"
+                            class="invalid-feedback">
+                            <div>
+                                Por favor seleccione un tipo
+                            </div>
                         </div>
-                      </div>
+                    </div>
 
 
 

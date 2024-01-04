@@ -9,6 +9,7 @@ import { CategoriaService } from 'src/services/CategoriaService';
 import { CompletarInformacionService } from 'src/services/CompletarInformacionService';
 import { OfertaService } from 'src/services/OfertaService';
 import { UsuarioService } from 'src/services/UsuarioService';
+import { Empresa } from 'src/entities/Empresa';
 
 @Component({
   selector: 'app-completar-informacion',
@@ -18,6 +19,7 @@ import { UsuarioService } from 'src/services/UsuarioService';
 export class CompletarInformacionComponent {
 
 
+  completarEmpresa!:Empresa;
 
   completarUsuario!: CompletarPerfilUsuario;
 
@@ -26,6 +28,7 @@ export class CompletarInformacionComponent {
 
   categorias!: Categoria[];
   FormularioOferta!: FormGroup;
+  FormularioEmpresa!: FormGroup;
 
   telefono!: string;
   categoriaSeleccionada!: string;
@@ -77,9 +80,21 @@ export class CompletarInformacionComponent {
 
 
     });
-    if (this.telefonos.length > 0 && this.categoriasSeleccionadas.length > 0) {
-      this.CategoriaYTelefono = true;
-    }
+ 
+ 
+ 
+    this.FormularioEmpresa = this.formBuilder.group({
+      mision: [null, [Validators.required, Validators.maxLength(200)]],
+      vision: [null, [Validators.required, Validators.maxLength(200)]],
+      titularTarjeta: [null, [Validators.required, Validators.maxLength(50)]],
+      numeroTarjeta: [null, [Validators.required]],
+      codigoSeguridad: [null, [Validators.required, Validators.maxLength(3)]],
+      telefonos: [this.telefonos, []],
+      codigoEmpresa: [this.usuario.codigo, []],
+   
+      
+
+    });
 
 
   }
@@ -129,11 +144,10 @@ export class CompletarInformacionComponent {
     this.completarInformacionSerice.completarUsuario(this.completarUsuario, this.selectedJsonFile).subscribe({
       next: (created: CompletarPerfilUsuario) => {
         console.log("creado " + created);
-
-        if (this.usuario.tipo == "Usuario") {
+        if(this.usuario.tipo == "Usuario"){
           this.router.navigate(['/Proyecto2/Modulo/Usuario']);
+          
         }
-
 
       },
       error: (error: any) => {
@@ -142,6 +156,26 @@ export class CompletarInformacionComponent {
     });
 
 
+  }
+
+  submit(): void {
+    
+      this.completarEmpresa = this.FormularioEmpresa.value as Empresa;
+
+    
+      this.completarInformacionSerice.completarEmpresa(this.completarEmpresa).subscribe({
+        next: (created: Empresa) => {
+          if(this.usuario.tipo == "Empleador"){
+            this.router.navigate(['/Proyecto2/Modulo/Empleador']);
+            
+          }
+        
+          },
+        error: (error: any) => {
+          console.log("error");
+        }
+      });
+    
   }
 
 

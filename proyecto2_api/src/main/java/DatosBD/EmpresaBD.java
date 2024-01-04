@@ -17,9 +17,15 @@ import java.sql.SQLException;
  * @author MSI
  */
 public class EmpresaBD {
-    
+     private Connection conexion;
+
+    public EmpresaBD(Connection conexion) {
+        this.conexion = conexion;
+    }
+
      private static String SelectEmpresaID = "SELECT e.*, u.nombre AS nombre_usuario FROM empresa AS e JOIN usuarios AS u ON e.cod_usuario = u.codigo WHERE e.cod_usuario = ?";
-   static Connection conexion = ConexionBD.getInstancia().getConexion();
+     private static String Insert = "INSERT INTO empresa (cod_usuario, mision, vision, titular_tarjeta, no_tarjeta, codigo_seguridad) VALUES (?, ?, ?, ?, ?, ?)";
+   //  static Connection conexion = ConexionBD.getInstancia().getConexion();
 
     
         public Empresa getEmpresa(String codigo) {
@@ -45,5 +51,40 @@ public class EmpresaBD {
 
     return null;
     }
+ 
+          public Empresa crearEmpresa(Empresa empresa) {
+        System.out.println("esta creando la Empresa");
+        try {
+            PreparedStatement insert = conexion.prepareStatement(Insert, PreparedStatement.RETURN_GENERATED_KEYS);
+            insert.setString(1, empresa.getCodigoEmpresa());
+            insert.setString(2, empresa.getMision());
+            insert.setString(3, empresa.getVision());
+            insert.setString(4, empresa.getTitularTarjeta());
+            insert.setString(5, empresa.getNumeroTarjeta());
+            insert.setString(6, empresa.getCodigoSeguridad());
+
+            int affectedRows = insert.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("La inserción no tuvo éxito, ningún ID generado.");
+            }
+
+            try (ResultSet generatedKeys = insert.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int generatedID = generatedKeys.getInt(1);
+                    System.out.println("categoria Creada");
+                    return empresa;
+                } else {
+                    throw new SQLException("La inserción no tuvo éxito, ningún ID generado.");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+        
+        
     
 }

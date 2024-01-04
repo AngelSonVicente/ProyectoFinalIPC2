@@ -1,80 +1,191 @@
 <div class="container">
-    <br>
-    <div class="alert alert-primary" role="alert">
-        <h2>Para Continuar Necesita completar su perfil!</h2>
+  <br>
+  <div class="alert alert-primary" role="alert">
+    <h2>Para Continuar Necesita completar su perfil!</h2>
+  </div>
+
+  <div >
+    <div>
+      <label for="telefono">Teléfono</label>
+      <input class="form-control" id="telefono" type="number" [(ngModel)]="telefono" />
+      <br>
+      <button class="btn btn-success" (click)="agregarTelefono()">Agregar Teléfono</button>
     </div>
+    <br>
+    <br>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Teléfono</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let telefono of telefonos; let i = index">
+          <td>{{ telefono }}</td>
+          <td><button class="btn btn-outline-danger" (click)="eliminarTelefono(i)">Eliminar</button></td>
+        </tr>
+      </tbody>
+    </table>
 
 
+  </div>
+
+  <div *ngIf="usuario.tipo=='Usuario'">
     <div class="row">
 
-        <div >
-            <label   for="telefono">Teléfono</label>
-            <input class="form-control" id="telefono" type="number" [(ngModel)]="telefono" />
-            <br>
-            <button class="btn btn-success" (click)="agregarTelefono()">Agregar Teléfono</button>
-          </div>
-          <br>
-          <br>
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Teléfono</th>
-                <th>Eliminar</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let telefono of telefonos; let i = index">
-                <td>{{ telefono }}</td>
-                <td><button class="btn btn-outline-danger" (click)="eliminarTelefono(i)">Eliminar</button></td>
-              </tr>
-            </tbody>
-          </table>
-          
-          <div>
-            <label for="categoria">Categoría</label>
-            <select class="form-select" id="categoria" [(ngModel)]="categoriaSeleccionada">
-              <option *ngFor="let categoria of categorias" [value]="categoria.codigo">
-                {{ categoria.nombre }} - Descripcion: {{ categoria.descripcion }}
-              </option>
-            </select>
-            <button class="btn btn-success" (click)="agregarCategoria()">Agregar Categoría</button>
-          </div>
-          
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>Categoría</th>
-                <th>Eliminar</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let categoria of categoriasSeleccionadas; let i = index">
-                  <td>{{ obtenerNombreCategoria(categoria) }}</td>
-                  <td><button class="btn btn-outline-danger" (click)="eliminarCategoria(i)">Eliminar</button></td>
-                </tr>
-              </tbody>
-          </table>
+    
 
-          <br>
-          <br>
-          <div class="alert alert-danger" role="alert" *ngIf="archivoInvalido">
-            El Archivo que ha seleccionado no es un archivo PDF! <br>
-            Por favor, seleccione un archivo PDF.
+      <div>
+        <label for="categoria">Categoría</label>
+        <select class="form-select" id="categoria" [(ngModel)]="categoriaSeleccionada">
+          <option *ngFor="let categoria of categorias" [value]="categoria.codigo">
+            {{ categoria.nombre }} - Descripcion: {{ categoria.descripcion }}
+          </option>
+        </select>
+        <button class="btn btn-success" (click)="agregarCategoria()">Agregar Categoría</button>
+      </div>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Categoría</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let categoria of categoriasSeleccionadas; let i = index">
+            <td>{{ obtenerNombreCategoria(categoria) }}</td>
+            <td><button class="btn btn-outline-danger" (click)="eliminarCategoria(i)">Eliminar</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <br>
+      <br>
+      <div class="alert alert-danger" role="alert" *ngIf="archivoInvalido">
+        El Archivo que ha seleccionado no es un archivo PDF! <br>
+        Por favor, seleccione un archivo PDF.
+      </div>
+      <br>
+      <div class="form-row">
+        <div class="form-group">
+          <input type="file" accept=".pdf" class="form-control form-control-lg" (change)="onJsonFileSelected($event)" />
         </div>
         <br>
-          <div class="form-row">
-            <div class="form-group">
-                <input type="file" accept=".pdf" class="form-control form-control-lg"
-                    (change)="onJsonFileSelected($event)" />
-            </div>
-            <br>
-            <br>
-            <br>
-        </div>
-     
-          <button  class="btn btn-primary" [disabled]="(telefonos.length == 0 || categoriasSeleccionadas.length == 0) || !archivoValido" (click)="CompletarPerfilUsuario()">Completar Perfil</button>
         <br>
+        <br>
+      </div>
+
+      <button class="btn btn-primary"
+        [disabled]="(telefonos.length == 0 || categoriasSeleccionadas.length == 0) || !archivoValido"
+        (click)="CompletarPerfilUsuario()">Completar Perfil</button>
+      <br>
     </div>
     <br>
     <br>
-    <br>
+
+  </div>
+
+
+
+
+
+
+
+  <div *ngIf="usuario.tipo=='Empleador'">
+
+    <form [formGroup]="FormularioEmpresa" >
+      <div class="form-row">
+
+
+
+          <div class="form-group">
+              <label for="inputAddress">Mision</label>
+              <input class="form-control"
+                  [class.is-invalid]="FormularioEmpresa.controls['mision'].invalid && FormularioEmpresa.controls['mision'].touched"
+                  id="mision" name="mision" formControlName="mision" />
+
+              <div *ngIf="FormularioEmpresa.controls['mision'].invalid && (FormularioEmpresa.controls['mision'].dirty || FormularioEmpresa.controls['mision'].touched)"
+                  class="invalid-feedback">
+                  <div>
+                      Por favor ingrese la mision de la empresa! (max 200 caracteres)
+                  </div>
+              </div>
+          </div>
+
+
+          <div class="form-group">
+              <label for="inputAddress">Vision</label>
+              <input class="form-control"
+                  [class.is-invalid]="FormularioEmpresa.controls['vision'].invalid && FormularioEmpresa.controls['vision'].touched"
+                  id="vision" name="vision" formControlName="vision" />
+
+              <div *ngIf="FormularioEmpresa.controls['vision'].invalid && (FormularioEmpresa.controls['vision'].dirty || FormularioEmpresa.controls['vision'].touched)"
+                  class="invalid-feedback">
+                  <div>
+                      Por favor ingrese la vision de la empresa! (max 200 caracteres)
+                  </div>
+              </div>
+          </div>
+   
+
+          <div class="form-group">
+              <label for="inputAddress">Titular de la Tarjeta</label>
+              <input class="form-control"
+                  [class.is-invalid]="FormularioEmpresa.controls['titularTarjeta'].invalid && FormularioEmpresa.controls['titularTarjeta'].touched"
+                  id="titularTarjeta" name="titularTarjeta" formControlName="titularTarjeta" />
+
+              <div *ngIf="FormularioEmpresa.controls['titularTarjeta'].invalid && (FormularioEmpresa.controls['titularTarjeta'].dirty || FormularioEmpresa.controls['titularTarjeta'].touched)"
+                  class="invalid-feedback">
+                  <div>
+                     ingrese el titular de la tarjeta!
+                  </div>
+              </div>
+          </div>
+
+
+          <div class="form-group">
+              <label for="inputAddress">Numero de la Tarjeta</label>
+              <input class="form-control" type="number" 
+                  [class.is-invalid]="FormularioEmpresa.controls['numeroTarjeta'].invalid && FormularioEmpresa.controls['numeroTarjeta'].touched"
+                  id="numeroTarjeta" name="numeroTarjeta" formControlName="numeroTarjeta" />
+
+              <div *ngIf="FormularioEmpresa.controls['numeroTarjeta'].invalid && (FormularioEmpresa.controls['numeroTarjeta'].dirty || FormularioEmpresa.controls['numeroTarjeta'].touched)"
+                  class="invalid-feedback">
+                  <div>
+                      ingrese el numero de la tarjeta!
+                  </div>
+              </div>
+          </div>
+
+
+        
+          <div class="form-group">
+            <label for="inputAddress">Codigo de seguridad</label>
+            <input class="form-control" type="number"
+                [class.is-invalid]="FormularioEmpresa.controls['codigoSeguridad'].invalid && FormularioEmpresa.controls['codigoSeguridad'].touched"
+                id="codigoSeguridad" name="codigoSeguridad" formControlName="codigoSeguridad" />
+
+            <div *ngIf="FormularioEmpresa.controls['codigoSeguridad'].invalid && (FormularioEmpresa.controls['codigoSeguridad'].dirty || FormularioEmpresa.controls['codigoSeguridad'].touched)"
+                class="invalid-feedback">
+                <div>
+                    Ingrese el codigo de seguridad de la tarjeta
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+          <br />
+          <button class="btn btn-primary" [disabled]="FormularioEmpresa.invalid || telefonos.length==0 "  (click)="submit()" >Completar Perfil</button>
+      </div>
+  </form>
+
+
+  </div>
+
+
+  <br>

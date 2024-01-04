@@ -37,11 +37,16 @@ public class CompletarPerfilServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         Part pdfPart = request.getPart(CV_PART_NAME);
-        System.out.println("Nombre del archivo PDF: " + pdfPart.getSubmittedFileName());
+        //System.out.println("Nombre del archivo PDF: " + pdfPart.getSubmittedFileName());
 
-        String body = (request.getParameter("CompletarPerfilUsuario"));
+        String body = (request.getParameter("CompletarPerfi"));
 
-        completarPerfilService.CompletarPerfil(body, pdfPart, response);
+        try {
+            completarPerfilService.CompletarPerfil(body, pdfPart, response);
+
+        } catch (Exception e) {
+
+        }
         //     String json= request.getParameterValues("CompletarPerfilUsuario");
         // CompletarPerfilUsuario completarPerfil = new CompletarPerfilUsuario(request.getParameter("codigoUsuario"),request.getParameter("telefonos"),request.getParameter("categorias"));
     }
