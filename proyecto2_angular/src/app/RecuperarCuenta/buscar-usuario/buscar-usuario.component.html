@@ -1,0 +1,30 @@
+<div class="container col-xl-10 col-xxl-8 px-6 py-5">
+    <div class="col-md-10 mx-auto col-lg-6">
+        <div class="alert alert-success" role="alert" *ngIf="corrreoEnviado">
+            Se le ha enviado un correo electronico para reestablecer su contraseña!
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="error">
+           No existe una cuenta asociada con ese correo electronico!
+        </div>
+
+        <h2 class="display-10 fw-bold lh-5 text-body-emphasis mb-50">¿Ha Olvidado su contraseña?</h2>
+        No se preocupe! Ingrese su correo electronico
+        Le enviaremos un correo electronico para reestrablecer su contraseña!
+        <br>
+        <br>
+
+        <br>
+
+        <div class="mb-6">
+            <label for="exampleFormControlInput1" class="form-label">Correo Electronico: </label>
+            <input [(ngModel)]="cuenta.correo" type="text" class="form-control" id="exampleFormControlInput1"
+                placeholder="correo@ejemplo.com">
+
+        </div>
+        <br>
+        <button type="button" class="btn btn-primary" (click)="enviarCorreo()">Recuperar Contraseña</button>
+
+    </div>
+
+
+</div>

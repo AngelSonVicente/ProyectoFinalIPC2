@@ -56,6 +56,8 @@ import { RegistrarseComponent } from './registrarse/registrarse.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { CompletarInformacionComponent } from './completar-informacion/completar-informacion.component';
+import { BuscarUsuarioComponent } from './RecuperarCuenta/buscar-usuario/buscar-usuario.component';
+import { ReestablecerPasswordComponent } from './RecuperarCuenta/reestablecer-password/reestablecer-password.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +108,8 @@ import { CompletarInformacionComponent } from './completar-informacion/completar
          NavbarComponent,
          PerfilUsuarioComponent,
          CompletarInformacionComponent,
+         BuscarUsuarioComponent,
+         ReestablecerPasswordComponent,
   ],
   imports: [
     BrowserModule,

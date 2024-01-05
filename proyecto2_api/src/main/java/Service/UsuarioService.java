@@ -14,26 +14,35 @@ import exceptions.NotFoundException;
  * @author MSI
  */
 public class UsuarioService {
+
     UsuarioBD usuarioBD = new UsuarioBD();
-    
-    public Usuario CrearUsuario (Usuario usuario){
-    return usuarioBD.crearUsuario(usuario);
+
+    public Usuario CrearUsuario(Usuario usuario) {
+        return usuarioBD.crearUsuario(usuario);
     }
-    public DashBoard getDasg (){
-    return usuarioBD.getDash();
+
+    public DashBoard getDasg() {
+        return usuarioBD.getDash();
     }
-    
-    public Usuario getUsuarioID(String codigo) throws NotFoundException{
-    
+
+    public Usuario getUsuarioID(String codigo) throws NotFoundException {
+
         Usuario usuario = usuarioBD.getUsuarioCodigo(codigo);
-          if(usuario!=null){      
+        if (usuario != null) {
             return usuario;
-        }else{
-        
+        } else {
+
             throw new NotFoundException("No se encontró el Usuario");
         }
-        
-   
     }
-    
+
+    public Usuario getUsuarioCorreo(String Correo) {
+        if (Correo==null || Correo.isEmpty()) {
+        return null;
+        }
+
+     return usuarioBD.getUsuarioCorreo(Correo);
+     
+    }
+
 }

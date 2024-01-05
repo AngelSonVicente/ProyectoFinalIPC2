@@ -47,8 +47,7 @@ public class CompletarPerfilServlet extends HttpServlet {
         } catch (Exception e) {
 
         }
-        //     String json= request.getParameterValues("CompletarPerfilUsuario");
-        // CompletarPerfilUsuario completarPerfil = new CompletarPerfilUsuario(request.getParameter("codigoUsuario"),request.getParameter("telefonos"),request.getParameter("categorias"));
+    
     }
 
 }

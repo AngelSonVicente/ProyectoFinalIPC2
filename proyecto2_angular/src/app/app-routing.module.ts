@@ -35,6 +35,8 @@ import { CargaJsonComponent } from './carga-json/carga-json.component';
 import { RegistrarseComponent } from './registrarse/registrarse.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { CompletarInformacionComponent } from './completar-informacion/completar-informacion.component';
+import { BuscarUsuarioComponent } from './RecuperarCuenta/buscar-usuario/buscar-usuario.component';
+import { ReestablecerPasswordComponent } from './RecuperarCuenta/reestablecer-password/reestablecer-password.component';
 
 const rutasAdmin = [
   {
@@ -230,6 +232,18 @@ const routes: Routes = [
   path:"Proyecto2/CompletarInformacion",
   title:"Completar Informacion",
   component: CompletarInformacionComponent
+
+},
+{
+  path:"Proyecto2/RecuperarCuenta",
+  title:"Recuperar Cuenta",
+  component: BuscarUsuarioComponent
+
+},
+{
+  path:"Proyecto2/ResetPassword/:token",
+  title:"Reestablecer Contraseña",
+  component: ReestablecerPasswordComponent
 
 },
 

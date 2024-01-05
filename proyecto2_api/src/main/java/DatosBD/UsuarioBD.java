@@ -22,6 +22,7 @@ public class UsuarioBD {
     
      private static final String SelectUsuario = "SELECT * FROM usuarios WHERE usuario = ?";
      private static final String SelectUsuarioID = "SELECT * FROM usuarios WHERE codigo = ?";
+     private static final String SelectUsuarioCorreo = "SELECT * FROM usuarios WHERE correo = ?";
      private static final String Insert = "INSERT INTO usuarios(nombre, usuario, password, direccion, correo, cui, birth, tipo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
      private static final String Dashboard=  "SELECT COUNT(CASE WHEN tipo = 'Empleador' THEN 1 END) AS total_empleadores, COUNT(CASE WHEN tipo = 'Usuario' THEN 1 END) AS total_usuarios FROM usuarios;";
@@ -116,6 +117,31 @@ public class UsuarioBD {
         try {
             PreparedStatement select = conexion.prepareStatement(SelectUsuarioID);
             select.setString(1, codigo);
+            ResultSet resultset = select.executeQuery();
+            System.out.println("----------------------------------------------------");
+            System.out.println(select.toString());
+            
+            if (resultset.next()) {
+                return new Usuario(resultset.getInt("codigo"),
+                resultset.getString("nombre"),resultset.getString("usuario"),
+                resultset.getString("direccion"),resultset.getString("correo"),"",
+                resultset.getString("cui"),resultset.getString("birth"),resultset.getString("tipo"),
+                resultset.getBytes("cv"));
+            }
+            
+            return null;
+        } catch (SQLException ex) {
+            // TODO pendiente manejo
+            ex.printStackTrace();
+        }
+        
+        return null;
+    }
+     public static Usuario getUsuarioCorreo(String correo) {
+        // validateCarnet not null
+        try {
+            PreparedStatement select = conexion.prepareStatement(SelectUsuarioCorreo);
+            select.setString(1, correo);
             ResultSet resultset = select.executeQuery();
             System.out.println("----------------------------------------------------");
             System.out.println(select.toString());
