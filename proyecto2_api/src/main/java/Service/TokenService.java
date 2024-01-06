@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -25,7 +25,7 @@ public class TokenService {
     private TokenBD tokenBD = new TokenBD();
     
     public RecuperarCuenta CrearToken(RecuperarCuenta cuenta) throws InvalidDataException {
-         LocalDate fechaActual = LocalDate.now();
+        LocalDate fechaActual = LocalDate.now();
         LocalTime horaActual = LocalTime.now();
 
         DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");

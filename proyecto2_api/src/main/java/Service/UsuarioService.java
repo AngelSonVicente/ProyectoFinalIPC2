@@ -20,6 +20,12 @@ public class UsuarioService {
     public Usuario CrearUsuario(Usuario usuario) {
         return usuarioBD.crearUsuario(usuario);
     }
+    
+    public boolean cambiarPassword(String codigoUsuario, String password) {
+        
+        return usuarioBD.cambiarPassword(codigoUsuario, password);
+    
+    }
 
     public DashBoard getDasg() {
         return usuarioBD.getDash();

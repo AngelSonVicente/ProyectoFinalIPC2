@@ -5,7 +5,8 @@
 package Servlets;
 
 import Datos.JsonUtil;
-import Service.RecuperarCuentaService;
+import Datos.RecuperarCuenta;
+import Service.ReestablecerPasswordService;
 import exceptions.InvalidDataException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,29 +21,43 @@ import java.util.logging.Logger;
  *
  * @author MSI
  */
-@WebServlet(name = "EnviarCorreoRecuperacionController", urlPatterns = {"/v1/EnviarCorreoRecuperacion"})
+@WebServlet(name = "ReestablecerPasswordController", urlPatterns = {"/v1/ReestablecerPasword"})
 
-public class EnviarCorreoRecuperacionServlet extends HttpServlet {
+public class ReestrablecerPasswordServlet extends HttpServlet {
 
     JsonUtil jsonUtil = new JsonUtil();
 
     @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String token = request.getParameter("token");
+
+        ReestablecerPasswordService tokenValido = new ReestablecerPasswordService();
+        try {
+            tokenValido.getInformaiconToken(token, response);
+
+        } catch (InvalidDataException ex) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+        }
+    }
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        ReestablecerPasswordService reestablecerPasswordService = new ReestablecerPasswordService();
 
         String body = jsonUtil.getBody(request);
 
-        RecuperarCuentaService recuperarCuenta = new RecuperarCuentaService();
         try {
-            recuperarCuenta.procesarSolicitud(body);
+            reestablecerPasswordService.CambiarPassword(body, response);
             response.setStatus(HttpServletResponse.SC_OK);
 
         } catch (InvalidDataException ex) {
-          response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
         }
 
-        System.out.println("body: " + body);
-    
     }
 
 }

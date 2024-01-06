@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { RecuperarCuenta } from 'src/entities/RecuperarCuenta';
+import { ReestablcerPasswordService } from 'src/services/ReestablcerPasswordService';
 
 @Component({
   selector: 'app-reestablecer-password',
@@ -7,18 +9,67 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./reestablecer-password.component.css']
 })
 export class ReestablecerPasswordComponent {
-
+  cuenta!: RecuperarCuenta;
   token!: string;
 
-  constructor(private route: ActivatedRoute) {}
+  PasswordCambaida=false;
+
+  tokenValido!: boolean;
+  error: boolean = false;
+
+  constructor(private route: ActivatedRoute, private reestablcerPasswordService: ReestablcerPasswordService) { }
 
   ngOnInit(): void {
-    // Obtener el token de la URL
     this.route.params.subscribe(params => {
       this.token = params['token'];
-      // Ahora puedes usar el token como necesites
-      console.log('Token:', this.token);
     });
+
+
+    if (this.token != null) {
+      this.reestablcerPasswordService.getInformacionToken(this.token).subscribe({
+        next: (confirmacion: RecuperarCuenta) => {
+
+          this.tokenValido = true;
+          this.cuenta = confirmacion;
+
+
+        },
+        error: (error: any) => {
+          this.error = true;
+
+        }
+      });
+    } else {
+      this.error = true;
+
+    }
+
+
+    
+
+
+
+
+
+
+  }
+
+  PasswordNueva() {
+
+  this.reestablcerPasswordService.recuperarPassword(this.cuenta).subscribe({
+        next: (confirmacion: RecuperarCuenta) => {
+
+          this.PasswordCambaida = true;
+          this.error = false;
+        },
+        error: (error: any) => {
+          this.error = true;
+          this.PasswordCambaida = false;
+
+        }
+      });
+    
+
   }
 
 }
