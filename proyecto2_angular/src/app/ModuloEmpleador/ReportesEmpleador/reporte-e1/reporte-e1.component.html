@@ -1,17 +1,26 @@
-<
-<div>
-    <form #miFormulario="ngForm" (ngSubmit)="realizarAccion(miFormulario.value)">
-      <label for="fecha1">Fecha 1:</label>
-      <input type="date" id="fecha1" name="fecha1" ngModel>
-  
-      <label for="fecha2">Fecha 2:</label>
-      <input type="date" id="fecha2" name="fecha2" ngModel>
-  
-      <button type="submit">Ver Ofertas</button>
-    </form>
+<div class="row">
+    <div class="col-md-4">
+      <label>Fecha Inicio:</label>
+      <input type="date" class="form-control" [(ngModel)]="fecha1">
+    </div>
+    
+    <div class="col-md-4">
+      <label>Fecha Final:</label>
+      <input type="date" class="form-control" [(ngModel)]="fecha2">
+    </div>
+    
+    <div class="col-md-3">
+      <label></label>
+      <button class="btn btn-success btn-block" (click)="realizarAccion()">Generar Reporte</button>
+    </div>
   </div>
+  
 
-  <table class="table table-striped table-bordered">
+<div>
+    <br>
+    <br>
+    <a class="btn btn-success col-md-12" href="{{downloadUrl}}" (click)="PDF()">Descargar pdf</a>
+<table class="table table-striped table-bordered">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -26,7 +35,8 @@
             <td>{{item.fechaPublicacion}}</td>
             <td>{{item.estado}}</td>
             <td> <a class="btn btn-outline-success" (click)="abrirModal(item.codigo)">ver detalles</a>
-          
+
         </tr>
     </tbody>
 </table>
+</div>

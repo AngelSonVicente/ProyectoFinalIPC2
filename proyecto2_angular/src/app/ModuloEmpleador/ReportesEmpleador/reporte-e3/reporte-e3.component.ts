@@ -7,6 +7,7 @@ import { ReportesService } from 'src/services/ReportesService';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { DetallesOfertasComponent } from 'src/app/ModuloUsuario/BuscarEmpleo/detalles-ofertas/detalles-ofertas.component';
 import { HistorialCobros } from 'src/entities/HistorialCobros';
+import { ReportesPDFService } from 'src/services/ReportesPDFService';
 
 @Component({
   selector: 'app-reporte-e3',
@@ -16,13 +17,16 @@ import { HistorialCobros } from 'src/entities/HistorialCobros';
 export class ReporteE3Component implements OnInit {
   reporte3!: HistorialCobros[];
   usuario!: Usuario;
+  downloadUrl: string;
   
   
   modalRef!: BsModalRef;
   fecha11!:string;
   fecha22!:string;
 
-  constructor(private reportesService: ReportesService, private modalService: BsModalService) { }
+  constructor(private fileService: ReportesPDFService,private reportesService: ReportesService, private modalService: BsModalService) { 
+    this.downloadUrl = '';
+  }
 
   ngOnInit(): void {
     let jsonUsuario = localStorage.getItem('usuario');
@@ -31,6 +35,11 @@ export class ReporteE3Component implements OnInit {
     this.reportesService.getReporte3Empleador(this.usuario.codigo.toString()).subscribe(data => {
       this.reporte3 = data;
     });
+
+    this.downloadUrl = this.fileService.getReporte3Empleador(this.usuario.codigo.toString());
+  
+
+
   }
 }
 
