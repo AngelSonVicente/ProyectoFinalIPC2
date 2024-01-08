@@ -41,6 +41,21 @@ export class ReportesPDFService {
     public getReporte3Empleador( codigo: String): string {
         return this.DOWNLOAD_URL + "?tipo=Empleador&reporte=3&codigo="+codigo;
     }
+    public getReporte1Usuario(fecahaIncio: String,fechaFinal: String, codigo: String): string {
+        return this.DOWNLOAD_URL + "?tipo=Usuario&reporte=1&fecha1="+fecahaIncio+"&fecha2="+ fechaFinal+"&codigo="+codigo;
+    }
+
+    public getReporte2Usuario( codigo: String): string {
+        return this.DOWNLOAD_URL + "?tipo=Usuario&reporte=2&codigo="+codigo;
+    }
+    public getReporte3Usuario( codigo: String): string {
+        return this.DOWNLOAD_URL + "?tipo=Usuario&reporte=3&codigo="+codigo;
+    }
+    public getReporte4Usuario( codigo: String): string {
+        return this.DOWNLOAD_URL + "?tipo=Usuario&reporte=4&codigo="+codigo;
+    }
+
+    
 
 
 

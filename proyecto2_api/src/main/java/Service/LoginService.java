@@ -29,8 +29,7 @@ public class LoginService {
         System.out.println("Tipo de usuario: " + UsuarioFE.getTipo());
         System.out.println("usuario de usuario: " + UsuarioFE.getUsuario());
         System.out.println("contra de usuario: " + UsuarioFE.getPassword());
-        System.out.println("AÑaA");
-
+    
         Usuario usuario = new Usuario();
         if (UsuarioFE.getTipo() == null) {
 
@@ -71,6 +70,11 @@ public class LoginService {
 
         String Contra = obtnerContra(UsuarioIngresado);
         Usuario usuario = new Usuario();
+
+        System.out.println("contra ingresada: " + ContraEncriptada);
+        System.out.println("usuario ingresado: " + UsuarioIngresado);
+        System.out.println("contra : " + Contra);
+        
 
         if (ContraEncriptada.equals(Contra)) {
             System.out.println("si ingresó");

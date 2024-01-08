@@ -18,7 +18,7 @@ public class ReportesUsuarioService {
     ReportesUsuarioBD reportes = new ReportesUsuarioBD();
     
      public List<SolicitudRetirada> Reporte1(String codigoUsuario, String fecha1, String fecha2) {
-        if (!fecha1.equals("nada") && !fecha2.equals("nada")) {
+        if (!fecha1.equals("sinfecha") && !fecha2.equals("sinfecha")) {
             return reportes.Reporte1Fecha(codigoUsuario, fecha1, fecha2);
         }
         return reportes.Reporte1(codigoUsuario);

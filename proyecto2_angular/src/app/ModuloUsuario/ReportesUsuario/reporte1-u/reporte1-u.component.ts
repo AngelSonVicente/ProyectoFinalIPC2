@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SolicitudRetirada } from 'src/entities/SolicitudRetirada';
 import { Usuario } from 'src/entities/Usuario';
+import { ReportesPDFService } from 'src/services/ReportesPDFService';
 import { ReportesService } from 'src/services/ReportesService';
 
 @Component({
@@ -12,9 +13,15 @@ export class Reporte1UComponent {
   reporte1!: SolicitudRetirada[];
 usuario!: Usuario;
 
-fecha11!:string;
-fecha22!:string;
-constructor(private reportesService: ReportesService) { }
+fecha1:string = "sinfecha";
+fecha2:string= "sinfecha";
+
+downloadUrl: string;
+
+
+constructor(private fileService: ReportesPDFService,private reportesService: ReportesService) { 
+  this.downloadUrl = '';
+}
 
   ngOnInit(): void {
 
@@ -23,26 +30,19 @@ constructor(private reportesService: ReportesService) { }
   
   }
 
-  realizarAccion(datosFormulario: any): void {
-    // Verifica si las fechas están definidas y realiza la acción correspondiente
-    if (datosFormulario.fecha1 && datosFormulario.fecha2) {
-      console.log('Fechas seleccionadas:', datosFormulario.fecha1, datosFormulario.fecha2);
-      // Llama a tu función con las fechas seleccionadas
-      this.reportesService.getReporte1Usuario(this.usuario.codigo.toString(), datosFormulario.fecha1 , datosFormulario.fecha2 ).subscribe(data => {
+  realizarAccion(): void {
+ 
+      this.reportesService.getReporte1Usuario(this.usuario.codigo.toString(),this.fecha1 ,this.fecha2 ).subscribe(data => {
         this.reporte1 = data;
       });
-    } else {
-      this.fecha11="nada";
-      this.fecha22="nada";
+    }
 
-      console.log('No se seleccionaron fechas. Se utilizarán valores nulos.');
-      this.reportesService.getReporte1Usuario(this.usuario.codigo.toString(),this.fecha11 ,this.fecha22 ).subscribe(data => {
-        this.reporte1 = data;
-      });
-      // Llama a tu función con valores nulos o realiza la acción correspondiente
+    PDF() {
+      this.downloadUrl = this.fileService.getReporte1Usuario(this.fecha1, this.fecha2,this.usuario.codigo.toString());
+    
     }
   
 
-  }
+  
 
 }

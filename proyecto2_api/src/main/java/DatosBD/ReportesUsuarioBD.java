@@ -28,7 +28,6 @@ public class ReportesUsuarioBD {
     String Reporte2 ="SELECT s.*, o.nombre AS nombre_oferta FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo WHERE s.codigo_usuario = ? AND s.estado = 'Entrevista';";
     String Reporte3 ="SELECT s.*, o.nombre AS nombre_oferta FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo WHERE s.estado = 'Rechazado' AND s.codigo_usuario = ?;";
     String Reporte4 ="SELECT s.*, o.nombre AS nombre_oferta FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo WHERE s.estado != 'Elegido' AND s.codigo_usuario = ?;";
-   
     public List<SolicitudRetirada> Reporte1(String codigoEmpresa) {
         System.out.println("entramos al getofertas");
         List<SolicitudRetirada> solicitudes = new ArrayList<>();

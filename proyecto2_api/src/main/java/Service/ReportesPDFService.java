@@ -140,6 +140,73 @@ public class ReportesPDFService {
             }
 
         }
+        
+        
+        //----------------------USUARIO----------------
+        
+         if (reporte.getTipo().equals(TipoUsuario.Usuario.name())) {
+
+            if (reporte.getReporte().equals("1")) {
+
+                if (!reporte.getFecha1().equals(sinFecha) && !reporte.getFecha2().equals(sinFecha)) {
+                    //reporte con fecha
+
+                    Map parametros = new HashMap();
+                    parametros.put("fechaInicio", "'" + reporte.getFecha1() + "'");
+                    parametros.put("fechaFinal", "'" + reporte.getFecha2() + "'");
+                    parametros.put("codigoUsuario", "'" + reporte.getCodigo() + "'");
+
+                    generarReporte("UsuarioReporte1", parametros, response);
+
+                } else {
+                    Map parametros = new HashMap();
+                    parametros.put("codigoUsuario", "'" + reporte.getCodigo() + "'");
+
+                    generarReporte("UsuarioReporte1SF", parametros, response);
+                }
+
+            }
+              if (reporte.getReporte().equals("2")) {
+                  
+                       Map parametros = new HashMap();
+                    parametros.put("codigoUsuario", "'" + reporte.getCodigo() + "'");
+
+                    generarReporte("UsuarioReporte2", parametros, response);
+               
+             
+              }
+              if (reporte.getReporte().equals("3")) {
+                  
+                       Map parametros = new HashMap();
+                    parametros.put("codigoUsuario", "'" + reporte.getCodigo() + "'");
+
+                    generarReporte("UsuarioReporte3", parametros, response);
+               
+             
+              }
+              if (reporte.getReporte().equals("4")) {
+                  
+                       Map parametros = new HashMap();
+                    parametros.put("codigoUsuario", "'" + reporte.getCodigo() + "'");
+
+                    generarReporte("UsuarioReporte4", parametros, response);
+               
+             
+              }
+            
+            
+            
+            
+            
+            
+            
+         }
+        
+        
+        
+        
+        
+        
 
         return reporte;
     }
