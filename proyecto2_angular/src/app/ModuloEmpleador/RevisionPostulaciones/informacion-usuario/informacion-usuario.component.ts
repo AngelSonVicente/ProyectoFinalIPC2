@@ -19,21 +19,21 @@ import { SolicitudesService } from 'src/services/SolicitudesService';
   styleUrls: ['./informacion-usuario.component.css']
 })
 export class InformacionUsuarioComponent {
-  
+
   @Output() confirmado: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  codigoSolicitud!:  string;
-  codigoCreado!:string;
+  codigoSolicitud!: string;
+  codigoCreado!: string;
   agendarEntrevista!: boolean;
 
 
   entrevista!: Entrevista;
-  solicitud!: Solicitudes ;
+  solicitud!: Solicitudes;
   horasDisponibles: HoraDisponible[] = [];
   codigoOferta!: string;
   FomularioEntrevista!: FormGroup;
   oferta!: Oferta;
-  categorias!:Categoria[];
+  categorias!: Categoria[];
   usuario!: Usuario;
   postulante!: Usuario;
   codigo!: string;
@@ -41,7 +41,7 @@ export class InformacionUsuarioComponent {
   rechazado!: boolean;
   pdfSrc!: SafeUrl; // Declarar pdfSrc como SafeUrl
 
-  
+
 
   constructor(private formBuilder: FormBuilder,
     private usuarioService: UsuarioService, private sanitizer: DomSanitizer
@@ -55,9 +55,9 @@ export class InformacionUsuarioComponent {
   }
 
   ngOnInit(): void {
-    
+
     let jsonUsuario = localStorage.getItem('usuario');
-    this.usuario= jsonUsuario ? JSON.parse(jsonUsuario) : null;    
+    this.usuario = jsonUsuario ? JSON.parse(jsonUsuario) : null;
 
     this.usuarioService.getUsuarioID(this.codigo).subscribe({
       next: (usuario: Usuario) => {
@@ -71,14 +71,14 @@ export class InformacionUsuarioComponent {
     this.FomularioEntrevista = this.formBuilder.group({
       fecha: [null, [Validators.required, this.fechaNoMenorQueHoyValidator]],
       ubicacion: [null, [Validators.required, Validators.maxLength(100)]],
-      
+
       hora: [null, [Validators.required]],
-   
-   
+
+
 
     });
 
-  
+
 
 
 
@@ -87,25 +87,25 @@ export class InformacionUsuarioComponent {
   fechaNoMenorQueHoyValidator(control: any) {
     const fechaIngresada = new Date(control.value);
     const fechaHoy = new Date();
- 
+
     //le quitamos un dia porque no jala con la fecha actual :c
     fechaHoy.setDate(fechaHoy.getDate() - 1);
-  
+
     if (fechaIngresada.getTime() < fechaHoy.getTime()) {
       return { fechaInvalida: true };
     }
-  
+
     return null;
   }
 
   onFechaUbicacionChange() {
     const fechaSeleccionada = this.FomularioEntrevista.get('fecha')?.value;
     const ubicacionSeleccionada = this.FomularioEntrevista.get('ubicacion')?.value;
-    this.horaService.getHorasDisponibles(fechaSeleccionada,ubicacionSeleccionada,this.codigoOferta).subscribe({
+    this.horaService.getHorasDisponibles(fechaSeleccionada, ubicacionSeleccionada, this.codigoOferta).subscribe({
 
       next: (list: HoraDisponible[]) => {
         this.horasDisponibles = list;
-        
+
       }
     });
 
@@ -117,34 +117,21 @@ export class InformacionUsuarioComponent {
     if (this.FomularioEntrevista.valid) {
       console.log("entro a submit");
       this.entrevista = this.FomularioEntrevista.value as Entrevista;
-      this.entrevista.codigoOferta = this.codigoOferta; 
-      this.entrevista.codigoUsuario = this.postulante.codigo.toString(); 
+      this.entrevista.codigoOferta = this.codigoOferta;
+      this.entrevista.codigoUsuario = this.postulante.codigo.toString();
 
-      this.solicitud.codigo=this.codigoSolicitud;
+      this.solicitud.codigo = this.codigoSolicitud;
       this.solicitud.codigoOferta = this.codigoOferta;
-      this.solicitud.estado="Entrevista";
+      this.entrevista.codigoSolicitud = this.codigoSolicitud;
+      this.solicitud.estado = "Entrevista";
 
       this.entrevistaService.crearEntrevista(this.entrevista).subscribe({
         next: (created: Entrevista) => {
           console.log("creado " + created);
-          this.codigoCreado=created.codigo;
+          this.codigoCreado = created.codigo;
           this.saved = true;
-          
-
-          this.solicitudService.actualizarEstadoSolicitud(this.codigoSolicitud, this.codigoOferta,"Entrevista").subscribe({
-            next: (created: Solicitudes) => {
-              console.log("rechazado " + created);
-              this.confirmar();
-              this.limpiar()
-      
-             
-      
-            },
-            error: (error: any) => {
-              console.log("error -----------------------------");
-            }
-          });
-      
+          this.confirmar();
+          this.limpiar()
 
         },
         error: (error: any) => {
@@ -162,19 +149,19 @@ export class InformacionUsuarioComponent {
     });
 
   }
- 
- 
 
-  
+
+
+
   confirmar() {
     this.confirmado.emit(true);
   }
 
-  rechazarPostulacion(){
+  rechazarPostulacion() {
 
 
 
-    this.solicitudService.actualizarEstadoSolicitud(this.codigoSolicitud, this.codigoOferta,"Rechazado").subscribe({
+    this.solicitudService.actualizarEstadoSolicitud(this.codigoSolicitud, this.codigoOferta, "Rechazado").subscribe({
       next: (created: Solicitudes) => {
         console.log("rechazado " + created);
         this.rechazado = true;
@@ -197,6 +184,6 @@ export class InformacionUsuarioComponent {
     }
     return null;
   }
-  
+
 
 }

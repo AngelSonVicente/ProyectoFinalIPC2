@@ -39,17 +39,26 @@ public class CargaJSonServlet extends HttpServlet {
 
         // Obtener todos los archivos PDF
         List<Part> pdfParts = new ArrayList<>();
+        
         for (Part part : request.getParts()) {
             if (part.getName().startsWith(PDF_PART_PREFIX)) {
                 pdfParts.add(part);
                 System.out.println("Nombre del archivo PDF: " + part.getSubmittedFileName());
-          
+            
+                
+                
             }
         }
         
+        CargaJsonService cargaArchivoEntrada =  new CargaJsonService();
         
-        
-
+        try {
+            cargaArchivoEntrada.CargarJson(jsonPart, pdfParts);
+            
+        } catch (InvalidDataException ex) {
+            Logger.getLogger(CargaJSonServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                         
 //        try {
 //            // Aquí puedes manejar tanto el archivo JSON como la lista de archivos PDF
 //            cargaJsonService.CargarJson(jsonPart);
@@ -61,6 +70,6 @@ public class CargaJSonServlet extends HttpServlet {
 //        } catch (InvalidDataException ex) {
 //            // Manejar la excepción según sea necesario
 //        }
-
+        
     }
 }

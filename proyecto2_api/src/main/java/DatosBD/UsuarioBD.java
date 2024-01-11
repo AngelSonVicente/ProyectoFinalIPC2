@@ -24,8 +24,9 @@ public class UsuarioBD {
     private static final String SelectUsuario = "SELECT * FROM usuarios WHERE usuario = ?";
     private static final String SelectUsuarioID = "SELECT * FROM usuarios WHERE codigo = ?";
     private static final String SelectUsuarioCorreo = "SELECT * FROM usuarios WHERE correo = ?";
-    private static final String Insert = "INSERT INTO usuarios(nombre, usuario, password, direccion, correo, cui, birth, tipo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String Insert = "INSERT INTO usuarios (codigo, nombre, usuario, password, direccion, correo, cui, birth, tipo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String cambiarPassword = "UPDATE usuarios SET password = ? WHERE codigo = ?";
+    private static final String ExisteCorreYUsuario = "SELECT * FROM usuarios WHERE usuario = ? OR correo = ? ";
 
     private static final String Dashboard = "SELECT COUNT(CASE WHEN tipo = 'Empleador' THEN 1 END) AS total_empleadores, COUNT(CASE WHEN tipo = 'Usuario' THEN 1 END) AS total_usuarios FROM usuarios;";
     Util util = new Util();
@@ -36,14 +37,15 @@ public class UsuarioBD {
         System.out.println("esta creando el usuario");
         try {
             PreparedStatement insert = conexion.prepareStatement(Insert, PreparedStatement.RETURN_GENERATED_KEYS);
-            insert.setString(1, usuario.getNombre());
-            insert.setString(2, usuario.getUsuario());
-            insert.setString(3, util.Encriptar(usuario.getPassword()));
-            insert.setString(4, usuario.getDireccion());
-            insert.setString(5, usuario.getCorreo());
-            insert.setString(6, usuario.getCui());
-            insert.setString(7, usuario.getBirth());
-            insert.setString(8, usuario.getTipo());
+            insert.setInt(1, usuario.getCodigo());
+            insert.setString(2, usuario.getNombre());
+            insert.setString(3, usuario.getUsuario());
+            insert.setString(4, util.Encriptar(usuario.getPassword()));
+            insert.setString(5, usuario.getDireccion());
+            insert.setString(6, usuario.getCorreo());
+            insert.setString(7, usuario.getCui());
+            insert.setString(8, usuario.getBirth());
+            insert.setString(9, usuario.getTipo());
 
             System.out.println(insert.toString());
             int affectedRows = insert.executeUpdate();
@@ -140,7 +142,7 @@ public class UsuarioBD {
         return null;
     }
 
-    public static Usuario getUsuarioCorreo(String correo) {
+    public  Usuario getUsuarioCorreo(String correo) {
         // validateCarnet not null
         try {
             PreparedStatement select = conexion.prepareStatement(SelectUsuarioCorreo);

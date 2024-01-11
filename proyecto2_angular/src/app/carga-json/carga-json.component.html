@@ -51,7 +51,7 @@
                             <span *ngFor="let archivo of inputFiles">{{ archivo.name }} </span>
                           </label>
                           <input type="file" accept=".pdf" id="fileInput{{i}}" style="display: none" (change)="onPdfFileSelected($event, i)">
-                          <button (click)="eliminarPdf(i)">Eliminar Input</button>
+                          <button (click)="eliminarPdf(i)">Eliminar PDF</button>
                         </div>
                       </div>
                       

@@ -29,7 +29,7 @@ public class EntrevistaBD {
     private static String SelectExiste = "SELECT * FROM solicitudes WHERE codigo_usuario = ? AND codigo_oferta = ?";
     private static String SelectTodoUsuario = "SELECT e.*, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM entrevistas AS e JOIN ofertas AS o ON e.codigo_oferta = o.codigo JOIN usuarios AS u ON e.usuario = u.codigo WHERE e.estado = 'Pendiente' AND e.usuario = ?";
         private static String SelectEntevistasFecha = "SELECT e.*, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM entrevistas AS e JOIN ofertas AS o ON e.codigo_oferta = o.codigo JOIN usuarios AS u ON e.usuario = u.codigo WHERE e.estado = 'Pendiente' AND e.usuario = ?";
-    private static String Insert = "INSERT INTO entrevistas (codigo_oferta, usuario, fecha, hora, ubicacion, estado) VALUES (?, ?, ?, ?, ?, 'Pendiente')";
+    private static String Insert = "INSERT INTO entrevistas (codigo, codigo_oferta, usuario, fecha, hora, ubicacion, estado, notas) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static String FinalizarEntrevista = "UPDATE entrevistas SET estado = 'Finalizado', notas = ? WHERE codigo = ?";
     private static String SelectEntrevistasOferta="SELECT e.*, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM entrevistas AS e JOIN ofertas AS o ON e.codigo_oferta = o.codigo JOIN usuarios AS u ON e.usuario = u.codigo WHERE e.codigo_oferta = ?";
@@ -63,11 +63,14 @@ public class EntrevistaBD {
 
         try {
             PreparedStatement insert = conexion.prepareStatement(Insert, PreparedStatement.RETURN_GENERATED_KEYS);
-            insert.setString(1, entrevista.getCodigoOferta());
-            insert.setString(2, entrevista.getCodigoUsuario());
-            insert.setString(3, entrevista.getFecha());
-            insert.setString(4, entrevista.getHora());
-            insert.setString(5, entrevista.getUbicacion());
+            insert.setString(1, entrevista.getCodigo());
+            insert.setString(2, entrevista.getCodigoOferta());
+            insert.setString(3, entrevista.getCodigoUsuario());
+            insert.setString(4, entrevista.getFecha());
+            insert.setString(5, entrevista.getHora());
+            insert.setString(6, entrevista.getUbicacion());
+            insert.setString(7, entrevista.getEstado());
+            insert.setString(8, entrevista.getNota());
 
             System.out.println(insert.toString());
             int affectedRows = insert.executeUpdate();
@@ -104,7 +107,7 @@ public class EntrevistaBD {
                 entrevistas.add(new Entrevista(resultset.getString("codigo"), resultset.getString("codigo_oferta"),
                         resultset.getString("nombre_oferta"), resultset.getString("usuario"), resultset.getString("nombre_usuario"),
                         resultset.getString("fecha"), resultset.getString("hora"), resultset.getString("ubicacion"),
-                        resultset.getString("estado"), resultset.getString("notas")
+                        resultset.getString("estado"), resultset.getString("notas"),null
                 ));
             }
 
@@ -131,7 +134,7 @@ public class EntrevistaBD {
                 entrevistas.add(new Entrevista(resultset.getString("codigo"), resultset.getString("codigo_oferta"),
                         resultset.getString("nombre_oferta"), resultset.getString("usuario"), resultset.getString("nombre_usuario"),
                         resultset.getString("fecha"), resultset.getString("hora"), resultset.getString("ubicacion"),
-                        resultset.getString("estado"), resultset.getString("notas")
+                        resultset.getString("estado"), resultset.getString("notas"),null
                 ));
             }
 

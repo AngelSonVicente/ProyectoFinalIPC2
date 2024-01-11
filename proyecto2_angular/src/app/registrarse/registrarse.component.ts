@@ -17,6 +17,7 @@ export class RegistrarseComponent implements OnInit {
   FormularioOferta!: FormGroup;
   saved : boolean=false;
 
+  error: boolean = false;
   UsuarioCreacion!:Usuario;
   codigoCreado!:string;
 
@@ -55,10 +56,13 @@ export class RegistrarseComponent implements OnInit {
           console.log("creado " + created);
           this.codigoCreado=created.codigo.toString();
           this.saved = true;
+          this.error=false;
           this.limpiar()
         },
         error: (error: any) => {
           console.log("error");
+          this.error=true;
+
         }
       });
     }

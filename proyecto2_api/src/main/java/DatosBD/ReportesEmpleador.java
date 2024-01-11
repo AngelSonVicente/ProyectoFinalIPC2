@@ -136,7 +136,7 @@ public class ReportesEmpleador {
                 entrevistas.add(new Entrevista(resultset.getString("codigo"), resultset.getString("codigo_oferta"),
                         resultset.getString("nombre_oferta"), resultset.getString("usuario"), resultset.getString("nombre_usuario"),
                         resultset.getString("fecha"), resultset.getString("hora"), resultset.getString("ubicacion"),
-                        resultset.getString("estado"), resultset.getString("notas")
+                        resultset.getString("estado"), resultset.getString("notas"),null
                 ));
             }
 
@@ -163,7 +163,7 @@ public class ReportesEmpleador {
                 entrevistas.add(new Entrevista(resultset.getString("codigo"), resultset.getString("codigo_oferta"),
                         resultset.getString("nombre_oferta"), resultset.getString("usuario"), resultset.getString("nombre_usuario"),
                         resultset.getString("fecha"), resultset.getString("hora"), resultset.getString("ubicacion"),
-                        resultset.getString("estado"), resultset.getString("notas")
+                        resultset.getString("estado"), resultset.getString("notas"),null
                 ));
             }
 

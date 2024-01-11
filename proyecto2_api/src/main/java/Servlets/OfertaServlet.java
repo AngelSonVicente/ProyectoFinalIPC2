@@ -104,7 +104,9 @@ public class OfertaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     var ofertFE = jsonUtil.JsonAObjeto(request, Oferta.class);
+    
     Oferta oferta = (Oferta) ofertFE;  
+    oferta.setEstado("Activo");
        
     try {
 

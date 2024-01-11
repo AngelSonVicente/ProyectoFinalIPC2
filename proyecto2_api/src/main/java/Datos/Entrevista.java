@@ -19,11 +19,12 @@ public class Entrevista {
     private String ubicacion;
     private String estado;
     private String nota;
+    private String codigoSolicitud;
 
     public Entrevista() {
     }
 
-    public Entrevista(String codigo, String codigoOferta, String nombreOferta, String codigoUsuario, String nombreUsuario, String fecha, String hora, String ubicacion, String estado, String nota) {
+    public Entrevista(String codigo, String codigoOferta, String nombreOferta, String codigoUsuario, String nombreUsuario, String fecha, String hora, String ubicacion, String estado, String nota, String codigoSolicitud) {
         this.codigo = codigo;
         this.codigoOferta = codigoOferta;
         this.nombreOferta = nombreOferta;
@@ -34,6 +35,7 @@ public class Entrevista {
         this.ubicacion = ubicacion;
         this.estado = estado;
         this.nota = nota;
+        this.codigoSolicitud = codigoSolicitud;
     }
 
     public String getCodigo() {
@@ -115,6 +117,21 @@ public class Entrevista {
     public void setNota(String nota) {
         this.nota = nota;
     }
+
+    public String getCodigoSolicitud() {
+        return codigoSolicitud;
+    }
+
+    public void setCodigoSolicitud(String codigoSolicitud) {
+        this.codigoSolicitud = codigoSolicitud;
+    }
+
+    @Override
+    public String toString() {
+        return "Entrevista{" + "codigo=" + codigo + ", codigoOferta=" + codigoOferta + ", nombreOferta=" + nombreOferta + ", codigoUsuario=" + codigoUsuario + ", nombreUsuario=" + nombreUsuario + ", fecha=" + fecha + ", hora=" + hora + ", ubicacion=" + ubicacion + ", estado=" + estado + ", nota=" + nota + ", codigoSolicitud=" + codigoSolicitud + '}';
+    }
     
+    
+
     
 }

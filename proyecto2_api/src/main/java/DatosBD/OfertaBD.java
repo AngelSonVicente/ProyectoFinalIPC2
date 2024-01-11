@@ -26,7 +26,7 @@ public class OfertaBD {
     private static String SelectOfertaID = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.codigo = ?";
 
     private static String Existe="SELECT * FROM ofertas WHERE codigo = ? AND estado = 'Finalizado'";
-    private static String Insert = "INSERT INTO ofertas (codigo_empresa, nombre, descripcion, categoria, estado, fecha_publicacion, fecha_limite, salario, modalidad, ubicacion, detalles) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static String Insert = "INSERT INTO ofertas (codigo, codigo_empresa, nombre, descripcion, categoria, estado, fecha_publicacion, fecha_limite, salario, modalidad, ubicacion, detalles, usuario_elegido) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static String Update = "UPDATE ofertas set nombre = ?, descripcion = ? , categoria = ?, estado = ?, fecha_limite = ?, salario = ?, modalidad = ?, ubicacion = ?, detalles = ? WHERE codigo = ?";
     private static String UpdateEstado = "UPDATE ofertas set estado = ? WHERE codigo = ?";
 
@@ -218,18 +218,24 @@ public class OfertaBD {
         String fecha = fechaActual.format(formato);
         try {
             PreparedStatement insert = conexion.prepareStatement(Insert, PreparedStatement.RETURN_GENERATED_KEYS);
-            insert.setString(1, oferta.getCodigoEmpresa());
-            insert.setString(2, oferta.getNombre());
-            insert.setString(3, oferta.getDescripcion());
-            insert.setString(4, oferta.getCategoria());
-            insert.setString(5, "Activo");
-            insert.setString(6, fecha);
-            insert.setString(7, oferta.getFechaLimite());
-            insert.setFloat(8, oferta.getSalario());
-            insert.setString(9, oferta.getModadidad());
-            insert.setString(10, oferta.getUbicacion());
-            insert.setString(11, oferta.getDetalle());
+            insert.setString(1, oferta.getCodigo());
+            insert.setString(2, oferta.getCodigoEmpresa());
+            insert.setString(3, oferta.getNombre());
+            insert.setString(4, oferta.getDescripcion());
+            insert.setString(5, oferta.getCategoria());
+            insert.setString(6, oferta.getEstado());
+            insert.setString(7, fecha);
+            insert.setString(8, oferta.getFechaLimite());
+            insert.setFloat(9, oferta.getSalario());
+            insert.setString(10, oferta.getModadidad());
+            insert.setString(11, oferta.getUbicacion());
+            insert.setString(12, oferta.getDetalle());
+            insert.setString(13, oferta.getUsuarioElegido());
+            
+          
 
+          
+            System.out.println("------------Creando Oferta OFERTA------------");
             System.out.println(insert.toString());
             int affectedRows = insert.executeUpdate();
 
@@ -240,7 +246,7 @@ public class OfertaBD {
             try (ResultSet generatedKeys = insert.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     String generatedID = generatedKeys.getString(1);
-                    System.out.println("categoria Creada");
+                    System.out.println("Oferta Creada");
                     oferta.setCodigo(generatedID);
                     return oferta;
                 } else {

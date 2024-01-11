@@ -8,6 +8,7 @@ import Datos.DashBoard;
 import Datos.JsonUtil;
 import Datos.Usuario;
 import Service.UsuarioService;
+import exceptions.InvalidDataException;
 import exceptions.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -70,11 +71,17 @@ public class UsuarioServlet extends HttpServlet {
         System.out.println("nombre"+user.getNombre());
         System.out.println("contraseña"+user.getPassword());
         
-        Usuario usuarioCreado = usuarioService.CrearUsuario(user);
-            jsonUtil.EnviarJson(response, usuarioCreado);
+        Usuario usuarioCreado;
+        try {
+            usuarioCreado = usuarioService.CrearUsuario(user);
+      jsonUtil.EnviarJson(response, usuarioCreado);
         
-             response.setStatus(HttpServletResponse.SC_OK);
+        } catch (InvalidDataException ex) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
+        }
+            
+         
     }
 
     @Override

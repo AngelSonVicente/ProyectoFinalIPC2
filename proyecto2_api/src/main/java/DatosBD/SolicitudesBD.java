@@ -26,7 +26,7 @@ public class SolicitudesBD {
     private static String SelectSoliID = "SELECT s.*, o.codigo AS codigo_oferta, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo JOIN usuarios AS u ON s.codigo_usuario = u.codigo WHERE s.codigo = ?";
     private static String ActualizarEstado="UPDATE solicitudes SET estado = ? WHERE codigo = ?";
     private static String Delete = "DELETE FROM solicitudes WHERE codigo = ?";
-    private static String Insert = "INSERT INTO solicitudes (codigo_oferta, codigo_usuario, mensaje, estado) VALUES (?, ?, ?, 'Activo')";
+    private static String Insert = "INSERT INTO solicitudes (codigo ,codigo_oferta, codigo_usuario, mensaje, estado) VALUES (?, ?, ?, ?, ?)";
 
     private static String SelectUsuarioOferta ="SELECT * FROM solicitudes WHERE codigo_oferta = ? AND codigo_usuario = ?";
     //
@@ -34,9 +34,11 @@ public class SolicitudesBD {
         System.out.println("esta creando la solicitud");
         try {
             PreparedStatement insert = conexion.prepareStatement(Insert, PreparedStatement.RETURN_GENERATED_KEYS);
-            insert.setString(1, solicitud.getCodigoOferta());
-            insert.setString(2, solicitud.getCodigoUsuario());
-            insert.setString(3, solicitud.getMensaje());
+            insert.setString(1, solicitud.getCodigo());
+            insert.setString(2, solicitud.getCodigoOferta());
+            insert.setString(3, solicitud.getCodigoUsuario());
+            insert.setString(4, solicitud.getMensaje());
+            insert.setString(5, solicitud.getEstado());
 
             int affectedRows = insert.executeUpdate();
 

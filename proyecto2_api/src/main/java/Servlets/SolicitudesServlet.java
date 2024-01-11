@@ -90,6 +90,7 @@ public class SolicitudesServlet extends HttpServlet {
         }
         String payload = buffer.toString();
         Solicitudes solicitudFE = gson.fromJson(payload, Solicitudes.class);
+        solicitudFE.setEstado("Activo");
 
         System.out.println("codigo empleo: " + solicitudFE.getCodigoOferta());
         System.out.println("codigo usuario: " + solicitudFE.getCodigoUsuario());
@@ -137,6 +138,7 @@ public class SolicitudesServlet extends HttpServlet {
         String codigoSolicitud=request.getParameter("codigoSoli");
         String codigoOferta=request.getParameter("codigoOferta");
         String Estado=request.getParameter("estado");
+        
         Solicitudes soli = new Solicitudes(codigoSolicitud, codigoOferta, null, null, null, null, Estado);
        Solicitudes soliCreada= solicitudService.actualizarEstadoSolicitud(soli);
        jsonUtil.EnviarJson(response, soliCreada);

@@ -62,21 +62,17 @@ public class EntrevistasServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        System.out.println("Entrando al post de Entrevistas");
-        var entrevistaFE = jsonUtil.JsonAObjeto(request, Entrevista.class);
-        Entrevista entrevista = (Entrevista) entrevistaFE;
-
+        
+        String body = jsonUtil.getBody(request);
+        
         try {
-
-            Entrevista entrevistaCrada = entrevistaService.crearEntrevista(entrevista);
-            jsonUtil.EnviarJson(response, entrevistaCrada);
-
-            response.setStatus(HttpServletResponse.SC_OK);
-
+            entrevistaService.procesarSolicitud(body, response);
         } catch (InvalidDataException ex) {
-
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+              response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
+        
+
+        
 
     }
 

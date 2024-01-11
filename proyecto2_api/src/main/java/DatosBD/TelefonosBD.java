@@ -38,7 +38,6 @@ public class TelefonosBD {
            
             // Iterar sobre la lista de teléfonos
             for (int i = 0; i < telefonos.size(); i++) {
-                // Configuramos cada teléfono en la posición 'i+2' (ya que la posición 1 es para el código de usuario)
                 insert.setString(2, telefonos.get(i));
            
             int affectedRows = insert.executeUpdate();

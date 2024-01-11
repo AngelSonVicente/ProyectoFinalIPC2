@@ -80,6 +80,7 @@ public class LoginService {
             System.out.println("si ingresó");
 
             usuario = UsuarioBD.getUsuarioByUser(UsuarioIngresado);
+          
             return usuario;
 
         }

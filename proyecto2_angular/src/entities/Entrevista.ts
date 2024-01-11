@@ -9,5 +9,6 @@ export class Entrevista {
     ubicacion!: string;
     estado!: string;
     nota!: string;
+    codigoSolicitud!: string;
 
 }
