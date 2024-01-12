@@ -23,6 +23,8 @@ export class CompletarInformacionService {
     
         return this.httpClient.post<CompletarPerfilUsuario>(this.API_URL + 'CompletarInformacion', formData);
       }
+
+
       
     public completarEmpresa(informacion: Empresa): Observable<Empresa> {
         const formData: FormData = new FormData();
@@ -31,6 +33,13 @@ export class CompletarInformacionService {
         console.log('Conectando con el BE:', informacion);
     
         return this.httpClient.post<Empresa>(this.API_URL + 'CompletarInformacion', formData);
+      }
+   
+    public ActualizarPerfilUsuario(informacion: CompletarPerfilUsuario): Observable<CompletarPerfilUsuario> {
+       
+        console.log('Conectando con el BE:', informacion);
+    
+        return this.httpClient.put<CompletarPerfilUsuario>(this.API_URL + 'CompletarInformacion', informacion);
       }
    
 

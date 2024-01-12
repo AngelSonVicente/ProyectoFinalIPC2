@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +24,8 @@ public class PreferenciasBD {
     }
 
       private String Insert = "INSERT INTO preferencias (codigo_usuario, codigo_categoria) VALUES (?,?)";
-
+      private String Select = "SELECT * FROM preferencias WHERE codigo_usuario = ?";
+      private String Delete = "DELETE FROM preferencias WHERE codigo_usuario = ?";
       
     public CompletarPerfilUsuario ingresarPreferencias(CompletarPerfilUsuario perfilUsuario) {
         try {
@@ -54,6 +56,53 @@ public class PreferenciasBD {
 
         return null;
     }
+    
+       public List<String> getPreferencias(String codigo) {
+        System.out.println("entramos al getofertas");
+        List<String> categoriasPreferecia = new ArrayList<>();
+        try {
+            PreparedStatement select = conexion.prepareStatement(Select);
+            select.setString(1, codigo);
+            ResultSet resultset = select.executeQuery();
+            while (resultset.next()) {
+                categoriasPreferecia.add(resultset.getString("codigo_categoria"));
+            }
+
+        } catch (SQLException ex) {
+            // TODO pendiente manejo
+
+            System.out.println("-----------------------------------------------------------------");
+            System.out.println(ex);
+        }
+
+        return categoriasPreferecia;
+    }
+       
+       
+       public boolean eliminarPreferencias(String codigoUsuario) {
+        try {
+            // Preparar la declaración SQL
+            PreparedStatement deleteStatement = conexion.prepareStatement(Delete);
+
+            deleteStatement.setString(1, codigoUsuario);
+
+            int filasAfectadas = deleteStatement.executeUpdate();
+
+            if (filasAfectadas > 0) {
+                System.out.println("Registros eliminados ");
+                return true;
+         
+            } else {
+                System.out.println("No se encontraron registros para eliminar.");
+                return false;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
+
 
 
         

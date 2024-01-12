@@ -114,6 +114,11 @@ const rutasUsuario = [
     title: 'Reportes',
     component: ReportesComponent,
   },
+  {
+    path: 'Perfil',
+    title: 'Perfil',
+    component: PerfilUsuarioComponent,
+  },
 
   
 ];
@@ -158,6 +163,11 @@ const rutasEmpleador = [
     path: 'Reportes',
     title: 'Reportes Empleador',
     component: ReportesEmpleadorComponent
+  },
+  {
+    path: 'Perfil',
+    title: 'Perfil',
+    component: PerfilUsuarioComponent,
   },
   
   

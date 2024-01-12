@@ -1,0 +1,27 @@
+<h2>Curriculum Vitae Actual</h2>
+<iframe [src]="pdfSrc" width="100%" height="400px"></iframe>
+
+<br>
+<br>
+<div class="alert alert-danger" role="alert" *ngIf="archivoInvalido">
+    El Archivo que ha seleccionado no es un archivo PDF! <br>
+    Por favor, seleccione un archivo PDF.
+  </div>
+  <br>
+  <div class="form-row">
+    <div class="form-group">
+      <input type="file" accept=".pdf" class="form-control form-control-lg" (change)="onPDFFileSelected($event)" />
+    </div>
+
+    <br>
+    <br>
+    <button class="btn btn-primary"
+    [disabled]=" !archivoValido"
+    (click)="CompletarPerfilUsuario()">Carbiar Curriculum</button>
+
+    <br>
+    <br>
+    <br>
+  </div>
+
+<br>

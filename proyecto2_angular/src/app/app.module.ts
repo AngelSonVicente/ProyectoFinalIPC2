@@ -58,6 +58,10 @@ import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.componen
 import { CompletarInformacionComponent } from './completar-informacion/completar-informacion.component';
 import { BuscarUsuarioComponent } from './RecuperarCuenta/buscar-usuario/buscar-usuario.component';
 import { ReestablecerPasswordComponent } from './RecuperarCuenta/reestablecer-password/reestablecer-password.component';
+import { EditarPerfilGeneralComponent } from './EditarPerfil/editar-perfil-general/editar-perfil-general.component';
+import { EditarTelefonoCategoriaComponent } from './EditarPerfil/editar-telefono-categoria/editar-telefono-categoria.component';
+import { EditarCVComponent } from './EditarPerfil/editar-cv/editar-cv.component';
+import { CambiarContrasenaComponent } from './EditarPerfil/cambiar-contrasena/cambiar-contrasena.component';
 
 @NgModule({
   declarations: [
@@ -110,6 +114,10 @@ import { ReestablecerPasswordComponent } from './RecuperarCuenta/reestablecer-pa
          CompletarInformacionComponent,
          BuscarUsuarioComponent,
          ReestablecerPasswordComponent,
+         EditarPerfilGeneralComponent,
+         EditarTelefonoCategoriaComponent,
+         EditarCVComponent,
+         CambiarContrasenaComponent,
   ],
   imports: [
     BrowserModule,

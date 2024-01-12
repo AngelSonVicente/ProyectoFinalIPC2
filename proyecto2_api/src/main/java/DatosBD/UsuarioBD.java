@@ -26,6 +26,7 @@ public class UsuarioBD {
     private static final String SelectUsuarioCorreo = "SELECT * FROM usuarios WHERE correo = ?";
     private static final String Insert = "INSERT INTO usuarios (codigo, nombre, usuario, password, direccion, correo, cui, birth, tipo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String cambiarPassword = "UPDATE usuarios SET password = ? WHERE codigo = ?";
+    private static final String actualizarUsuario = "UPDATE usuarios SET nombre = ?, direccion = ?, correo = ?, cui = ?, birth = ? WHERE codigo = ?";
     private static final String ExisteCorreYUsuario = "SELECT * FROM usuarios WHERE usuario = ? OR correo = ? ";
 
     private static final String Dashboard = "SELECT COUNT(CASE WHEN tipo = 'Empleador' THEN 1 END) AS total_empleadores, COUNT(CASE WHEN tipo = 'Usuario' THEN 1 END) AS total_usuarios FROM usuarios;";
@@ -179,6 +180,39 @@ public class UsuarioBD {
         update.setString(1, util.Encriptar(password));
         update.setString(2, codigoUsuario);
         System.out.println("QueryFinalizacion : " + update.toString());
+        int affectedRows = update.executeUpdate();
+
+        if (affectedRows == 1) {
+            return true;
+        } else {
+            System.out.println("La actualización no tuvo éxito.");
+            return false;
+        }
+    }
+    catch (SQLException ex
+
+    
+        ) {
+        ex.printStackTrace();
+        System.out.println(ex);
+    }
+
+
+return false;
+}
+    public boolean ActualizarUsuario(Usuario usuario){
+
+    
+        System.out.println("Actualizando la password");
+    try {
+        PreparedStatement update = conexion.prepareStatement(actualizarUsuario);
+        update.setString(1, usuario.getNombre());
+        update.setString(2, usuario.getDireccion());
+        update.setString(3, usuario.getCorreo());
+        update.setString(4, usuario.getCui());
+        update.setString(5, usuario.getBirth());
+        update.setInt(6, usuario.getCodigo());
+        System.out.println("QueryActualizacion: " + update.toString());
         int affectedRows = update.executeUpdate();
 
         if (affectedRows == 1) {

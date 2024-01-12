@@ -1,0 +1,124 @@
+
+
+
+
+    <div class="col-md-12">
+        <div class="alert alert-success" role="alert" *ngIf="saved">
+            Usuario Actualizado Exitosamente. <br />
+
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="error">
+            Hubo un problema en la actualizacion de su infromacion. <br>
+            Falta algun Dato o el correo ya esta en uso por otro usuario!
+
+        </div>
+
+        <form [formGroup]="FormularioOferta" (ngSubmit)="submit()">
+            <div class="form-row">
+
+
+
+                <div class="form-group">
+                    <label for="inputAddress">Nombre</label>
+                    <input class="form-control"
+                        [class.is-invalid]="FormularioOferta.controls['nombre'].invalid && FormularioOferta.controls['nombre'].touched"
+                        id="nombre" name="nombre" formControlName="nombre" />
+
+                    <div *ngIf="FormularioOferta.controls['nombre'].invalid && (FormularioOferta.controls['nombre'].dirty || FormularioOferta.controls['nombre'].touched)"
+                        class="invalid-feedback">
+                        <div>
+                            Por favor ingrese el nombre
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                
+                <div class="form-group">
+                    <label for="inputAddress">Direccion</label>
+                    <input class="form-control"
+                        [class.is-invalid]="FormularioOferta.controls['direccion'].invalid && FormularioOferta.controls['direccion'].touched"
+                        id="direccion" name="direccion" formControlName="direccion" />
+
+                    <div *ngIf="FormularioOferta.controls['direccion'].invalid && (FormularioOferta.controls['direccion'].dirty || FormularioOferta.controls['direccion'].touched)"
+                        class="invalid-feedback">
+                        <div>
+                            Por favor ingrese el direccion
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+                <div class="form-group">
+                    <label for="inputAddress">correo</label>
+                    <input class="form-control"
+                        [class.is-invalid]="FormularioOferta.controls['correo'].invalid && FormularioOferta.controls['correo'].touched"
+                        id="correo" name="correo" formControlName="correo" />
+
+                    <div *ngIf="FormularioOferta.controls['correo'].invalid && (FormularioOferta.controls['correo'].dirty || FormularioOferta.controls['correo'].touched)"
+                        class="invalid-feedback">
+                        <div>
+                            Por favor ingrese un correo
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+                <div class="form-group">
+                    <label for="inputAddress">CUI</label>
+                    <input class="form-control"
+                        [class.is-invalid]="FormularioOferta.controls['cui'].invalid && FormularioOferta.controls['cui'].touched"
+                        id="cui" name="cui" formControlName="cui" />
+
+                    <div *ngIf="FormularioOferta.controls['cui'].invalid && (FormularioOferta.controls['cui'].dirty || FormularioOferta.controls['cui'].touched)"
+                        class="invalid-feedback">
+                        <div>
+                            Por favor, ingrese su cui
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="form-group">
+                    <label for="inputAddress">Fecha de nacimiento</label>
+                    <input class="form-control" type="date"
+                        [class.is-invalid]="FormularioOferta.controls['birth'].invalid && FormularioOferta.controls['birth'].touched"
+                        id="birth" name="birth" formControlName="birth" />
+
+                    <div *ngIf="FormularioOferta.controls['birth'].invalid && (FormularioOferta.controls['birth'].dirty || FormularioOferta.controls['birth'].touched)"
+                        class="invalid-feedback">
+                        <div>
+                            Por favor seleccione una Fecha
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <br />
+                <button class="btn btn-success" type="submit"
+                    [disabled]="FormularioOferta.invalid">Actualizar</button>
+            </div>
+        </form>

@@ -1,0 +1,75 @@
+<br>
+<br>
+<div class="container" >
+
+    <div class="alert alert-success" role="alert" *ngIf="saved">
+        Categorias y Telefonos Actualizado Exitosamente. <br />
+
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="error">
+        Hubo un problema en la actualizacion de sus telefonos y categorias, por favor  intentar de nuevo. <br>
+       
+
+    </div>
+    <br>
+
+
+    <div>
+      <label for="telefono">Teléfono</label>
+      <input class="form-control" id="telefono" type="number" [(ngModel)]="telefono" />
+      <br>
+      <button class="btn btn-success" (click)="agregarTelefono()">Agregar Teléfono</button>
+    </div>
+    <br>
+    <br>
+    <table class="table table-striped" >
+      <thead>
+        <tr>
+          <th>Teléfono</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let telefono of telefonos; let i = index">
+          <td>{{ telefono }}</td>
+          <td><button class="btn btn-outline-danger" (click)="eliminarTelefono(i)">Eliminar</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+
+
+    
+    <div>
+        <label for="categoria">Categoría</label>
+        <select class="form-select" id="categoria" [(ngModel)]="categoriaSeleccionada">
+          <option *ngFor="let categoria of categorias" [value]="categoria.codigo">
+            {{ categoria.nombre }} - Descripcion: {{ categoria.descripcion }}
+          </option>
+        </select>
+        <button class="btn btn-success" (click)="agregarCategoria()">Agregar Categoría</button>
+      </div>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Categoría</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let categoria of categoriasSeleccionadas; let i = index">
+            <td>{{ obtenerNombreCategoria(categoria) }}</td>
+            <td><button class="btn btn-outline-danger" (click)="eliminarCategoria(i)">Eliminar</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <button class="btn btn-primary"
+      [disabled]="(telefonos.length == 0 || categoriasSeleccionadas.length == 0)"
+      (click)="ActualizarPerfilUsuario()">Actualizar</button>
+    <br>
+
+
+  </div>

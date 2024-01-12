@@ -1,7 +1,8 @@
 <app-navbar></app-navbar>
+
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
+    <div class="row align-items-start">
+        <div class="col">
             <h4 class="display-5">Perfil</h4><br>
             <p class="lead">nombre: {{usuario.nombre}}</p>
             <p class="lead">usuario: {{usuario.usuario}}</p>
@@ -9,9 +10,70 @@
             <p class="lead">correo: {{usuario.correo}}</p>
             <p class="lead">CUI: {{usuario.cui}}</p>
             <p class="lead">Fecha Nacimiento: {{usuario.birth}}</p>
+
+            
         </div>
+
+        <div class="col-md-7">
+
+      
+        <div class="col-md-7">
+            <h5 class="display-8">Teléfonos</h5>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let telefono of telefonos">{{ telefono }}</li>
+            </ul>
+        </div>
+        <div class="col-md-7">
+            <h6 class="display-8">Categorías de Preferencia</h6>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let categoria of categoriaPreferencia">{{ obtenerNombreCategoria(categoria) }}</li>
+            </ul>
+        </div>
+        
+    </div>
+        
         <hr>
-        <button class="btn btn-outline-dark" (click)="Editar()">Editar</button>
+        <div *ngIf="usuario.tipo=='Admin'" class="row">
+            <button class="btn btn-outline-dark" (click)="EditarInformacion()">Editar</button>
+        </div>
+
+        <div *ngIf="usuario.tipo=='Usuario'" class="btn-group" role="group"
+            aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
+                (click)="EditarInformacion()">
+            <label class="btn btn-outline-dark" for="btnradio1">Editar Informacion</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+                (click)="EditarTelefonoCategoria()">
+            <label class="btn btn-outline-dark" for="btnradio2">Editar telefonos/preferencias</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off"
+                (click)="EditarCV()">
+            <label class="btn btn-outline-dark" for="btnradio3">Cambiar curriculum</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off"
+                (click)="CambiarContrasena()">
+            <label class="btn btn-outline-dark" for="btnradio4">Cambiar contraseña</label>
+
+        </div>
+
+
+    </div>
+
+    
+
+    <div *ngIf="editarInformacion">
+        <app-editar-perfil-general (usuarioActualizado)="recibirUsuario($event)"></app-editar-perfil-general>
+    </div>
+
+    <div *ngIf="editarTelefonoCategoria">
+        <app-editar-telefono-categoria (actualizado)="actualizoCategoriasTelefonos()"></app-editar-telefono-categoria>
+    </div>
+    <div *ngIf="editarCv">
+        <app-editar-cv></app-editar-cv>
+    </div>
+    <div *ngIf="cambiarContrasena">
+        <app-cambiar-contrasena></app-cambiar-contrasena>
     </div>
 
 
@@ -19,135 +81,6 @@
 
 
 
-    <div class="row" *ngIf="editar">
-        <div class="col-md-12">
-            <div class="alert alert-success" role="alert" *ngIf="saved">
-                Usuario Actualizado Exitosamente. <br />
-                Codigo Usuario Creada: {{codigoCreado}}
-
-            </div>
-            <form [formGroup]="FormularioOferta" (ngSubmit)="submit()">
-                <div class="form-row">
 
 
-
-                    <div class="form-group">
-                        <label for="inputAddress">Nombre</label>
-                        <input class="form-control"
-                            [class.is-invalid]="FormularioOferta.controls['nombre'].invalid && FormularioOferta.controls['nombre'].touched"
-                            id="nombre" name="nombre" formControlName="nombre" />
-
-                        <div *ngIf="FormularioOferta.controls['nombre'].invalid && (FormularioOferta.controls['nombre'].dirty || FormularioOferta.controls['nombre'].touched)"
-                            class="invalid-feedback">
-                            <div>
-                                Por favor ingrese el nombre
-                            </div>
-                        </div>
-                    </div>
-
-
-
-
-
-                    <div class="form-group">
-                        <label for="inputAddress">Usuario</label>
-                        <input class="form-control"
-                            [class.is-invalid]="FormularioOferta.controls['usuario'].invalid && FormularioOferta.controls['usuario'].touched"
-                            id="usuario" name="usuario" formControlName="usuario" />
-
-                        <div *ngIf="FormularioOferta.controls['usuario'].invalid && (FormularioOferta.controls['usuario'].dirty || FormularioOferta.controls['usuario'].touched)"
-                            class="invalid-feedback">
-                            <div>
-                                Por favor ingrese un usuario
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="inputAddress">Direccion</label>
-                        <input class="form-control"
-                            [class.is-invalid]="FormularioOferta.controls['direccion'].invalid && FormularioOferta.controls['direccion'].touched"
-                            id="direccion" name="direccion" formControlName="direccion" />
-
-                        <div *ngIf="FormularioOferta.controls['direccion'].invalid && (FormularioOferta.controls['direccion'].dirty || FormularioOferta.controls['direccion'].touched)"
-                            class="invalid-feedback">
-                            <div>
-                                Por favor ingrese el direccion
-                            </div>
-                        </div>
-                    </div>
-
-
-
-
-
-
-
-
-                    <div class="form-group">
-                        <label for="inputAddress">correo</label>
-                        <input class="form-control"
-                            [class.is-invalid]="FormularioOferta.controls['correo'].invalid && FormularioOferta.controls['correo'].touched"
-                            id="correo" name="correo" formControlName="correo" />
-
-                        <div *ngIf="FormularioOferta.controls['correo'].invalid && (FormularioOferta.controls['correo'].dirty || FormularioOferta.controls['correo'].touched)"
-                            class="invalid-feedback">
-                            <div>
-                                Por favor ingrese un correo
-                            </div>
-                        </div>
-                    </div>
-
-
-
-
-
-
-
-
-
-
-                    <div class="form-group">
-                        <label for="inputAddress">CUI</label>
-                        <input class="form-control"
-                            [class.is-invalid]="FormularioOferta.controls['cui'].invalid && FormularioOferta.controls['cui'].touched"
-                            id="cui" name="cui" formControlName="cui" />
-
-                        <div *ngIf="FormularioOferta.controls['cui'].invalid && (FormularioOferta.controls['cui'].dirty || FormularioOferta.controls['cui'].touched)"
-                            class="invalid-feedback">
-                            <div>
-                                Por favor, ingrese su cui
-                            </div>
-                        </div>
-                    </div>
-
-
-
-
-
-
-                    <div class="form-group">
-                        <label for="inputAddress">Fecha de nacimiento</label>
-                        <input class="form-control" type="date"
-                            [class.is-invalid]="FormularioOferta.controls['birth'].invalid && FormularioOferta.controls['birth'].touched"
-                            id="birth" name="birth" formControlName="birth" />
-
-                        <div *ngIf="FormularioOferta.controls['birth'].invalid && (FormularioOferta.controls['birth'].dirty || FormularioOferta.controls['birth'].touched)"
-                            class="invalid-feedback">
-                            <div>
-                                Por favor seleccione una Fecha
-                            </div>
-                        </div>
-                    </div>
-
-
-
-
-                    <br />
-                    <button class="btn btn-success" type="submit"
-                        [disabled]="FormularioOferta.invalid">Actualizar</button>
-                </div>
-            </form>
-        </div>
 </div>
