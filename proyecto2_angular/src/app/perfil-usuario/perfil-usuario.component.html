@@ -11,31 +11,59 @@
             <p class="lead">CUI: {{usuario.cui}}</p>
             <p class="lead">Fecha Nacimiento: {{usuario.birth}}</p>
 
-            
+
         </div>
 
-        <div class="col-md-7">
+        <div class="col-md-7" >
 
-      
-        <div class="col-md-7">
-            <h5 class="display-8">Teléfonos</h5>
-            <ul class="list-group">
-                <li class="list-group-item" *ngFor="let telefono of telefonos">{{ telefono }}</li>
-            </ul>
+
+            <div class="col-md-7" *ngIf="usuario.tipo=='Usuario' || usuario.tipo=='Empleador'">
+                <h5 class="display-8">Teléfonos</h5>
+                <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let telefono of telefonos">{{ telefono }}</li>
+                </ul>
+            </div>
+            <div class="col-md-7"*ngIf="usuario.tipo=='Usuario'" >
+                <h6 class="display-8">Categorías de Preferencia</h6>
+                <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let categoria of categoriaPreferencia">{{
+                        obtenerNombreCategoria(categoria) }}</li>
+                </ul>
+            </div>
+
+            <div *ngIf="usuario.tipo=='Empleador'">
+                <div class="row">
+                    <div class="col-md-12">
+                      <h4 class="display-5"></h4>
+                      <p class="lead">Mision: {{empresa.mision}}</p>
+                      <p class="lead">Vision: {{empresa.vision}}</p>
+
+                      <hr>
+
+                      <h4 class="display-7">Metodo de pago</h4>
+                      
+                      <p class="lead">Tarjeta: termina en {{getTarjeta()}}</p>
+                      <p class="lead">titular:  {{empresa.titularTarjeta}}</p>
+                   
+                    </div>
+                  </div>
+
+            </div>
+
         </div>
-        <div class="col-md-7">
-            <h6 class="display-8">Categorías de Preferencia</h6>
-            <ul class="list-group">
-                <li class="list-group-item" *ngFor="let categoria of categoriaPreferencia">{{ obtenerNombreCategoria(categoria) }}</li>
-            </ul>
-        </div>
-        
-    </div>
-        
+
         <hr>
-        <div *ngIf="usuario.tipo=='Admin'" class="row">
-            <button class="btn btn-outline-dark" (click)="EditarInformacion()">Editar</button>
-        </div>
+        <div *ngIf="usuario.tipo=='Admin'" class="btn-group" role="group"
+        aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
+            (click)="EditarInformacion()">
+        <label class="btn btn-outline-dark" for="btnradio1">Editar Informacion</label>
+
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+            (click)="CambiarContrasena()">
+        <label class="btn btn-outline-dark" for="btnradio2">Cambiar contraseña</label>
+
+    </div>
 
         <div *ngIf="usuario.tipo=='Usuario'" class="btn-group" role="group"
             aria-label="Basic radio toggle button group">
@@ -56,11 +84,27 @@
             <label class="btn btn-outline-dark" for="btnradio4">Cambiar contraseña</label>
 
         </div>
+        <div *ngIf="usuario.tipo=='Empleador'" class="btn-group" role="group"
+            aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
+                (click)="EditarInformacion()">
+            <label class="btn btn-outline-dark" for="btnradio1">Editar Informacion</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+                (click)="EditarEmpresa()">
+            <label class="btn btn-outline-dark" for="btnradio2">Editar telefonos/Metodos de pago</label>
+
+            
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off"
+                (click)="CambiarContrasena()">
+            <label class="btn btn-outline-dark" for="btnradio3">Cambiar contraseña</label>
+
+        </div>
 
 
     </div>
 
-    
+
 
     <div *ngIf="editarInformacion">
         <app-editar-perfil-general (usuarioActualizado)="recibirUsuario($event)"></app-editar-perfil-general>
@@ -72,8 +116,12 @@
     <div *ngIf="editarCv">
         <app-editar-cv></app-editar-cv>
     </div>
+    
     <div *ngIf="cambiarContrasena">
         <app-cambiar-contrasena></app-cambiar-contrasena>
+    </div>
+    <div *ngIf="editarEmpresa">
+        <app-editar-empresa (actualizado)="actualizoEmpresa()"></app-editar-empresa>
     </div>
 
 

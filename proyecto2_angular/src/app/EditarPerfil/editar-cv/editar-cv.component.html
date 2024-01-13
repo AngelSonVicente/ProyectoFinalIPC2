@@ -4,24 +4,30 @@
 <br>
 <br>
 <div class="alert alert-danger" role="alert" *ngIf="archivoInvalido">
-    El Archivo que ha seleccionado no es un archivo PDF! <br>
-    Por favor, seleccione un archivo PDF.
+  El Archivo que ha seleccionado no es un archivo PDF! <br>
+  Por favor, seleccione un archivo PDF.
+</div>
+<div class="alert alert-danger" role="alert" *ngIf="error">
+  Hubo un erorr al actualizar el curriculum, por favor intente de nuevo! 
+</div>
+<div class="alert alert-success" role="alert" *ngIf="actualizado">
+Su curriculum se ha actualizado Correctamente!
+</div>
+
+<br>
+<div class="form-row">
+  <div class="form-group">
+    <input type="file" accept=".pdf" class="form-control form-control-lg" (change)="onPDFFileSelected($event)" />
   </div>
+
   <br>
-  <div class="form-row">
-    <div class="form-group">
-      <input type="file" accept=".pdf" class="form-control form-control-lg" (change)="onPDFFileSelected($event)" />
-    </div>
+  <br>
+  <button class="btn btn-primary" [disabled]=" !archivoValido" (click)="ActualizarCurriculum()">Carbiar
+    Curriculum</button>
 
-    <br>
-    <br>
-    <button class="btn btn-primary"
-    [disabled]=" !archivoValido"
-    (click)="CompletarPerfilUsuario()">Carbiar Curriculum</button>
-
-    <br>
-    <br>
-    <br>
-  </div>
+  <br>
+  <br>
+  <br>
+</div>
 
 <br>

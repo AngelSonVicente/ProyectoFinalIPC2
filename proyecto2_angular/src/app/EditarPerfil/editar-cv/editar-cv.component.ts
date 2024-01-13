@@ -11,6 +11,7 @@ import { EntrevistasService } from 'src/services/EntrevistaService';
 import { Entrevista } from 'src/entities/Entrevista';
 import { Solicitudes } from 'src/entities/Solicitudes';
 import { SolicitudesService } from 'src/services/SolicitudesService';
+import { CurriculumService } from 'src/services/CurriculumService';
 @Component({
   selector: 'app-editar-cv',
   templateUrl: './editar-cv.component.html',
@@ -25,11 +26,13 @@ export class EditarCVComponent {
   fileUploaded: boolean = false;
   archivoValido: boolean = false;
   archivoInvalido: boolean = false;
+  error: boolean = false;
+  actualizado: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
     private usuarioService: UsuarioService, private sanitizer: DomSanitizer
     , private horaService: HoraDisponibleService, private entrevistaService: EntrevistasService,
-    private solicitudService: SolicitudesService){
+    private solicitudService: SolicitudesService, private curriculumService: CurriculumService){
 
   }
 
@@ -67,9 +70,25 @@ export class EditarCVComponent {
   }
 
 
-  CompletarPerfilUsuario(): void {
+  ActualizarCurriculum(): void {
 
-//enviar al servlet
+    this.curriculumService.actualizarCurriculum(this.usuario.codigo.toString(), this.selectedPDFFile).subscribe({
+      next: (actualizado: Usuario) => {
+
+        this.usuario = actualizado;
+
+        this.actualizado = true;
+        this.error=false;
+        localStorage.setItem('usuario', JSON.stringify(this.usuario));
+        this.pdfSrc =  this.mostrarPDF(actualizado.cv);
+
+      },
+      error: (error: any) => {
+
+        this.actualizado = false;
+        this.error=true;
+      }
+    });
 
 
   }

@@ -8,6 +8,7 @@ import Datos.JsonUtil;
 import Datos.RecuperarCuenta;
 import Service.ReestablecerPasswordService;
 import exceptions.InvalidDataException;
+import exceptions.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -50,7 +51,7 @@ public class ReestrablecerPasswordServlet extends HttpServlet {
         String body = jsonUtil.getBody(request);
 
         try {
-            reestablecerPasswordService.CambiarPassword(body, response);
+            reestablecerPasswordService.ReestablecerPassword(body, response);
             response.setStatus(HttpServletResponse.SC_OK);
 
         } catch (InvalidDataException ex) {
@@ -59,5 +60,25 @@ public class ReestrablecerPasswordServlet extends HttpServlet {
         }
 
     }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+        String body = jsonUtil.getBody(request);
+        
+        
+           ReestablecerPasswordService reestablecerPasswordService = new ReestablecerPasswordService();
+
+        try {
+            reestablecerPasswordService.Actualizarpassword(body, response);
+        } catch (InvalidDataException | NotFoundException ex) {
+             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+       
+        } 
+           
+    
+    }
+    
+    
 
 }

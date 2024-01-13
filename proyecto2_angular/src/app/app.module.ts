@@ -62,6 +62,7 @@ import { EditarPerfilGeneralComponent } from './EditarPerfil/editar-perfil-gener
 import { EditarTelefonoCategoriaComponent } from './EditarPerfil/editar-telefono-categoria/editar-telefono-categoria.component';
 import { EditarCVComponent } from './EditarPerfil/editar-cv/editar-cv.component';
 import { CambiarContrasenaComponent } from './EditarPerfil/cambiar-contrasena/cambiar-contrasena.component';
+import { EditarEmpresaComponent } from './EditarPerfil/editar-empresa/editar-empresa.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { CambiarContrasenaComponent } from './EditarPerfil/cambiar-contrasena/ca
          EditarTelefonoCategoriaComponent,
          EditarCVComponent,
          CambiarContrasenaComponent,
+         EditarEmpresaComponent,
   ],
   imports: [
     BrowserModule,

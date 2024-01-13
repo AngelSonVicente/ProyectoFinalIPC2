@@ -17,6 +17,9 @@ export class EmpresaService {
         console.log('connectando con el BE: ');
         return this.httpClient.get<Empresa>(this.API_URL + "Empresa?codigo="+codigoEmpresa);
     }
+    public actualizarEmpresa(empresa: Empresa): Observable<Empresa> {
+        return this.httpClient.put<Empresa>(this.API_URL + "Empresa", empresa);
+    }
 
    
 

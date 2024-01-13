@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Categoria } from 'src/entities/Categoria';
+import { Empresa } from 'src/entities/Empresa';
 import { Oferta } from 'src/entities/Oferta';
 import { Usuario } from 'src/entities/Usuario';
 import { CategoriaService } from 'src/services/CategoriaService';
+import { EmpresaService } from 'src/services/EmpresaService';
 import { OfertaService } from 'src/services/OfertaService';
 import { PreferenciasService } from 'src/services/PreferenciasService';
 import { TelefonosService } from 'src/services/TelefonosService';
@@ -18,6 +20,7 @@ import { UsuarioService } from 'src/services/UsuarioService';
 export class PerfilUsuarioComponent {
 
 
+  empresa!: Empresa;
 
   categorias!: Categoria[];
   FormularioOferta!: FormGroup;
@@ -26,6 +29,7 @@ export class PerfilUsuarioComponent {
   editarTelefonoCategoria: boolean = false;
   editarCv: boolean = false;
   cambiarContrasena: boolean = false;
+  editarEmpresa: boolean = false;
 
   UsuarioCreacion!: Usuario;
   codigoCreado!: string;
@@ -38,8 +42,7 @@ export class PerfilUsuarioComponent {
 
 
   constructor(private categoriaService: CategoriaService, private usuarioService: UsuarioService, private formBuilder: FormBuilder,
-    private route: ActivatedRoute, private ofertaService: OfertaService,
-    private router: Router, private telefonosService: TelefonosService, private preferenciaService: PreferenciasService) { }
+   private telefonosService: TelefonosService, private preferenciaService: PreferenciasService, private empresaService: EmpresaService) { }
   ngOnInit(): void {
     let jsonUsuario = localStorage.getItem('usuario');
     this.usuario = jsonUsuario ? JSON.parse(jsonUsuario) : null;
@@ -52,6 +55,14 @@ export class PerfilUsuarioComponent {
       birth: [this.usuario.birth, [Validators.required]],
 
 
+    });
+
+    this.empresaService.getEmpresa(this.usuario.codigo.toString()).subscribe({
+      next: (empresa: Empresa) => {
+        this.empresa = empresa;
+
+  
+      }
     });
 
     this.categoriaService.getCategorias().subscribe({
@@ -71,6 +82,14 @@ export class PerfilUsuarioComponent {
 
 
 
+  }
+
+  getTarjeta(): string {
+    if (this.empresa && this.empresa.numeroTarjeta && this.empresa.numeroTarjeta.length >= 4) {
+      return this.empresa.numeroTarjeta.slice(-4);
+    } else {
+      return this.empresa.numeroTarjeta;  
+    }
   }
 
   obtenerNombreCategoria(codigoCategoria: string | number): string {
@@ -105,6 +124,7 @@ export class PerfilUsuarioComponent {
     this.editarCv = false;
     this.editarTelefonoCategoria = false;
     this.cambiarContrasena = false;
+    this.editarEmpresa= false;
   }
 
   EditarTelefonoCategoria(): void {
@@ -112,6 +132,14 @@ export class PerfilUsuarioComponent {
     this.editarCv = false;
     this.editarTelefonoCategoria = true;
     this.cambiarContrasena = false;
+
+  }
+
+  EditarEmpresa(): void {
+    this.editarInformacion = false;
+    this.cambiarContrasena = false;
+    this.editarEmpresa = true;
+
 
   }
 
@@ -128,6 +156,7 @@ export class PerfilUsuarioComponent {
     this.editarCv = false;
     this.editarTelefonoCategoria = false;
     this.cambiarContrasena = true;
+    this.editarEmpresa= false;
 
   }
 
@@ -168,6 +197,19 @@ export class PerfilUsuarioComponent {
   actualizoCategoriasTelefonos() {
 
 
+    this.getPerfilUsuario();
+
+
+  }
+  actualizoEmpresa() {
+
+    this.empresaService.getEmpresa(this.usuario.codigo.toString()).subscribe({
+      next: (empresa: Empresa) => {
+        this.empresa = empresa;
+
+  
+      }
+    });
     this.getPerfilUsuario();
 
 

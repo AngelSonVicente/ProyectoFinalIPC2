@@ -27,6 +27,7 @@ public class CurriculumBD {
 
     public boolean IngresarCV(String codigo, InputStream pdfCV) {
         System.out.println("Actualizando la CV");
+        System.out.println("cdigo: " + codigo);
         try {
             PreparedStatement update = conexion.prepareStatement(Update);
             update.setBlob(1, pdfCV);

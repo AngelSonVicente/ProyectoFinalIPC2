@@ -5,9 +5,11 @@
 package Servlets;
 
 import Datos.Empresa;
+import Datos.JsonUtil;
 import Datos.Oferta;
 import Service.EmpresaService;
 import com.google.gson.Gson;
+import exceptions.InvalidDataException;
 import exceptions.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,6 +18,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,6 +29,7 @@ import java.util.List;
 
 public class EmpresaServlet extends HttpServlet {
     private EmpresaService empresaService = new EmpresaService();
+    JsonUtil jsonUtil = new JsonUtil();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -51,6 +56,25 @@ public class EmpresaServlet extends HttpServlet {
         
         
     }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+   
+        String body= jsonUtil.getBody(request);
+        
+        try {
+            empresaService.ActualizarDatosEmpresa(body, response);
+        } catch (InvalidDataException ex) {
+        
+                  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+          
+            
+        }
+    
+    
+    }
+    
+    
     
     
     

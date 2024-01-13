@@ -1,0 +1,141 @@
+<div>
+
+    <div class="alert alert-success" role="alert" *ngIf="actualizadoo">
+        datos Actualizados Exitosamente. <br />
+
+    </div>
+    <div class="alert alert-danger" role="alert" *ngIf="error">
+        Hubo un problema en la actualizacion de su infromacion. <br>
+        por favor intentar de nuevo!
+
+    </div>
+    <br>
+
+
+    <div>
+        <label for="telefono">Teléfono</label>
+        <input class="form-control" id="telefono" type="number" [(ngModel)]="telefono" />
+        <br>
+        <button class="btn btn-success" (click)="agregarTelefono()">Agregar Teléfono</button>
+    </div>
+    <br>
+    <br>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Teléfono</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let telefono of telefonos; let i = index">
+                <td>{{ telefono }}</td>
+                <td><button class="btn btn-outline-danger" (click)="eliminarTelefono(i)">Eliminar</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <br>
+
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        Si no desea agregar un metodo de pago nuevo. Deje las casillas del metodo de pago en blanco!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <form [formGroup]="FormularioEmpresa">
+        <div class="form-row">
+
+
+
+            <div class="form-group">
+                <label for="inputAddress">Mision</label>
+                <input class="form-control"
+                    [class.is-invalid]="FormularioEmpresa.controls['mision'].invalid && FormularioEmpresa.controls['mision'].touched"
+                    id="mision" name="mision" formControlName="mision" />
+
+                <div *ngIf="FormularioEmpresa.controls['mision'].invalid && (FormularioEmpresa.controls['mision'].dirty || FormularioEmpresa.controls['mision'].touched)"
+                    class="invalid-feedback">
+                    <div>
+                        Por favor ingrese la mision de la empresa! (max 200 caracteres)
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="inputAddress">Vision</label>
+                <input class="form-control"
+                    [class.is-invalid]="FormularioEmpresa.controls['vision'].invalid && FormularioEmpresa.controls['vision'].touched"
+                    id="vision" name="vision" formControlName="vision" />
+
+                <div *ngIf="FormularioEmpresa.controls['vision'].invalid && (FormularioEmpresa.controls['vision'].dirty || FormularioEmpresa.controls['vision'].touched)"
+                    class="invalid-feedback">
+                    <div>
+                        Por favor ingrese la vision de la empresa! (max 200 caracteres)
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+
+            <h2>Metodo de pago</h2>
+            <hr>
+
+            <div class="form-group">
+                <label for="inputAddress">Titular de la Tarjeta</label>
+                <input class="form-control"
+                    [class.is-invalid]="FormularioEmpresa.controls['titularTarjeta'].invalid && FormularioEmpresa.controls['titularTarjeta'].touched"
+                    id="titularTarjeta" name="titularTarjeta" formControlName="titularTarjeta" />
+
+                <div *ngIf="FormularioEmpresa.controls['titularTarjeta'].invalid && (FormularioEmpresa.controls['titularTarjeta'].dirty || FormularioEmpresa.controls['titularTarjeta'].touched)"
+                    class="invalid-feedback">
+                    <div>
+                        ingrese el titular de la tarjeta!
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="inputAddress">Numero de la Tarjeta</label>
+                <input class="form-control" type="number"
+                    [class.is-invalid]="FormularioEmpresa.controls['numeroTarjeta'].invalid && FormularioEmpresa.controls['numeroTarjeta'].touched"
+                    id="numeroTarjeta" name="numeroTarjeta" formControlName="numeroTarjeta" />
+
+                <div *ngIf="FormularioEmpresa.controls['numeroTarjeta'].invalid && (FormularioEmpresa.controls['numeroTarjeta'].dirty || FormularioEmpresa.controls['numeroTarjeta'].touched)"
+                    class="invalid-feedback">
+                    <div>
+                        ingrese el numero de la tarjeta!
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <label for="inputAddress">Codigo de seguridad</label>
+                <input class="form-control" type="number"
+                    [class.is-invalid]="FormularioEmpresa.controls['codigoSeguridad'].invalid && FormularioEmpresa.controls['codigoSeguridad'].touched"
+                    id="codigoSeguridad" name="codigoSeguridad" formControlName="codigoSeguridad" />
+
+                <div *ngIf="FormularioEmpresa.controls['codigoSeguridad'].invalid && (FormularioEmpresa.controls['codigoSeguridad'].dirty || FormularioEmpresa.controls['codigoSeguridad'].touched)"
+                    class="invalid-feedback">
+                    <div>
+                        Ingrese el codigo de seguridad de la tarjeta
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <br />
+            <button class="btn btn-primary" [disabled]="FormularioEmpresa.invalid || telefonos.length==0 "
+                (click)="submit()">Completar Perfil</button>
+        </div>
+    </form>
+
+
+
+</div>

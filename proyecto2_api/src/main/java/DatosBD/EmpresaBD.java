@@ -25,7 +25,10 @@ public class EmpresaBD {
 
      private static String SelectEmpresaID = "SELECT e.*, u.nombre AS nombre_usuario FROM empresa AS e JOIN usuarios AS u ON e.cod_usuario = u.codigo WHERE e.cod_usuario = ?";
      private static String Insert = "INSERT INTO empresa (cod_usuario, mision, vision, titular_tarjeta, no_tarjeta, codigo_seguridad) VALUES (?, ?, ?, ?, ?, ?)";
-   //  static Connection conexion = ConexionBD.getInstancia().getConexion();
+ private static String UpdateEmpresa = "UPDATE empresa set mision = ?, vision = ? , titular_tarjeta = ?, no_tarjeta = ?, codigo_seguridad = ? WHERE cod_usuario = ?";
+ private static String UpdateMisionVision = "UPDATE empresa set mision = ?, vision = ? WHERE cod_usuario = ?";
+      
+//  static Connection conexion = ConexionBD.getInstancia().getConexion();
 
     
         public Empresa getEmpresa(String codigo) {
@@ -86,5 +89,60 @@ public class EmpresaBD {
     }
         
         
+          public boolean actualizarMisionVisionEmpresa(Empresa empresa) {
+        System.out.println("Actualizando la oferta");
+        try {
+            PreparedStatement update = conexion.prepareStatement(UpdateMisionVision);
+            update.setString(1, empresa.getMision());
+
+            update.setString(2, empresa.getVision());
+            update.setString(3, empresa.getCodigoEmpresa());
+
+            int affectedRows = update.executeUpdate();
+
+            if (affectedRows == 1) {
+                System.out.println("mision vision actualizada");
+                return true;
+            } else {
+                System.out.println("La actualización no tuvo éxito.");
+                return false;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("------------------------------------------------------------------------------");
+            System.out.println(ex);
+        }
+
+        return true;
+    }
+        
+          public boolean actualizarEmpresa(Empresa empresa) {
+        System.out.println("Actualizando la oferta");
+        try {
+            PreparedStatement update = conexion.prepareStatement(UpdateEmpresa);
+            update.setString(1, empresa.getMision());
+            update.setString(2, empresa.getVision());
+            update.setString(3, empresa.getTitularTarjeta());
+            update.setString(4, empresa.getNumeroTarjeta());
+            update.setString(5, empresa.getCodigoSeguridad());
+            update.setString(6, empresa.getCodigoEmpresa());
+
+            int affectedRows = update.executeUpdate();
+
+            if (affectedRows == 1) {
+                System.out.println("mision vision actualizada");
+                return true;
+            } else {
+                System.out.println("La actualización no tuvo éxito.");
+                return false;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("------------------------------------------------------------------------------");
+            System.out.println(ex);
+        }
+
+        return true;
+    }
     
 }

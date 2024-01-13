@@ -1,1 +1,33 @@
-<p>cambiar-contrasena works!</p>
+<div class="container col-xl-10 col-xxl-8 px-6 py-5">
+   
+    <div class="alert alert-danger" role="alert" *ngIf="error">
+        Hubo un error al cambiar su contraseña, por favor verifique su contraseña e intente de nuevo! 
+      </div>
+      <div class="alert alert-success" role="alert" *ngIf="actualizado">
+      Su contraseña se ha cambiado Correctamente!
+      </div>
+       
+        <div class="col-md-5 mx-auto col-lg-5">
+            <form class="p-4 p-md-9 border rounded-7" id="loginForm"  #loginForm="ngForm">
+             
+
+
+                <label for="inputAddress">Contraseña Actual</label>
+                <div class="form-floating mb-3">
+                    <input [(ngModel)]="cambiarPassword.passwordAnterior" type="password" class="form-control" id="passwordInput" name="passwordInput" placeholder="password">
+                </div>
+
+                <label for="inputAddress">Contraseña Nueva</label>
+                <div class="form-floating mb-3">
+                    <input [(ngModel)]="cambiarPassword.passwordNuevo" type="password" class="form-control" id="passwordInput" name="passwordInput" placeholder="password">
+                </div>
+                <button class="w-100 btn btn-lg btn-primary" (click)="CambiarPassword()">Cambiar Contraseña</button>
+              
+               
+            </form>
+        
+
+          
+        </div>
+
+</div>

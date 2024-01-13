@@ -4,9 +4,12 @@
  */
 package Service;
 
+import Datos.CambiarPassword;
 import Datos.JsonUtil;
 import Datos.RecuperarCuenta;
+import Datos.Usuario;
 import exceptions.InvalidDataException;
+import exceptions.NotFoundException;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -27,8 +30,41 @@ public class ReestablecerPasswordService {
 
     JsonUtil jsonUtil = new JsonUtil();
     TokenService tokenService = new TokenService();
+    
+    public void Actualizarpassword(String Body, HttpServletResponse response) throws IOException, InvalidDataException, NotFoundException{
+        
+        UsuarioService usuarioService= new UsuarioService();
+        
+        CambiarPassword cambiarPassword= (CambiarPassword) jsonUtil.JsonStringAObjeto(Body, CambiarPassword.class);
+        System.out.println(cambiarPassword.toString());
+        
+        if(cambiarPassword.getCodigoUsuario()==null || cambiarPassword.getPasswordAnterior() == null || cambiarPassword.getPasswordNuevo()==null ||
+                cambiarPassword.getCodigoUsuario().isEmpty() || cambiarPassword.getPasswordAnterior().isEmpty() || cambiarPassword.getPasswordNuevo().isEmpty() ){
+             throw new InvalidDataException("Faltan Datos");  
+        }
+        
+        //buscamos la informacion del usuario 
+        Usuario usuario= usuarioService.getUsuarioID(cambiarPassword.getCodigoUsuario());
+        
+        LoginService loginService = new LoginService();
+        //verificar si la contraseña anterior es la misma
+        if(loginService.IsLogin(cambiarPassword.getPasswordAnterior(), usuario.getUsuario())!=null){
+        
+            //cambiarPassword
+            usuarioService.cambiarPassword(cambiarPassword.getCodigoUsuario(), cambiarPassword.getPasswordNuevo());
+            
+                 response.setStatus(HttpServletResponse.SC_OK);   
+        }else{
+        
+            //mandar error 
+             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+       
+        }
+        
+    
+    }
 
-    public boolean CambiarPassword(String Body, HttpServletResponse response) throws InvalidDataException, IOException {
+    public boolean ReestablecerPassword(String Body, HttpServletResponse response) throws InvalidDataException, IOException {
 
         RecuperarCuenta cuenta = (RecuperarCuenta) jsonUtil.JsonStringAObjeto(Body, RecuperarCuenta.class);
 
