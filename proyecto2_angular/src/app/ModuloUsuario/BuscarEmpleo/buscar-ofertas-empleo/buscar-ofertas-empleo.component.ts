@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Oferta } from 'src/entities/Oferta';
 import { Usuario } from 'src/entities/Usuario';
@@ -12,6 +12,7 @@ import { OfertaService } from 'src/services/OfertaService';
 })
 export class BuscarOfertasEmpleoComponent  implements OnInit{
   @Input() codigoEmpresa!: string;
+  
   
 
   empresaId!: string;
@@ -51,6 +52,8 @@ export class BuscarOfertasEmpleoComponent  implements OnInit{
 
   }
 
+
+  
 
 
 

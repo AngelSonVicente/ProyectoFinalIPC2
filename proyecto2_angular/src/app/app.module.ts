@@ -63,6 +63,7 @@ import { EditarTelefonoCategoriaComponent } from './EditarPerfil/editar-telefono
 import { EditarCVComponent } from './EditarPerfil/editar-cv/editar-cv.component';
 import { CambiarContrasenaComponent } from './EditarPerfil/cambiar-contrasena/cambiar-contrasena.component';
 import { EditarEmpresaComponent } from './EditarPerfil/editar-empresa/editar-empresa.component';
+import { PublicidadComponent } from './ModuloUsuario/BuscarEmpleo/publicidad/publicidad.component';
 
 @NgModule({
   declarations: [
@@ -120,6 +121,7 @@ import { EditarEmpresaComponent } from './EditarPerfil/editar-empresa/editar-emp
          EditarCVComponent,
          CambiarContrasenaComponent,
          EditarEmpresaComponent,
+         PublicidadComponent,
   ],
   imports: [
     BrowserModule,

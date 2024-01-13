@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Oferta } from 'src/entities/Oferta';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -91,6 +91,9 @@ export class DetallesOfertasComponent implements OnInit {
 
 
   }
+
+  
+
 
   //aqui lo que hace es cerrar el modal y redigirilo a otra pestaña, entonces se cierra este y manda al usuario a otra pagina
 

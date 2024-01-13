@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Empresa } from 'src/entities/Empresa';
 import { EmpresaService } from 'src/services/EmpresaService';
@@ -31,4 +31,7 @@ export class PerfilEmpleadorComponent {
   
   
   }
+
+  
+ 
 }
