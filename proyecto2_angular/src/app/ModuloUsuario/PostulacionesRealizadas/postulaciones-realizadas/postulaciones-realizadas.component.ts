@@ -20,11 +20,14 @@ export class PostulacionesRealizadasComponent implements OnInit{
   
     if (confirmacion) {
       this.eliminar(codigo);
+
     }
   }
   
   eliminar(codigoSoli: string) {
     this.solicitudesService.BorrarSolicitud(codigoSoli).subscribe((borrado: boolean) => {
+
+      
       if (borrado) {
         window.location.reload();
         

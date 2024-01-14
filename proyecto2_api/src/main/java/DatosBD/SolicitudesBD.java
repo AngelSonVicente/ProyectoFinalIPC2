@@ -164,7 +164,7 @@ public class SolicitudesBD {
     public List<Solicitudes> getSolicitudesOferta(String codigo) {
         List<Solicitudes> solicitudes = new ArrayList<>();
         try {
-            System.out.println(SelectTodoUsuario);
+          //  System.out.println(SelectTodoUsuario);
             PreparedStatement select = conexion.prepareStatement(SelectTodoOferta);
             select.setString(1, codigo);
             ResultSet resultset = select.executeQuery();
@@ -174,7 +174,7 @@ public class SolicitudesBD {
                         resultset.getString("mensaje"), resultset.getString("estado")
                 ));
 
-                System.out.println("codigo:   " + resultset.getString("codigo"));
+            //    System.out.println("codigo:   " + resultset.getString("codigo"));
             }
 
         } catch (SQLException ex) {

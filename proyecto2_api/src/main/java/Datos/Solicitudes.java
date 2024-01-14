@@ -84,6 +84,11 @@ public class Solicitudes {
         this.estado = estado;
     }
 
+    @Override
+    public String toString() {
+        return "Solicitudes{" + "codigo=" + codigo + ", codigoOferta=" + codigoOferta + ", nombreOferta=" + nombreOferta + ", codigoUsuario=" + codigoUsuario + ", nombreUsuario=" + nombreUsuario + ", mensaje=" + mensaje + ", estado=" + estado + '}';
+    }
+
     
     
 }

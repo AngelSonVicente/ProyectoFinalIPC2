@@ -268,7 +268,7 @@ public class SubirArchivoEntradaBD {
                         solciitudesBD.add(solicitud);
 
                         //subir a la BD
-                          solicitudService.crearSOlicitud(solicitud);
+                          solicitudService.crearSOlicitudBD(solicitud);
                         System.out.println("  - Código: " + codigoSolicitud + ", Usuario: " + usuarioSolicitud + ", Mensaje: " + mensajeSolicitud);
                     }
                 }

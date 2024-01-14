@@ -1,4 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+.modal-right {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    margin: 70px;
+    overflow-y: auto; 
+    overflow-x: hidden;
+}
 
 
 @import "~bootstrap/dist/css/bootstrap.min.css";

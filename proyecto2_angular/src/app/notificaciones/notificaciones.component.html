@@ -1,0 +1,53 @@
+<div class="card text-bg-secondary mb-3" style="max-width: 18rem;" *ngFor="let notificacion of notificaciones">
+
+
+    <div class="card-header" *ngIf="usuario.tipo=='Usuario'">
+
+        <a href="/Proyecto2/Usuario/DetallesOferta/{{notificacion.codigoOferta}}" class="link-light">
+            {{notificacion.nombreOferta}}</a>
+
+
+
+
+        <div class="card-body">
+            <h5 class="card-title">{{notificacion.contenido}}</h5>
+
+            <p class="card-text">{{getDiasNotificacion(notificacion.fecha)}} {{notificacion.estado}}</p>
+        </div>
+    </div>
+
+
+    <div class="card-header" *ngIf="usuario.tipo=='Empleador'">
+
+        <a href="/Proyecto2/Usuario/DetallesOferta/{{notificacion.codigoOferta}}" class="link-light">
+            {{notificacion.nombreOferta}}</a>
+
+
+
+
+        <div class="card-body">
+            <h5 class="card-title">El Usuario {{notificacion.nombreUsuario}} {{notificacion.contenido}}</h5>
+
+            <p class="card-text">{{getDiasNotificacion(notificacion.fecha)}} {{notificacion.estado}}</p>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+<div *ngIf="notificaciones.length==0">
+    <div class="card text-bg-secondary mb-3" style="max-width: 18rem;">
+        <div class="card-header"></div>
+        <div class="card-body">
+            <h3 class="card-title">No hay notificacion!</h3>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <button class="btn btn-outline-secondary" (click)="MarcarComoLeido()">Marcar como leidos</button>
+</div>

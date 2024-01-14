@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Entrevista } from 'src/entities/Entrevista';
 import { Usuario } from 'src/entities/Usuario';
 import { forkJoin, interval } from 'rxjs';
@@ -30,7 +30,8 @@ export class EntrevistasOfertasComponent {
   ofertaFinalizada: boolean = false;
 
   constructor(private entrevistaService: EntrevistasService,  private route: ActivatedRoute,  
-     private modalService: BsModalService, private finalizarService: FinalizarcionOfertaService){
+     private modalService: BsModalService, private finalizarService: FinalizarcionOfertaService,
+     private router: Router){
       
       
 
@@ -84,6 +85,11 @@ interval(2000)
           this.finalizarService.FinalizarOFerta(this.codigoOferta,codigoUsuario,this.usuario.codigo.toString()).subscribe({
         next: (created: FinalizarOferta) => {
           console.log("creado " + created);
+
+          this.router.navigate(['/Proyecto2/Empleador/Facturacion', this.codigoOferta]);
+    
+         
+
         },
         error: (error: any) => {
           console.log("error");
@@ -94,23 +100,7 @@ interval(2000)
     } 
   }
 
-  ejecutarAlConfirmar() {
-   
-  //Modificar la eligicion del empleado en la oferta
-
-  //Modificar el estado de la oferta a finalizado
-
-  //Modificar el estado de la solicitud a finalizado
-  //cobrar veda, ahuevos
-
-  //meter el gasto al hostorial
-
-  //ocupamos meter 
-  //codigo oferta, codigoUsuarioElegido
-  //codigoSolicitud, codigoEmpresa
-
   
-  }
 
 
   

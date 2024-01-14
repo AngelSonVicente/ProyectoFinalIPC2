@@ -3,11 +3,16 @@ package Service;
 import Datos.Entrevista;
 import Datos.Estado;
 import Datos.JsonUtil;
+import Datos.Notificaciones;
+import Datos.Oferta;
 import Datos.Solicitudes;
+import DatosBD.ConexionBD;
 import DatosBD.EntrevistaBD;
 import exceptions.InvalidDataException;
+import exceptions.NotFoundException;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -15,19 +20,37 @@ import java.util.List;
  * @author MSI
  */
 public class EntrevistaService {
+    static Connection conexion = ConexionBD.getInstancia().getConexion();
 
+    
     private EntrevistaBD entrevistaBD = new EntrevistaBD();
+    private OfertaService ofertaService = new OfertaService();
     private JsonUtil jsonUtil = new JsonUtil();
     private SolicitudesService solicitudService = new SolicitudesService();
 
-    public Entrevista procesarSolicitud(String Body, HttpServletResponse response) throws IOException, InvalidDataException {
+    public Entrevista procesarSolicitud(String Body, HttpServletResponse response) throws IOException, InvalidDataException, NotFoundException {
         //Crear entrevista y actualizar estado SOlicitud a "Entrevista"
         Entrevista entrevista = (Entrevista) jsonUtil.JsonStringAObjeto(Body, Entrevista.class);
         entrevista.setEstado(Estado.Pendiente.name());
 
+        System.out.println("Entrevista recibida: "+ entrevista.toString());
+        
+        //APLICAR TRANSACCION
         Entrevista entrevistaAgendada = agendarEntrevista(entrevista);
+        
+        Oferta oferta = ofertaService.getOferta(entrevista.getCodigoOferta());
+        
+        //enviar notificacion a usuario de que ha conseguido la entrevista
+        NotificacionesService notificacionesService = new NotificacionesService(conexion);
+        
+        Notificaciones notificacion = new Notificaciones(null, oferta.getCodigoEmpresa(), null, entrevista.getCodigoUsuario(), null, entrevista.getCodigoOferta(), null, "Se ha agendado una Entrevista En la oferta de empleo", null, null);
+    //enviar notificacion
+        notificacionesService.CrearNotificacion(notificacion);
+        
+        
+        
 
-        jsonUtil.EnviarJson(response, entrevistaAgendada);
+       jsonUtil.EnviarJson(response, entrevistaAgendada);
 
         return null;
     }
@@ -37,7 +60,7 @@ public class EntrevistaService {
       
         //aplicar transaccionalidad
         Entrevista entrevistaCreada = crearEntrevista(entrevista);
-        solicitudService.actualizarEstadoSolicitud(solicitud);
+        solicitudService.actualizarEstadoSolicitudBD(solicitud);
 
         return entrevistaCreada;
     }

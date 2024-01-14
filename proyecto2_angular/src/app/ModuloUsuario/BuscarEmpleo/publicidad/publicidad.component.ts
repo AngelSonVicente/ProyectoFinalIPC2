@@ -26,14 +26,14 @@ export class PublicidadComponent {
 
     this.Publicidad="assets/Publicidad/publicidad"+ this.generarNumeroAleatorio()+".png";
     const probabilidad = Math.random();
-    // Mostrar la publicidad con una probabilidad del 40%
+    // Mostrar la publicidad con una probabilidad del 30%
     this.mostrarPublicidad = probabilidad <= 0.3
     ;
   
   }
 
   generarNumeroAleatorio(): number {
-    // Genera un número aleatorio entre 1 y 10
+    // Genera un número aleatorio entre 1 y 5
     return Math.floor(Math.random() * 5) + 1;
   }
 

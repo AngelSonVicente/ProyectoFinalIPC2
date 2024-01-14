@@ -43,6 +43,7 @@ public class OfertaBD {
             if (affectedRows == 1) {
                 System.out.println("Categoría actualizada");
                 OfertaEliminadaBD ofertaeliminada = new OfertaEliminadaBD();
+                System.out.println("objeto en el update: " + oferta.toString());
                 oferta = ofertaeliminada.crearOfertaEliminada(oferta);
 
                 return oferta;
@@ -138,7 +139,7 @@ public class OfertaBD {
                         resultset.getString("usuario_elegido"), resultset.getString("nombre_usuario_elegido")
                 ));
 
-                System.out.println("codigo:   " + resultset.getString("codigo"));
+          //      System.out.println("codigo:   " + resultset.getString("codigo"));
             }
 
         } catch (SQLException ex) {
@@ -168,7 +169,7 @@ public class OfertaBD {
                         resultset.getString("usuario_elegido"), resultset.getString("nombre_usuario_elegido")
                 ));
 
-                System.out.println("codigo:   " + resultset.getString("codigo"));
+       //         System.out.println("codigo:   " + resultset.getString("codigo"));
             }
 
         } catch (SQLException ex) {
@@ -199,7 +200,7 @@ public class OfertaBD {
                         resultset.getString("usuario_elegido"), resultset.getString("nombre_usuario_elegido")
                 ));
 
-                System.out.println("codigo:   " + resultset.getString("codigo"));
+         //       System.out.println("codigo:   " + resultset.getString("codigo"));
             }
 
         } catch (SQLException ex) {

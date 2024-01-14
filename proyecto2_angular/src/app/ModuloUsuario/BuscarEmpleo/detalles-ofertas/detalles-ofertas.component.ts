@@ -34,10 +34,6 @@ export class DetallesOfertasComponent implements OnInit {
     let jsonUsuario = localStorage.getItem('usuario');
     this.usuario= jsonUsuario ? JSON.parse(jsonUsuario) : null;    
 
-    //en mi caso yo utilizo este componente para mostrarlo con el Usuario y el EMpleador
-    //meti un if para que si se manda llamar desde el usuario, en ese caso lo mando a llamar como una ruta 
-    //si es mandado a llamar desde una ruta, la variable codigo va a estar como null, pero si es del modal, se inicializa automaticamente
-   //entonces si lo manda a llamar el USuario, tengo que jalar el codigo desde la URL 
     if(this.codigo==null){
 
       //jalar de la URL

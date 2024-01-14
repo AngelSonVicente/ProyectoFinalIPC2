@@ -24,8 +24,8 @@ export class SolicitudesService {
         return this.httpClient.get<Solicitudes[]>(this.API_URL + "Solicitudes?codigoSuuario="+usuario);
     }
 
-    public actualizarEstadoSolicitud(codigoSoli:string, codigoOferta:string, estado:string  ): Observable<Solicitudes> {
-      return this.httpClient.put<Solicitudes>(this.API_URL + "Solicitudes?codigoSoli="+codigoSoli+"&codigoOferta="+codigoOferta+"&estado="+estado,null);
+    public actualizarEstadoSolicitud(codigoSoli:string, codigoOferta:string, estado:string , codigoUsuario:string  ): Observable<Solicitudes> {
+      return this.httpClient.put<Solicitudes>(this.API_URL + "Solicitudes?codigoSoli="+codigoSoli+"&codigoOferta="+codigoOferta+"&estado="+estado+"&codigoUsuario="+codigoUsuario,null);
   }
     
    

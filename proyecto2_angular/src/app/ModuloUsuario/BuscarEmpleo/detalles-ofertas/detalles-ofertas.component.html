@@ -42,15 +42,22 @@
     <br />
 
 
+    <div *ngIf="oferta.estado!='Activo'">
+    
+      Ya no se acceptan más postulaciones
+    </div>
+
 
     <div *ngIf="usuario.tipo=='Empleador'">
       <a (click)="redirigirConCierreModal(oferta.codigo)" class="btn btn-success">Editar Oferta</a>
     </div>
 
-    <div *ngIf="usuario.tipo=='Usuario'">
+    <div *ngIf="usuario.tipo=='Usuario' && oferta.estado=='Activo'">
       <div *ngIf="!postulado; else yaPostulado">
         <a class="btn btn-primary" (click)="abrirModal()">Postularme</a>
       </div>
+
+
       <ng-template #yaPostulado>
         <p>¡Ya has sido postulado!</p>
       </ng-template>

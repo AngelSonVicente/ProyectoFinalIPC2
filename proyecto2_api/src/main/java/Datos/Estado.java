@@ -15,6 +15,7 @@ public enum Estado {
     Entrevista,
     Elegido,
     Finalizado,
-    Pendiente
+    Pendiente,
+    Seleccion
     
 }

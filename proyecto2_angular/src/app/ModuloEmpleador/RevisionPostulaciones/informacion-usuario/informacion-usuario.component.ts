@@ -161,7 +161,7 @@ export class InformacionUsuarioComponent {
 
 
 
-    this.solicitudService.actualizarEstadoSolicitud(this.codigoSolicitud, this.codigoOferta, "Rechazado").subscribe({
+    this.solicitudService.actualizarEstadoSolicitud(this.codigoSolicitud, this.codigoOferta, "Rechazado",this.postulante.codigo.toString()).subscribe({
       next: (created: Solicitudes) => {
         console.log("rechazado " + created);
         this.rechazado = true;

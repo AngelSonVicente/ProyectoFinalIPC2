@@ -27,11 +27,13 @@ public class OfertaEliminadaBD {
    
     
         public OfertaEliminada crearOfertaEliminada(OfertaEliminada oferta) {
+            
+            System.out.println("crear oferta eliminada: "+ oferta.toString());
         try {
             PreparedStatement insert = conexion.prepareStatement(Insert, PreparedStatement.RETURN_GENERATED_KEYS);
             insert.setString(1, oferta.getCodigoOferta());
             insert.setString(2, oferta.getMotivo());
-            insert.setString(2, fecha);
+            insert.setString(3, fecha);
           
 
             System.out.println(insert.toString());

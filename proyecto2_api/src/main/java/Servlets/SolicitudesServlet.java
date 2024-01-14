@@ -10,6 +10,7 @@ import Datos.Solicitudes;
 import Service.SolicitudesService;
 import com.google.gson.Gson;
 import exceptions.InvalidDataException;
+import exceptions.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,6 +18,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -52,7 +55,7 @@ public class SolicitudesServlet extends HttpServlet {
         }
         if (codigoUsuario != null && codigoOferta == null) {
 
-            List<Solicitudes> solis = solicitudService.getOfertasEmpresa(codigoUsuario);
+            List<Solicitudes> solis = solicitudService.getSolicitudesEmpresa(codigoUsuario);
 
             String json = new Gson().toJson(solis);
 
@@ -64,7 +67,7 @@ public class SolicitudesServlet extends HttpServlet {
 
         }
         if (codigoUsuario == null && codigoOferta != null) {
-            List<Solicitudes> solis = solicitudService.getOfertasOferta(codigoOferta);
+            List<Solicitudes> solis = solicitudService.getSolicitudesOferta(codigoOferta);
 
             String json = new Gson().toJson(solis);
 
@@ -82,39 +85,14 @@ public class SolicitudesServlet extends HttpServlet {
 
         System.out.println("entramos el Servlet SOlicitudes");
 
-        var buffer = new StringBuilder();
-        var reader = request.getReader();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            buffer.append(line);
-        }
-        String payload = buffer.toString();
-        Solicitudes solicitudFE = gson.fromJson(payload, Solicitudes.class);
-        solicitudFE.setEstado("Activo");
-
-        System.out.println("codigo empleo: " + solicitudFE.getCodigoOferta());
-        System.out.println("codigo usuario: " + solicitudFE.getCodigoUsuario());
-        System.out.println("Mensaje: " + solicitudFE.getMensaje());
-        // Usuario usuario = loginService.IsLogin(logincito.getPassword(), logincito.getUsuario());
-
-        //   response.setStatus(HttpServletResponse.SC_OK);
+        String body= jsonUtil.getBody(request);
+        
         try {
-
-            Solicitudes solicitud = solicitudService.crearSOlicitud(solicitudFE);
-
-            String json = new Gson().toJson(solicitud);
-            // Configura la respuesta
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-
-            // Envía el JSON como respuesta
-            response.getWriter().write(json);
-
-            response.setStatus(HttpServletResponse.SC_OK);
-        } catch (InvalidDataException e) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            solicitudService.CrearSolicitud(body, response);
+        } catch (InvalidDataException | NotFoundException ex) {
+              response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+      
         }
-
     }
 
     @Override
@@ -122,11 +100,17 @@ public class SolicitudesServlet extends HttpServlet {
 
         String codigo = request.getParameter("codigo");
 
-        if (solicitudService.borrarSolicitud(codigo)) {
-            response.setStatus(HttpServletResponse.SC_OK);
-        } else {
-
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        try {
+            if (solicitudService.borrarSolicitud(codigo)) {
+                response.setStatus(HttpServletResponse.SC_OK);
+            } else {
+                
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            }
+        } catch (InvalidDataException ex) {
+            Logger.getLogger(SolicitudesServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotFoundException ex) {
+            Logger.getLogger(SolicitudesServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -139,10 +123,17 @@ public class SolicitudesServlet extends HttpServlet {
         String codigoOferta=request.getParameter("codigoOferta");
         String Estado=request.getParameter("estado");
         
-        Solicitudes soli = new Solicitudes(codigoSolicitud, codigoOferta, null, null, null, null, Estado);
-       Solicitudes soliCreada= solicitudService.actualizarEstadoSolicitud(soli);
-       jsonUtil.EnviarJson(response, soliCreada);
-    
+        Solicitudes soli = new Solicitudes(codigoSolicitud, codigoOferta, null, request.getParameter("codigoUsuario"), null, null, Estado);
+       
+        try {
+            solicitudService.ActualizarSolicitud(soli,response);
+        } catch (InvalidDataException ex) {
+             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+       
+        }
+      
+       
+     
     }
     
     

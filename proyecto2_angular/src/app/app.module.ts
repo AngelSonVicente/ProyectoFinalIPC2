@@ -64,6 +64,8 @@ import { EditarCVComponent } from './EditarPerfil/editar-cv/editar-cv.component'
 import { CambiarContrasenaComponent } from './EditarPerfil/cambiar-contrasena/cambiar-contrasena.component';
 import { EditarEmpresaComponent } from './EditarPerfil/editar-empresa/editar-empresa.component';
 import { PublicidadComponent } from './ModuloUsuario/BuscarEmpleo/publicidad/publicidad.component';
+import { NotificacionesComponent } from './notificaciones/notificaciones.component';
+import { FacturacionComponent } from './ModuloEmpleador/RevisionEntrevistas/facturacion/facturacion.component';
 
 @NgModule({
   declarations: [
@@ -122,6 +124,8 @@ import { PublicidadComponent } from './ModuloUsuario/BuscarEmpleo/publicidad/pub
          CambiarContrasenaComponent,
          EditarEmpresaComponent,
          PublicidadComponent,
+         NotificacionesComponent,
+         FacturacionComponent,
   ],
   imports: [
     BrowserModule,

@@ -66,6 +66,12 @@ public class OfertaEliminada {
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
+
+    @Override
+    public String toString() {
+        return "OfertaEliminada{" + "codigo=" + codigo + ", codigoOferta=" + codigoOferta + ", nombreOferta=" + nombreOferta + ", motivo=" + motivo + ", fecha=" + fecha + '}';
+    }
+    
     
     
 }

@@ -37,6 +37,7 @@ import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.componen
 import { CompletarInformacionComponent } from './completar-informacion/completar-informacion.component';
 import { BuscarUsuarioComponent } from './RecuperarCuenta/buscar-usuario/buscar-usuario.component';
 import { ReestablecerPasswordComponent } from './RecuperarCuenta/reestablecer-password/reestablecer-password.component';
+import { FacturacionComponent } from './ModuloEmpleador/RevisionEntrevistas/facturacion/facturacion.component';
 
 const rutasAdmin = [
   {
@@ -168,6 +169,11 @@ const rutasEmpleador = [
     path: 'Perfil',
     title: 'Perfil',
     component: PerfilUsuarioComponent,
+  },
+  {
+    path: 'Facturacion/:codigo',
+    title: 'Facturacion',
+    component: FacturacionComponent,
   },
   
   

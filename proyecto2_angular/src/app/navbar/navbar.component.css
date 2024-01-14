@@ -1,0 +1,8 @@
+.modal-right {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 300px; /* Ajusta según sea necesario */
+  margin: auto;
+}

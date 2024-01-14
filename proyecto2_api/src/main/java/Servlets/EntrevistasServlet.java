@@ -8,6 +8,7 @@ import Service.SolicitudesService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import exceptions.InvalidDataException;
+import exceptions.NotFoundException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,7 +24,6 @@ import java.util.logging.Logger;
  *
  * @author MSI
  */
-
 @WebServlet(name = "EntrevistaController", urlPatterns = {"/v1/Entrevistas"})
 
 public class EntrevistasServlet extends HttpServlet {
@@ -62,17 +62,16 @@ public class EntrevistasServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        
         String body = jsonUtil.getBody(request);
-        
+
         try {
             entrevistaService.procesarSolicitud(body, response);
-        } catch (InvalidDataException ex) {
-              response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        }
-        
 
-        
+    
+        } catch (InvalidDataException | NotFoundException ex) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+        } 
 
     }
 
@@ -81,12 +80,12 @@ public class EntrevistasServlet extends HttpServlet {
         System.out.println("Entrando al servlet metodo put de entrevista");
         var entrevistaFE = jsonUtil.JsonAObjeto(request, Entrevista.class);
         Entrevista entrevista = (Entrevista) entrevistaFE;
-        
+
         System.out.println("codigo: " + entrevista.getCodigo());
         System.out.println("nota: " + entrevista.getNota());
         try {
             Entrevista entrevistaFinalizada = entrevistaService.finalizarEntrevista(entrevista);
-               jsonUtil.EnviarJson(response, entrevistaFinalizada);
+            jsonUtil.EnviarJson(response, entrevistaFinalizada);
 
             response.setStatus(HttpServletResponse.SC_OK);
 
@@ -94,12 +93,8 @@ public class EntrevistasServlet extends HttpServlet {
             System.out.println("--------------------------------");
             System.out.println(e);
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            
+
         }
-        
-        
-        
-        
 
     }
 
