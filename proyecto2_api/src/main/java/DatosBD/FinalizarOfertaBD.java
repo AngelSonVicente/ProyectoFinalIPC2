@@ -6,7 +6,7 @@ package DatosBD;
 
 import Datos.FinalizarOferta;
 import Datos.Oferta;
-import static DatosBD.OfertaBD.conexion;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +24,17 @@ public class FinalizarOfertaBD {
     DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Formato para obtener solo la fecha
     String fecha = fechaActual.format(formato);
 
-    static Connection conexion = ConexionBD.getInstancia().getConexion();
+    private Connection conexion;
+
+    public FinalizarOfertaBD(Connection conexion) {
+        this.conexion = conexion;
+    }
+
+    public FinalizarOfertaBD() {
+        conexion = ConexionBD.getInstancia().getConexion();
+
+    }
+
     private static String FinalizarOferta = "UPDATE ofertas set estado = 'Finalizado', usuario_elegido = ? WHERE codigo = ?";
     private static String FinalizarSolicitudes = "UPDATE solicitudes set estado = 'Elegido' WHERE codigo = ?";
     private static String Pago = "INSERT INTO historial_cobros (codigo_empresa, monto, fecha, codigo_oferta) VALUES (?,  (SELECT comision FROM parametros ORDER BY codigo DESC LIMIT 1), ?, ?);";

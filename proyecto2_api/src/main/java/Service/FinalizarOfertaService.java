@@ -120,7 +120,7 @@ public class FinalizarOfertaService {
     
     
     
-    public void OfertaFinalizada(String codigo, HttpServletResponse response) {
+    public void OfertaFinalizada(String codigo, HttpServletResponse response) throws InvalidDataException {
         OfertaService ofertaService = new OfertaService();
 
         if (ofertaService.OfertaFinalizada(codigo)) {

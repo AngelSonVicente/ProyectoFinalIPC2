@@ -16,9 +16,9 @@ import java.util.List;
  */
 public class ReportesUsuarioService {
     ReportesUsuarioBD reportes = new ReportesUsuarioBD();
-    
+    String sinFecha="sinFecha";
      public List<SolicitudRetirada> Reporte1(String codigoUsuario, String fecha1, String fecha2) {
-        if (!fecha1.equals("sinfecha") && !fecha2.equals("sinfecha")) {
+        if (!fecha1.equals(sinFecha) && !fecha2.equals(sinFecha)) {
             return reportes.Reporte1Fecha(codigoUsuario, fecha1, fecha2);
         }
         return reportes.Reporte1(codigoUsuario);

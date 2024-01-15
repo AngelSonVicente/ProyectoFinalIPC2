@@ -51,7 +51,13 @@ public class FinalizarOfertaServlet extends HttpServlet {
 
         String codigo = request.getParameter("codigoOferta");
         
-        finalizarService.OfertaFinalizada(codigo, response);
+        try {
+            finalizarService.OfertaFinalizada(codigo, response);
+        } catch (InvalidDataException ex) {
+    
+                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+        }
        
 
     }

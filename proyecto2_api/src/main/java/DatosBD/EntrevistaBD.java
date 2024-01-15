@@ -7,8 +7,8 @@ package DatosBD;
 import Datos.Entrevista;
 import Datos.Oferta;
 import Datos.Solicitudes;
-import static DatosBD.OfertaBD.conexion;
-import static DatosBD.SolicitudesBD.conexion;
+
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,8 +24,19 @@ import java.util.List;
  */
 public class EntrevistaBD {
 
-    static Connection conexion = ConexionBD.getInstancia().getConexion();
+    private Connection conexion;
 
+    public EntrevistaBD(Connection conexion) {
+        this.conexion = conexion;
+    }
+
+    public EntrevistaBD() {
+    conexion = ConexionBD.getInstancia().getConexion();
+
+    }
+    
+    
+    
     private static String SelectExiste = "SELECT * FROM solicitudes WHERE codigo_usuario = ? AND codigo_oferta = ?";
     private static String SelectTodoUsuario = "SELECT e.*, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM entrevistas AS e JOIN ofertas AS o ON e.codigo_oferta = o.codigo JOIN usuarios AS u ON e.usuario = u.codigo WHERE e.estado = 'Pendiente' AND e.usuario = ?";
         private static String SelectEntevistasFecha = "SELECT e.*, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM entrevistas AS e JOIN ofertas AS o ON e.codigo_oferta = o.codigo JOIN usuarios AS u ON e.usuario = u.codigo WHERE e.estado = 'Pendiente' AND e.usuario = ?";

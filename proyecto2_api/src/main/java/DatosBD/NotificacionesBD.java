@@ -7,8 +7,8 @@ package DatosBD;
 import Datos.Categoria;
 import Datos.Notificaciones;
 import Datos.Oferta;
-import static DatosBD.GestionCategoriaBD.conexion;
-import static DatosBD.OfertaBD.conexion;
+import  DatosBD.GestionCategoriaBD;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

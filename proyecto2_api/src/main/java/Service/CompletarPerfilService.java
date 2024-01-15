@@ -26,8 +26,6 @@ public class CompletarPerfilService {
 
     public void CompletarPerfil(String body, Part filePart, HttpServletResponse response) throws IOException, InvalidDataException {
 
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.println("COnexion: " +conexion);
         
         CompletarPerfilUsuario perfilUsuario = (CompletarPerfilUsuario) jsonUtil.JsonStringAObjeto(body, CompletarPerfilUsuario.class);
         Empresa perfilEmpresa = (Empresa) jsonUtil.JsonStringAObjeto(body, Empresa.class);

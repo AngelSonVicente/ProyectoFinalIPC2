@@ -23,6 +23,7 @@ import Datos.Estado;
 import Datos.Notificaciones;
 import DatosBD.ConexionBD;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  *
@@ -30,134 +31,267 @@ import java.sql.Connection;
  */
 public class SolicitudesService {
 
-    static Connection conexion = ConexionBD.getInstancia().getConexion();
+    private Connection conexion;
 
-    SolicitudesBD solicitudBD = new SolicitudesBD();
-    OfertaService ofertaService = new OfertaService();
-    SolicitudesRetiradasBD soliretirada = new SolicitudesRetiradasBD();
+    public SolicitudesService() {
+    }
 
+    public SolicitudesService(Connection conexion) {
+        conexion = ConexionBD.getInstancia().getConexion();
+    }
+
+    // SolicitudesBD solicitudBD = new SolicitudesBD();
+    // OfertaService ofertaService = new OfertaService();
+    // SolicitudesRetiradasBD soliretirada = new SolicitudesRetiradasBD();
     Util util = new Util();
     JsonUtil jsonUtil = new JsonUtil();
     private String MensajeNotificacion = "ha aplicado a la oferta de empleo";
 
-    public void CrearSolicitud(String body, HttpServletResponse response) throws InvalidDataException, IOException, NotFoundException {
+    public void CrearSolicitud(String body, HttpServletResponse response) throws InvalidDataException, IOException, NotFoundException, SQLException {
 
         Solicitudes solicitudFE = (Solicitudes) jsonUtil.JsonStringAObjeto(body, Solicitudes.class);
 
         solicitudFE.setEstado(Estado.Activo.name());
+        NotificacionesService notificacionesService = new NotificacionesService(conexion);
+        OfertaService ofertaService = new OfertaService(conexion);
 
         System.out.println("codigo empleo: " + solicitudFE.getCodigoOferta());
         System.out.println("codigo usuario: " + solicitudFE.getCodigoUsuario());
         System.out.println("Mensaje: " + solicitudFE.getMensaje());
 
+        Solicitudes solicitud = new Solicitudes();
         //APLICAR TRANSACCIONALIDAD
         //crearSolicitud
-        Solicitudes solicitud = crearSOlicitudBD(solicitudFE);
+        try {
+            // Iniciar transacción
+            conexion.setAutoCommit(false);
 
-        //notificar al emppleador
-        Oferta oferta = ofertaService.getOferta(solicitudFE.getCodigoOferta());
+            //funciones
+            solicitud = crearSOlicitudBD(solicitudFE);
 
-        Notificaciones notificacion = new Notificaciones(null, solicitudFE.getCodigoUsuario(), null, oferta.getCodigoEmpresa(), null, oferta.getCodigo(), null, MensajeNotificacion, null, null);
+            //notificar al emppleador
+            Oferta oferta = ofertaService.getOferta(solicitudFE.getCodigoOferta());
 
-        NotificacionesService notificacionesService = new NotificacionesService(conexion);
-        notificacionesService.CrearNotificacion(notificacion);
+            Notificaciones notificacion = new Notificaciones(null, solicitudFE.getCodigoUsuario(), null, oferta.getCodigoEmpresa(), null, oferta.getCodigo(), null, MensajeNotificacion, null, null);
 
-        jsonUtil.EnviarJson(response, solicitud);
+            notificacionesService.CrearNotificacion(notificacion);
+
+// Confirmar la transacción si todas las operaciones fueron exitosas
+            conexion.commit();
+
+        } catch (SQLException e) {
+            // En caso de error, deshacer la transacción
+
+            try {
+                conexion.rollback();
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+            }
+            e.printStackTrace();
+
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        } finally {
+            // Restaurar el modo de autocommit y cerrar la conexión
+            try {
+                conexion.setAutoCommit(true);
+                //enviar json
+                jsonUtil.EnviarJson(response, solicitud);
+
+            } catch (SQLException closeException) {
+                closeException.printStackTrace();
+            }
+        }
 
     }
 
-    public void ActualizarSolicitud(Solicitudes solicitud, HttpServletResponse response) throws IOException, InvalidDataException {
+    public void ActualizarSolicitud(Solicitudes solicitud, HttpServletResponse response) throws IOException, InvalidDataException, NotFoundException {
 
         System.out.println(solicitud.toString());
-        
-        //aplicar transaccionalidad :v
-       Solicitudes solicitudActualizada = actualizarEstadoSolicitudBD(solicitud);
 
-        
         NotificacionesService notificacionesService = new NotificacionesService(conexion);
-        if(solicitud.getEstado().equals(Estado.Rechazado.name())){
-            
-            
-            //enviar notificacion de rechazo
-            
-            Notificaciones notificaion = new Notificaciones(null, null, null, solicitud.getCodigoUsuario(), null, solicitud.getCodigoOferta(), null, "Se ha rechazado su Solicitud a la oferta", null, null);
-            System.out.println(notificaion.toString());
-            
-            notificacionesService.CrearNotificacion(notificaion);
-            
-            
+        Solicitudes solicitudActualizada = new Solicitudes();
+        try {
+            // Iniciar transacción
+            conexion.setAutoCommit(false);
+
+            //funciones
+            solicitudActualizada = actualizarEstadoSolicitudBD(solicitud);
+
+            if (solicitud.getEstado().equals(Estado.Rechazado.name())) {
+
+                //enviar notificacion de rechazo
+                Notificaciones notificaion = new Notificaciones(null, null, null, solicitud.getCodigoUsuario(), null, solicitud.getCodigoOferta(), null, "Se ha rechazado su Solicitud a la oferta", null, null);
+                System.out.println(notificaion.toString());
+
+                notificacionesService.CrearNotificacion(notificaion);
+
+            }
+
+// Confirmar la transacción si todas las operaciones fueron exitosas
+            conexion.commit();
+
+        } catch (SQLException e) {
+            // En caso de error, deshacer la transacción
+
+            try {
+                conexion.rollback();
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+            }
+            e.printStackTrace();
+
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        } finally {
+            // Restaurar el modo de autocommit y cerrar la conexión
+            try {
+                conexion.setAutoCommit(true);
+                //enviar json
+
+            } catch (SQLException closeException) {
+                closeException.printStackTrace();
+            }
         }
-        
-        
-        
-        
+
         jsonUtil.EnviarJson(response, solicitudActualizada);
-        
 
     }
 
     public Solicitudes crearSOlicitudBD(Solicitudes solicitud) throws InvalidDataException {
 
         validar(solicitud);
-
+        SolicitudesBD solicitudBD = new SolicitudesBD(conexion);
         return solicitudBD.crearSolicitud(solicitud);
     }
 
     public boolean ExisteSolicitud(String codigoUsuario, String codigoOferta) {
+        SolicitudesBD solicitudBD = new SolicitudesBD(conexion);
         return solicitudBD.ExisteSolicitud(codigoUsuario, codigoOferta);
     }
 
     public boolean borrarSolicitud(String codigo) throws InvalidDataException, NotFoundException {
-        Solicitudes soli = solicitudBD.getSolicitud(codigo);
+        SolicitudesBD solicitudBD = new SolicitudesBD(conexion);
 
+        Solicitudes soli = solicitudBD.getSolicitud(codigo);
+        OfertaService ofertaService = new OfertaService(conexion);
         Oferta oferta = ofertaService.getOferta(soli.getCodigoOferta());
-        
-        
-        //APLICAR TRANSACCION
-        soliretirada.crearSolicitudRetirada(new SolicitudRetirada(null, soli.getCodigoUsuario(), null, soli.getCodigoOferta(), null, null));
-     
         NotificacionesService notificacionesService = new NotificacionesService(conexion);
-        
-        Notificaciones notificacion = new Notificaciones(null, soli.getCodigoUsuario(), null, oferta.getCodigoEmpresa(), null, soli.getCodigoOferta(), null, "El Usuario ha retirado su postulacion de la oferta", null, null);
-        
-        //mandar notificacion 
-        notificacionesService.CrearNotificacion(notificacion);
-        
-        
-        
-        return solicitudBD.borrarSolicitud(codigo);
+        SolicitudesRetiradasBD soliretirada = new SolicitudesRetiradasBD(conexion);
+
+        boolean solicitudBoraada = false;
+
+        //APLICAR TRANSACCION
+        try {
+            // Iniciar transacción
+            conexion.setAutoCommit(false);
+
+            //funciones
+            soliretirada.crearSolicitudRetirada(new SolicitudRetirada(null, soli.getCodigoUsuario(), null, soli.getCodigoOferta(), null, null));
+
+            Notificaciones notificacion = new Notificaciones(null, soli.getCodigoUsuario(), null, oferta.getCodigoEmpresa(), null, soli.getCodigoOferta(), null, "El Usuario ha retirado su postulacion de la oferta", null, null);
+
+            //mandar notificacion 
+            notificacionesService.CrearNotificacion(notificacion);
+
+            solicitudBoraada = solicitudBD.borrarSolicitud(codigo);
+
+// Confirmar la transacción si todas las operaciones fueron exitosas
+            conexion.commit();
+
+        } catch (SQLException e) {
+            // En caso de error, deshacer la transacción
+
+            try {
+                conexion.rollback();
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+            }
+            e.printStackTrace();
+
+        } finally {
+            // Restaurar el modo de autocommit y cerrar la conexión
+            try {
+                conexion.setAutoCommit(true);
+
+            } catch (SQLException closeException) {
+                closeException.printStackTrace();
+            }
+        }
+
+        return solicitudBoraada;
+
     }
 
-    public List<Solicitudes> getSolicitudesOferta(String codigo) {
+    public List<Solicitudes> getSolicitudesOferta(String codigo) throws InvalidDataException {
+
+        if (codigo == null || codigo.isEmpty()) {
+            throw new InvalidDataException("el codigo no es valido");
+
+        }
+
+        SolicitudesBD solicitudBD = new SolicitudesBD(conexion);
         return solicitudBD.getSolicitudesOferta(codigo);
     }
 
-    public List<Solicitudes> getSolicitudesEmpresa(String codigo) {
+    public List<Solicitudes> getSolicitudesEmpresa(String codigo) throws InvalidDataException {
+        if (codigo == null || codigo.isEmpty()) {
+            throw new InvalidDataException("el codigo no es valido");
+
+        }
+
+        SolicitudesBD solicitudBD = new SolicitudesBD(conexion);
         return solicitudBD.getSolicitudesUsuario(codigo);
     }
 
-    public Solicitudes actualizarEstadoSolicitudBD(Solicitudes solicitud) {
-        //cambiar el estado de la oferta a Entrevista
-        Solicitudes soli = solicitudBD.actualizarEstadoSolicitud(solicitud);
+    public Solicitudes actualizarEstadoSolicitudBD(Solicitudes solicitud) throws InvalidDataException, NotFoundException {
+        SolicitudesBD solicitudBD = new SolicitudesBD(conexion);
+        OfertaService ofertaService = new OfertaService(conexion);
+        
+         Solicitudes solicitudactualizada = new Solicitudes();
 
-        List<Solicitudes> solicitudesOferta = getSolicitudesOferta(solicitud.getCodigoOferta());
-        System.out.println("codigo OFerta kjndkjnsadkjs_: " + solicitud.getCodigoOferta());
+        try {
+            // Iniciar transacción
+            conexion.setAutoCommit(false);
 
-        if (SolicitudesEnEntrevista(solicitudesOferta)) {
-            // cambiar el estado de oferta a Entrevista
-            try {
-                System.out.println("actualizando la onda esta");
+            //funciones
+            //cambiar el estado de la oferta a Entrevista
+             solicitudactualizada = solicitudBD.actualizarEstadoSolicitud(solicitud);
+
+            List<Solicitudes> solicitudesOferta = getSolicitudesOferta(solicitud.getCodigoOferta());
+            System.out.println("codigo OFerta kjndkjnsadkjs_: " + solicitud.getCodigoOferta());
+
+            if (SolicitudesEnEntrevista(solicitudesOferta)) {
+                // cambiar el estado de oferta a Entrevista
 
                 Oferta oferta = ofertaService.getOferta(solicitud.getCodigoOferta());
                 oferta.setEstado("Entrevista");
                 ofertaService.actualizarEstadoOferta(oferta);
-            } catch (Exception e) {
-                System.out.println("-----------------------");
-                System.out.println(e);
+
+            }
+
+// Confirmar la transacción si todas las operaciones fueron exitosas
+            conexion.commit();
+
+        } catch (SQLException e) {
+            // En caso de error, deshacer la transacción
+
+            try {
+                conexion.rollback();
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+            }
+            e.printStackTrace();
+
+        } finally {
+            // Restaurar el modo de autocommit y cerrar la conexión
+            try {
+                conexion.setAutoCommit(true);
+          
+            } catch (SQLException closeException) {
+                closeException.printStackTrace();
             }
         }
 
-        return soli;
+        return solicitudactualizada;
 
     }
 

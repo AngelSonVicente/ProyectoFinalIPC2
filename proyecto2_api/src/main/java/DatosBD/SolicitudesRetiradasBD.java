@@ -6,7 +6,8 @@ package DatosBD;
 
 import Datos.SolicitudRetirada;
 import Datos.Solicitudes;
-import static DatosBD.SolicitudesBD.conexion;
+import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,14 +19,25 @@ import java.time.format.DateTimeFormatter;
  * @author MSI
  */
 public class SolicitudesRetiradasBD {
+
+    private Connection conexion;
+
+    public SolicitudesRetiradasBD(Connection conexion) {
+        this.conexion = conexion;
+    }
+
+    public SolicitudesRetiradasBD() {
+        conexion = ConexionBD.getInstancia().getConexion();
+
+    }
+
     private static String Insert = "INSERT INTO solicitudes_retiradas (codigo_usuario, codigo_oferta, fecha) VALUES (?, ?, ?)";
-    
-    
+
     public SolicitudRetirada crearSolicitudRetirada(SolicitudRetirada solicitud) {
         System.out.println("esta creando la solicitud");
-           LocalDate fechaActual = LocalDate.now();
+        LocalDate fechaActual = LocalDate.now();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Formato para obtener solo la fecha
-        String fecha= fechaActual.format(formato);
+        String fecha = fechaActual.format(formato);
         try {
             PreparedStatement insert = conexion.prepareStatement(Insert, PreparedStatement.RETURN_GENERATED_KEYS);
             insert.setString(1, solicitud.getCodigoUsuario());
@@ -50,10 +62,10 @@ public class SolicitudesRetiradasBD {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            System.out.println("error: " +ex);
+            System.out.println("error: " + ex);
         }
 
         return null;
     }
-    
+
 }

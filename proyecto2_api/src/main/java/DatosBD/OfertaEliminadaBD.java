@@ -6,7 +6,8 @@ package DatosBD;
 
 import Datos.Oferta;
 import Datos.OfertaEliminada;
-import static DatosBD.OfertaBD.conexion;
+
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +19,17 @@ import java.time.format.DateTimeFormatter;
  * @author MSI
  */
 public class OfertaEliminadaBD {
+     private Connection conexion ;
+
+    public OfertaEliminadaBD(Connection conexion) {
+        this.conexion = conexion;
+    }
+
+    public OfertaEliminadaBD() {
+        conexion = ConexionBD.getInstancia().getConexion();
+
+    }
+     
       LocalDate fechaActual = LocalDate.now();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Formato para obtener solo la fecha
         String fecha = fechaActual.format(formato);

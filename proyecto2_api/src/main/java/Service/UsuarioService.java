@@ -45,7 +45,12 @@ public class UsuarioService {
         return usuarioBD.crearUsuario(usuario);
     }
 
-    public boolean cambiarPassword(String codigoUsuario, String password) {
+    public boolean cambiarPassword(String codigoUsuario, String password) throws InvalidDataException {
+        
+        if(codigoUsuario==null || password==null || codigoUsuario.isEmpty() || password.isEmpty()){
+              throw new InvalidDataException("Faltan datos");
+
+        }
 
         return usuarioBD.cambiarPassword(codigoUsuario, password);
 

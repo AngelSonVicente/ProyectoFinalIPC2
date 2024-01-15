@@ -26,8 +26,7 @@ public class UsuarioController {
         Usuario user = (Usuario) jsonUtil.JsonStringAObjeto(body, Usuario.class);
         UsuarioService usuarioService = new UsuarioService();
 
-        Usuario usuarioCreado;
-        usuarioCreado = usuarioService.CrearUsuario(user);
+        Usuario usuarioCreado = usuarioService.CrearUsuario(user);;
         jsonUtil.EnviarJson(response, usuarioCreado);
 
     }

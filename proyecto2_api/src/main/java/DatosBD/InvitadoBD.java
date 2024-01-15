@@ -5,7 +5,7 @@
 package DatosBD;
 
 import Datos.Oferta;
-import static DatosBD.OfertaBD.conexion;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

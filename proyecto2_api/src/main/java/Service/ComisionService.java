@@ -20,12 +20,10 @@ import java.util.List;
  * @author MSI
  */
 public class ComisionService {
-    GestionCategoriaBD categoria = new GestionCategoriaBD();
   
     
     ComisionBD comision = new ComisionBD();
-    Util util = new Util();
-
+  
   
     
     

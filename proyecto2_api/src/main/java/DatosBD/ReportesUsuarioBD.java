@@ -7,8 +7,7 @@ package DatosBD;
 import Datos.Oferta;
 import Datos.SolicitudRetirada;
 import Datos.Solicitudes;
-import static DatosBD.ReportesEmpleador.conexion;
-import static DatosBD.SolicitudesBD.conexion;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

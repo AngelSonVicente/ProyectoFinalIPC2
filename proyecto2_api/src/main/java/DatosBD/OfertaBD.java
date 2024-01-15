@@ -17,8 +17,19 @@ import java.util.List;
  */
 public class OfertaBD {
 
-    static Connection conexion = ConexionBD.getInstancia().getConexion();
+    private Connection conexion;
 
+    public OfertaBD(Connection conexion) {
+        this.conexion = conexion;
+    }
+
+    public OfertaBD() {
+         conexion = ConexionBD.getInstancia().getConexion();
+    
+    }
+    
+
+    
     //agregar fltro de las preferencias del usuario de momento todo
     private static String SelectTodo = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.estado = 'Activo'";
     private static String SelectOfertasPreferencias = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.estado = 'Activo' AND o.categoria IN (SELECT codigo_categoria FROM preferencias WHERE codigo_usuario = ?)";

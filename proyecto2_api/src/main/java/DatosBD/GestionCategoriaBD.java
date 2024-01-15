@@ -15,8 +15,17 @@ import java.util.List;
  */
 public class GestionCategoriaBD {
 
-    static Connection conexion = ConexionBD.getInstancia().getConexion();
+    private Connection conexion ;
 
+    public GestionCategoriaBD(Connection conexion) {
+        this.conexion = conexion;
+    }
+
+    public GestionCategoriaBD() {
+        conexion = ConexionBD.getInstancia().getConexion();
+
+    }
+    
     private static String SelectCategorias = "SELECT * FROM categorias";
     private static String SelectCategoriasID = "SELECT * FROM categorias WHERE codigo = ?";
     private static String ExisteNombre = "SELECT * FROM categorias WHERE nombre = ?";

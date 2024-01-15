@@ -6,7 +6,6 @@ package DatosBD;
 
 import Datos.Categoria;
 import Datos.Empresa;
-import static DatosBD.GestionCategoriaBD.conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

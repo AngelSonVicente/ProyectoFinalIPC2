@@ -7,8 +7,7 @@ package DatosBD;
 import Datos.Entrevista;
 import Datos.HistorialCobros;
 import Datos.Oferta;
-import static DatosBD.EntrevistaBD.conexion;
-import static DatosBD.OfertaBD.conexion;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,8 +21,20 @@ import java.util.List;
  */
 public class ReportesEmpleador {
 
-    static Connection conexion = ConexionBD.getInstancia().getConexion();
+    private Connection conexion ;
 
+    public ReportesEmpleador(Connection conexion) {
+        this.conexion = conexion;
+    }
+
+    public ReportesEmpleador() {
+        conexion = ConexionBD.getInstancia().getConexion();
+
+    }
+    
+    
+    
+    
     private String Reporte1Fechas = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.codigo_empresa = ? AND o.fecha_publicacion BETWEEN ? AND ?;";
     private String Reporte1 = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.codigo_empresa = ?";
 

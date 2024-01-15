@@ -18,8 +18,19 @@ import java.util.List;
  */
 public class SolicitudesBD {
 
-    static Connection conexion = ConexionBD.getInstancia().getConexion();
+    private Connection conexion;
 
+    public SolicitudesBD(Connection conexion) {
+        this.conexion = conexion;
+    }
+
+    public SolicitudesBD() {
+        conexion = ConexionBD.getInstancia().getConexion();
+
+    }
+    
+    
+    
     private static String SelectExiste = "SELECT * FROM solicitudes WHERE codigo_usuario = ? AND codigo_oferta = ?";
     private static String SelectTodoUsuario = "SELECT s.*, o.codigo AS codigo_oferta, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo JOIN usuarios AS u ON s.codigo_usuario = u.codigo WHERE s.estado = 'Activo' AND s.codigo_usuario = ?";
     private static String SelectTodoOferta = "SELECT s.*, o.codigo AS codigo_oferta, o.nombre AS nombre_oferta, u.nombre AS nombre_usuario FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo JOIN usuarios AS u ON s.codigo_usuario = u.codigo WHERE s.codigo_oferta = ?";

@@ -12,16 +12,10 @@ import DatosBD.OfertaBD;
 import com.google.gson.Gson;
 import exceptions.InvalidDataException;
 import exceptions.NotFoundException;
-import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import Datos.Estado;
 import Datos.Notificaciones;
 import Datos.Solicitudes;
 import DatosBD.ConexionBD;
-import Servlets.EntrevistasServlet;
 import java.sql.Connection;
 
 /**
@@ -30,40 +24,61 @@ import java.sql.Connection;
  */
 public class OfertaService {
 
-    static Connection conexion = ConexionBD.getInstancia().getConexion();
+    private Connection conexion;
+    OfertaBD ofertasBD;
+    public OfertaService(Connection conexion) {
+        this.conexion = conexion;
+    }
 
-    OfertaBD ofertasBD = new OfertaBD();
+    public OfertaService() {
+        conexion = ConexionBD.getInstancia().getConexion();
+       ofertasBD = new OfertaBD(conexion);
 
-    GestionCategoriaBD categoria = new GestionCategoriaBD();
+    }
 
-    ComisionBD comision = new ComisionBD();
+ 
     Util util = new Util();
-    JsonUtil jsonUtil = new JsonUtil();
 
-   
     public List<Oferta> getOfertas() {
         return ofertasBD.getOfertas();
     }
 
     public List<Oferta> getOfertasPreferencias(String codigo) throws InvalidDataException {
-        
+
+        if (codigo == null || codigo.isEmpty()) {
+            throw new InvalidDataException("El codigo no es valido");
+
+        }
         PasarOfertasFaseSeleccion();
         return ofertasBD.getOfertasPreferencias(codigo);
     }
 
-    public boolean OfertaFinalizada(String codigoOferta) {
-        
+    public boolean OfertaFinalizada(String codigoOferta) throws InvalidDataException {
+        if (codigoOferta == null || codigoOferta.isEmpty()) {
+            throw new InvalidDataException("El codigo no es valido");
+
+        }
+
         return ofertasBD.OfertaFinalizada(codigoOferta);
     }
 
     public List<Oferta> getOfertasEmpresa(String codigo) throws InvalidDataException {
+        if (codigo == null || codigo.isEmpty()) {
+            throw new InvalidDataException("El codigo no es valido");
+
+        }
+
         PasarOfertasFaseSeleccion();
         return ofertasBD.getOfertasEmpresa(codigo);
     }
 
     public List<Oferta> getOfertasEmpresaEstados(String codigo, String estado) throws InvalidDataException {
-          PasarOfertasFaseSeleccion();
-      
+        if (codigo == null || codigo.isEmpty() || estado == null || estado.isEmpty()) {
+            throw new InvalidDataException("El codigo no es valido");
+
+        }
+
+        PasarOfertasFaseSeleccion();
         return ofertasBD.getOfertasEmpresaEstados(codigo, estado);
     }
 
@@ -82,8 +97,11 @@ public class OfertaService {
         return ofertasBD.actualizarOferta(oferta);
     }
 
-    public OfertaEliminada eliminarOfertaBD(OfertaEliminada oferta) {
+    public OfertaEliminada eliminarOfertaBD(OfertaEliminada oferta) throws InvalidDataException {
+        if (oferta.getCodigo() == null || oferta.getCodigo().isEmpty()) {
+            throw new InvalidDataException("El codigo no es valido");
 
+        }
         return ofertasBD.EliminarOferta(oferta);
     }
 
@@ -106,17 +124,17 @@ public class OfertaService {
         List<Oferta> ofertas = getOfertas();
 
         for (Oferta oferta : ofertas) {
-            
+
             System.out.println(oferta.toString());
 
             if (!util.NoHaAlcanzadoFechaLimite(oferta.getFechaLimite())) {
-                
+
                 System.out.println("Aqui segun que ya alcanzó la fecha limite");
 
                 oferta.setEstado("Seleccion");
-                
-                System.out.println("cambio de estado hecho: "+ oferta.toString());
-                
+
+                System.out.println("cambio de estado hecho: " + oferta.toString());
+
                 actualizarEstadoOferta(oferta);
 
                 //enviar Notificacion
@@ -147,7 +165,7 @@ public class OfertaService {
             throw new InvalidDataException("Faltan Datos");
         }
 
-        if (oferta.getSalario() < 0) {
+        if (oferta.getSalario() <= 0) {
             throw new InvalidDataException("No se puede ingresar un numero negativo");
         }
 

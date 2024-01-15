@@ -6,7 +6,7 @@ package DatosBD;
 
 import Datos.RecuperarCuenta;
 import Datos.Solicitudes;
-import static DatosBD.SolicitudesBD.conexion;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

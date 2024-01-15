@@ -17,6 +17,7 @@ import java.util.List;
 public class ReportesEmpleadorService {
 
     ReportesEmpleador reportes = new ReportesEmpleador();
+    String sinFecha ="sinfecha";
 
     public List<Oferta> Reporte1(String codigoEmpresa, String fecha1, String fecha2) {
         if (fecha1 == "sinfecha" && fecha2 == "sinfecha") {
@@ -28,7 +29,7 @@ public class ReportesEmpleadorService {
     public List<Entrevista> Reporte2Fecha(String codigoUsuario, String fecha) {
         System.out.println("Reporte 2 Empleador:  codigoUsuario: " + codigoUsuario+"  fecha: "+fecha );
 
-        if (!fecha.equalsIgnoreCase("sinfecha")) {
+        if (!fecha.equalsIgnoreCase(sinFecha)) {
             return reportes.Reporte2Fecha(codigoUsuario, fecha);
         }else{
         

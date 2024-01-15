@@ -94,17 +94,20 @@ public class OfertaController {
     }
     
      public void ActualizarOferta(String body, HttpServletResponse response) throws IOException, InvalidDataException {
-     OfertaService ofertaService = new OfertaService();
+     OfertaService ofertaService = new OfertaService(conexion);
+        NotificacionesService notificacionService = new NotificacionesService(conexion);
          Oferta ofertaFE = (Oferta) jsonUtil.JsonStringAObjeto(body, Oferta.class);
 
         System.out.println("Objeto recibido: " + ofertaFE.toString());
 
+        
+        
+        
         //actualizar la oferta
         Oferta oferta = ofertaService.actualizarOfertaBD(ofertaFE);
 
         //enviar notificacion 
         //entrevista enviar a usuario con entrevistas 
-        NotificacionesService notificacionService = new NotificacionesService(conexion);
 
         //Activo, Seleccion enviar notificacion  a usuarios con solicitudes
         if (ofertaFE.getEstado().equals(Estado.Activo.name()) || ofertaFE.getEstado().equals("Seleccion")) {

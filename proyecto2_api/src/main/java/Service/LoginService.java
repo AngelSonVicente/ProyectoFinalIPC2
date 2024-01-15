@@ -66,6 +66,7 @@ public class LoginService {
 
     public Usuario IsLogin(String ContraIngresada, String UsuarioIngresado) {
 
+        UsuarioBD usuarioBD = new UsuarioBD();
         String ContraEncriptada = util.Encriptar(ContraIngresada);
 
         String Contra = obtnerContra(UsuarioIngresado);
@@ -79,7 +80,7 @@ public class LoginService {
         if (ContraEncriptada.equals(Contra)) {
             System.out.println("si ingresó");
 
-            usuario = UsuarioBD.getUsuarioByUser(UsuarioIngresado);
+            usuario = usuarioBD.getUsuarioByUser(UsuarioIngresado);
           
             return usuario;
 

@@ -49,8 +49,15 @@ public class PreferenciasService {
         return preferenciasBD.eliminarPreferencias(codigoUsuario);
     }
 
-    public CompletarPerfilUsuario ingresarPreferencias(CompletarPerfilUsuario perfilUsuario) {
+    public CompletarPerfilUsuario ingresarPreferencias(CompletarPerfilUsuario perfilUsuario) throws InvalidDataException {
 
+        if(perfilUsuario.getCodigoUsuario()==null || perfilUsuario.getCategorias()==null ||
+           perfilUsuario.getCodigoUsuario().isEmpty() || perfilUsuario.getCategorias().isEmpty()     ){
+                throw new InvalidDataException("faltan datos");
+
+        }
+        
+        
         PreferenciasBD preferenciasBD = new PreferenciasBD(conexion);
         //hacer otra validacion por si acaso, aunque ya se hizo en CompletarPerfilService
         return preferenciasBD.ingresarPreferencias(perfilUsuario);

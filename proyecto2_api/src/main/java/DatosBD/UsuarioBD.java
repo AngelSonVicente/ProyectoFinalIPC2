@@ -21,6 +21,17 @@ import java.util.Optional;
  */
 public class UsuarioBD {
 
+    private Connection conexion;
+
+    public UsuarioBD(Connection conexion) {
+        this.conexion = conexion;
+    }
+
+    public UsuarioBD() {
+        conexion = ConexionBD.getInstancia().getConexion();
+
+    }
+
     private static final String SelectUsuario = "SELECT * FROM usuarios WHERE usuario = ?";
     private static final String SelectUsuarioID = "SELECT * FROM usuarios WHERE codigo = ?";
     private static final String SelectUsuarioCorreo = "SELECT * FROM usuarios WHERE correo = ?";
@@ -31,8 +42,6 @@ public class UsuarioBD {
 
     private static final String Dashboard = "SELECT COUNT(CASE WHEN tipo = 'Empleador' THEN 1 END) AS total_empleadores, COUNT(CASE WHEN tipo = 'Usuario' THEN 1 END) AS total_usuarios FROM usuarios;";
     Util util = new Util();
-
-    static Connection conexion = ConexionBD.getInstancia().getConexion();
 
     public Usuario crearUsuario(Usuario usuario) {
         System.out.println("esta creando el usuario");
@@ -93,7 +102,7 @@ public class UsuarioBD {
         return null;
     }
 
-    public static Usuario getUsuarioByUser(String usuario) {
+    public  Usuario getUsuarioByUser(String usuario) {
         // validateCarnet not null
         try {
             PreparedStatement select = conexion.prepareStatement(SelectUsuario);
@@ -117,7 +126,7 @@ public class UsuarioBD {
         return null;
     }
 
-    public static Usuario getUsuarioCodigo(String codigo) {
+    public  Usuario getUsuarioCodigo(String codigo) {
         // validateCarnet not null
         try {
             PreparedStatement select = conexion.prepareStatement(SelectUsuarioID);
@@ -143,7 +152,7 @@ public class UsuarioBD {
         return null;
     }
 
-    public  Usuario getUsuarioCorreo(String correo) {
+    public Usuario getUsuarioCorreo(String correo) {
         // validateCarnet not null
         try {
             PreparedStatement select = conexion.prepareStatement(SelectUsuarioCorreo);
@@ -169,72 +178,56 @@ public class UsuarioBD {
         return null;
     }
 
-    
+    public boolean cambiarPassword(String codigoUsuario, String password) {
 
-    public boolean cambiarPassword(String codigoUsuario, String password){
-
-    
         System.out.println("Actualizando la password");
-    try {
-        PreparedStatement update = conexion.prepareStatement(cambiarPassword);
-        update.setString(1, util.Encriptar(password));
-        update.setString(2, codigoUsuario);
-        System.out.println("QueryFinalizacion : " + update.toString());
-        int affectedRows = update.executeUpdate();
+        try {
+            PreparedStatement update = conexion.prepareStatement(cambiarPassword);
+            update.setString(1, util.Encriptar(password));
+            update.setString(2, codigoUsuario);
+            System.out.println("QueryFinalizacion : " + update.toString());
+            int affectedRows = update.executeUpdate();
 
-        if (affectedRows == 1) {
-            return true;
-        } else {
-            System.out.println("La actualización no tuvo éxito.");
-            return false;
+            if (affectedRows == 1) {
+                return true;
+            } else {
+                System.out.println("La actualización no tuvo éxito.");
+                return false;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println(ex);
         }
-    }
-    catch (SQLException ex
 
-    
-        ) {
-        ex.printStackTrace();
-        System.out.println(ex);
+        return false;
     }
 
+    public boolean ActualizarUsuario(Usuario usuario) {
 
-return false;
-}
-    public boolean ActualizarUsuario(Usuario usuario){
-
-    
         System.out.println("Actualizando la password");
-    try {
-        PreparedStatement update = conexion.prepareStatement(actualizarUsuario);
-        update.setString(1, usuario.getNombre());
-        update.setString(2, usuario.getDireccion());
-        update.setString(3, usuario.getCorreo());
-        update.setString(4, usuario.getCui());
-        update.setString(5, usuario.getBirth());
-        update.setInt(6, usuario.getCodigo());
-        System.out.println("QueryActualizacion: " + update.toString());
-        int affectedRows = update.executeUpdate();
+        try {
+            PreparedStatement update = conexion.prepareStatement(actualizarUsuario);
+            update.setString(1, usuario.getNombre());
+            update.setString(2, usuario.getDireccion());
+            update.setString(3, usuario.getCorreo());
+            update.setString(4, usuario.getCui());
+            update.setString(5, usuario.getBirth());
+            update.setInt(6, usuario.getCodigo());
+            System.out.println("QueryActualizacion: " + update.toString());
+            int affectedRows = update.executeUpdate();
 
-        if (affectedRows == 1) {
-            return true;
-        } else {
-            System.out.println("La actualización no tuvo éxito.");
-            return false;
+            if (affectedRows == 1) {
+                return true;
+            } else {
+                System.out.println("La actualización no tuvo éxito.");
+                return false;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println(ex);
         }
-    }
-    catch (SQLException ex
 
-    
-        ) {
-        ex.printStackTrace();
-        System.out.println(ex);
+        return false;
     }
 
-
-return false;
-}
-    
-     
-     
-     
 }
