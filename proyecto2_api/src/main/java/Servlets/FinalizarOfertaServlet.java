@@ -40,7 +40,7 @@ public class FinalizarOfertaServlet extends HttpServlet {
         try {
             finalizarService.FinalizarOFerta(body, response);
         } catch (InvalidDataException ex) {
-             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
         }
 
@@ -50,13 +50,9 @@ public class FinalizarOfertaServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String codigo = request.getParameter("codigoOferta");
-        if (ofertaService.OfertaFinalizada(codigo)) {
-            response.setStatus(HttpServletResponse.SC_OK);
-
-        } else {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-
-        }
+        
+        finalizarService.OfertaFinalizada(codigo, response);
+       
 
     }
 

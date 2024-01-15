@@ -1,5 +1,6 @@
 package Servlets;
 
+import Controller.OfertaController;
 import Datos.Categoria;
 import Datos.JsonUtil;
 import Datos.Oferta;
@@ -39,111 +40,47 @@ public class OfertaServlet extends HttpServlet {
         String estado = request.getParameter("estado");
         String codigoEmpresa = request.getParameter("empresa");
 
+        String codigoUsuario = request.getParameter("codigoUsuario");
+
         System.out.println("Entramos al servlet");
         System.out.println("COdigo: " + codigo);
         System.out.println("COdigo Empresa: " + codigoEmpresa);
+        System.out.println("codigo Usuario = " + codigoUsuario);
 
-        if (codigo == null) {
-            if (codigoEmpresa != null) {
-                if (estado != null) {
-                    List<Oferta> ofertas = ofertaService.getOfertasEmpresaEstados(codigoEmpresa, estado);
-
-                    String json = new Gson().toJson(ofertas);
-
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-
-                    // Envía el JSON como respuesta
-                    response.getWriter().write(json);
-                } else {
-                    List<Oferta> ofertas = ofertaService.getOfertasEmpresa(codigoEmpresa);
-
-                    String json = new Gson().toJson(ofertas);
-
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-
-                    // Envía el JSON como respuesta
-                    response.getWriter().write(json);
-
-                }
-
-            } else {
-
-                List<Oferta> ofertas = ofertaService.getOfertas();
-
-                String json = new Gson().toJson(ofertas);
-
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-
-                // Envía el JSON como respuesta
-                response.getWriter().write(json);
-            }
-
-        } else {
-
-            try {
-                Oferta ofert = ofertaService.getOferta(codigo);
-
-                String json = new Gson().toJson(ofert);
-                // Configura la respuesta
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-
-                // Envía el JSON como respuesta
-                response.getWriter().write(json);
-
-                response.setStatus(HttpServletResponse.SC_OK);
-            } catch (NotFoundException e) {
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            }
-
-        }
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        var ofertFE = jsonUtil.JsonAObjeto(request, Oferta.class);
-
-        Oferta oferta = (Oferta) ofertFE;
-        oferta.setEstado("Activo");
-
+        OfertaController ofertaController = new OfertaController();
         try {
-
-            Oferta ofertaaa = ofertaService.crearOferta(oferta);
-
-            jsonUtil.EnviarJson(response, ofertaaa);
-
-//             String json = new Gson().toJson(ofertaaa);
-//            // Configura la respuesta
-//            response.setContentType("application/json");
-//            response.setCharacterEncoding("UTF-8");
-//
-//            // Envía el JSON como respuesta
-//            response.getWriter().write(json);
-            response.setStatus(HttpServletResponse.SC_OK);
-
-        } catch (InvalidDataException e) {
+            ofertaController.GetOfertas(codigo, estado, codigoEmpresa, codigoUsuario, response);
+        } catch (InvalidDataException | NotFoundException ex) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
 
     }
 
     @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String body = jsonUtil.getBody(request);
+
+        OfertaController ofertaController = new OfertaController();
+        try {
+            ofertaController.CrearOferta(body, response);
+        } catch (InvalidDataException ex) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+        }
+
+    }
+
+    @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        OfertaController ofertaController = new OfertaController();
 
         System.out.println("Entre al servlet metodo put");
 
         String body = jsonUtil.getBody(request);
-        Oferta ofertaFE = gson.fromJson(body, Oferta.class);
-
-        System.out.println("Objeto recibido: " + ofertaFE.toString());
-
         try {
 
-            ofertaService.ActualizarOferta(body, response);
+            ofertaController.ActualizarOferta(body, response);
         } catch (InvalidDataException ex) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
@@ -153,25 +90,18 @@ public class OfertaServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        OfertaController ofertaController = new OfertaController();
 
-        System.out.println("body: "+ jsonUtil.getBody(request));
-        
-       OfertaEliminada oferta = new OfertaEliminada(null, request.getParameter("codigoOferta"), null, request.getParameter("motivo"), null);
+        OfertaEliminada oferta = new OfertaEliminada(null, request.getParameter("codigoOferta"), null, request.getParameter("motivo"), null);
 
-        OfertaEliminada ofertaEliminada = (OfertaEliminada) jsonUtil.JsonAObjeto(request, OfertaEliminada.class);
-     
-        
         try {
-            
-           
-            ofertaService.EliminarOferta(oferta, response);
-        } catch (NotFoundException | InvalidDataException ex) {
-        
-           response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
-        
+            ofertaController.EliminarOferta(oferta, response);
+        } catch (NotFoundException | InvalidDataException ex) {
+
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
         }
-        
 
     }
 

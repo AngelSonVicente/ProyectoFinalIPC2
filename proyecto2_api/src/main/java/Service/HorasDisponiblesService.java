@@ -6,9 +6,12 @@ package Service;
 
 import Datos.Entrevista;
 import Datos.HoraDisponible;
+import Datos.JsonUtil;
 import Datos.Solicitudes;
 import DatosBD.HoraDisponibleBD;
 import exceptions.InvalidDataException;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,6 +23,18 @@ import org.apache.commons.lang3.Range;
  */
 public class HorasDisponiblesService {
     HoraDisponibleBD horasocupadas = new HoraDisponibleBD();
+    JsonUtil jsonUtil = new JsonUtil();
+    
+    public void HorasDisponibles(String fecha, String ubicacion, String codigoOferta, HttpServletResponse response) throws IOException, InvalidDataException{
+        
+            List<HoraDisponible> horasDisponibles = getHorasDisponibles(fecha, ubicacion, codigoOferta);
+            jsonUtil.EnviarListaJson(response, horasDisponibles);
+            System.out.println("se envio lista de horad");
+        
+        
+    
+    }
+    
     
     
       public List<HoraDisponible> getHorasDisponibles(String fecha, String ubicacion, String codigoOferta) throws InvalidDataException {

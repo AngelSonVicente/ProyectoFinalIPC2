@@ -55,23 +55,20 @@ public class CompletarPerfilServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      String body= jsonUtil.getBody(request);
+        String body = jsonUtil.getBody(request);
         System.out.println("Entrando Al PUT");
-      
-      EditarPerfilService editarPerfilService = new EditarPerfilService();
+
+        EditarPerfilService editarPerfilService = new EditarPerfilService();
         try {
             editarPerfilService.EditarPerfil(body, response);
         } catch (InvalidDataException ex) {
 
-            System.out.println("error___ "+ ex);
-            
-                          response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            System.out.println("error___ " + ex);
+
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
         }
-      
-      
+
     }
-    
-    
 
 }

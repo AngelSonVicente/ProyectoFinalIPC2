@@ -33,6 +33,10 @@ export class OfertaService {
         console.log('connectando con el BE: ');
         return this.httpClient.get<Oferta[]>(this.API_URL + "Ofertas");
     }
+    public getOfertasPreferencia(codigoUsuario: string): Observable<Oferta[]> {
+        console.log('connectando con el BE: ');
+        return this.httpClient.get<Oferta[]>(this.API_URL + "Ofertas?codigoUsuario="+codigoUsuario);
+    }
 
     public getOfertasEmpresa(codigoEmpresa: String): Observable<Oferta[]> {
         console.log('connectando con el BE: ');

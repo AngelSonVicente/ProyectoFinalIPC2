@@ -20,40 +20,24 @@ import java.util.List;
  * @author MSI
  */
 public class EntrevistaService {
-    static Connection conexion = ConexionBD.getInstancia().getConexion();
+    //static Connection conexion = ConexionBD.getInstancia().getConexion();
 
+    private Connection conexion;
+
+    public EntrevistaService(Connection conexion) {
+        this.conexion = conexion;
+    }
+
+    public EntrevistaService() {
+        conexion = ConexionBD.getInstancia().getConexion();
+    }
     
     private EntrevistaBD entrevistaBD = new EntrevistaBD();
     private OfertaService ofertaService = new OfertaService();
     private JsonUtil jsonUtil = new JsonUtil();
     private SolicitudesService solicitudService = new SolicitudesService();
 
-    public Entrevista procesarSolicitud(String Body, HttpServletResponse response) throws IOException, InvalidDataException, NotFoundException {
-        //Crear entrevista y actualizar estado SOlicitud a "Entrevista"
-        Entrevista entrevista = (Entrevista) jsonUtil.JsonStringAObjeto(Body, Entrevista.class);
-        entrevista.setEstado(Estado.Pendiente.name());
-
-        System.out.println("Entrevista recibida: "+ entrevista.toString());
-        
-        //APLICAR TRANSACCION
-        Entrevista entrevistaAgendada = agendarEntrevista(entrevista);
-        
-        Oferta oferta = ofertaService.getOferta(entrevista.getCodigoOferta());
-        
-        //enviar notificacion a usuario de que ha conseguido la entrevista
-        NotificacionesService notificacionesService = new NotificacionesService(conexion);
-        
-        Notificaciones notificacion = new Notificaciones(null, oferta.getCodigoEmpresa(), null, entrevista.getCodigoUsuario(), null, entrevista.getCodigoOferta(), null, "Se ha agendado una Entrevista En la oferta de empleo", null, null);
-    //enviar notificacion
-        notificacionesService.CrearNotificacion(notificacion);
-        
-        
-        
-
-       jsonUtil.EnviarJson(response, entrevistaAgendada);
-
-        return null;
-    }
+   
 
     public Entrevista agendarEntrevista(Entrevista entrevista) throws InvalidDataException {
         Solicitudes solicitud = new Solicitudes(entrevista.getCodigoSolicitud(), entrevista.getCodigoOferta(), null, null, null, null, Estado.Entrevista.name());
@@ -65,7 +49,12 @@ public class EntrevistaService {
         return entrevistaCreada;
     }
 
-    public List<Entrevista> getEntrevistasOferta(String codigo) {
+    public List<Entrevista> getEntrevistasOferta(String codigo) throws InvalidDataException {
+          if(codigo==null || codigo.isEmpty()){
+               throw new InvalidDataException("El codigo no es valido");
+     
+        }
+        
         return entrevistaBD.getEntrevistasOferta(codigo);
     }
 
@@ -74,7 +63,11 @@ public class EntrevistaService {
         return entrevistaBD.finalizarEntrevista(entrevista);
     }
 
-    public List<Entrevista> getEntrevistasUsuario(String codigo) {
+    public List<Entrevista> getEntrevistasUsuario(String codigo) throws InvalidDataException {
+        if(codigo==null || codigo.isEmpty()){
+               throw new InvalidDataException("El codigo no es valido");
+     
+        }
         return entrevistaBD.getEntrevistasUsuario(codigo);
     }
 

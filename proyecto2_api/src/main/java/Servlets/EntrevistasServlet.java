@@ -1,5 +1,6 @@
 package Servlets;
 
+import Controller.EntrevistaController;
 import Datos.Entrevista;
 import Datos.JsonUtil;
 import Datos.Solicitudes;
@@ -16,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,23 +40,13 @@ public class EntrevistasServlet extends HttpServlet {
         String codigoUsuario = request.getParameter("codigoUsuario");
         String codigoOferta = request.getParameter("codigoOferta");
 
-        if (codigoUsuario != null) {
+        EntrevistaController entrevistaController = new EntrevistaController();
+        try {
+            entrevistaController.getEntrevistas(codigoUsuario, codigoOferta, response);
+        } catch (InvalidDataException ex) {
 
-            List<Entrevista> entrevistas = entrevistaService.getEntrevistasUsuario(codigoUsuario);
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
-            String json = new Gson().toJson(entrevistas);
-
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-
-            // Envía el JSON como respuesta
-            response.getWriter().write(json);
-
-        }
-        if (codigoOferta != null) {
-
-            List<Entrevista> entrevistas = entrevistaService.getEntrevistasOferta(codigoOferta);
-            jsonUtil.EnviarListaJson(response, entrevistas);
         }
 
     }
@@ -64,36 +56,29 @@ public class EntrevistasServlet extends HttpServlet {
 
         String body = jsonUtil.getBody(request);
 
-        try {
-            entrevistaService.procesarSolicitud(body, response);
+        EntrevistaController entrevistaController = new EntrevistaController();
 
-    
-        } catch (InvalidDataException | NotFoundException ex) {
+        try {
+            entrevistaController.CrearEntrevista(body, response);
+
+        } catch (InvalidDataException | NotFoundException | SQLException ex) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
-        } 
+        }
 
     }
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Entrando al servlet metodo put de entrevista");
-        var entrevistaFE = jsonUtil.JsonAObjeto(request, Entrevista.class);
-        Entrevista entrevista = (Entrevista) entrevistaFE;
 
-        System.out.println("codigo: " + entrevista.getCodigo());
-        System.out.println("nota: " + entrevista.getNota());
+        String body = jsonUtil.getBody(request);
+        EntrevistaController entrevistaController = new EntrevistaController();
+
         try {
-            Entrevista entrevistaFinalizada = entrevistaService.finalizarEntrevista(entrevista);
-            jsonUtil.EnviarJson(response, entrevistaFinalizada);
-
-            response.setStatus(HttpServletResponse.SC_OK);
-
-        } catch (Exception e) {
-            System.out.println("--------------------------------");
-            System.out.println(e);
+            entrevistaController.ActualizarEntrevista(body, response);
+        } catch (InvalidDataException ex) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-
         }
 
     }

@@ -2,9 +2,32 @@ package Datos;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Util {
 
+    
+      public  boolean NoHaAlcanzadoFechaLimite(String fechalimite) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            // Obtener la fecha actual
+            Date currentDate = new Date();
+
+            // Analizar la fecha límite
+            Date parsedEndDate = dateFormat.parse(fechalimite);
+
+            // Comparar las fechas
+            return !currentDate.after(parsedEndDate);
+        } catch (ParseException e) {
+            // Manejar excepción si hay un problema al analizar la fecha límite
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
 
     public static int[][] BuscarRepetidos(int[] ids, int[] cantidades) {
         int n = ids.length;

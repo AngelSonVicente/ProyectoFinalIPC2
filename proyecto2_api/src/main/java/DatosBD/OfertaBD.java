@@ -21,12 +21,12 @@ public class OfertaBD {
 
     //agregar fltro de las preferencias del usuario de momento todo
     private static String SelectTodo = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.estado = 'Activo'";
-    private static String SelectOfertasPreferencias = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.estado = 'Activo' AND o.categoria IN (SELECT codigo_categoria FROM preferencias WHERE codigo_usuario = ?";
+    private static String SelectOfertasPreferencias = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.estado = 'Activo' AND o.categoria IN (SELECT codigo_categoria FROM preferencias WHERE codigo_usuario = ?)";
     private static String SelectTodoEmpresa = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.codigo_empresa = ?";
     private static String SelectTodoEmpresaEstado = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.estado = ? AND o.codigo_empresa = ?";
     private static String SelectOfertaID = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.codigo = ?";
 
-    private static String Existe="SELECT * FROM ofertas WHERE codigo = ? AND estado = 'Finalizado'";
+    private static String Existe = "SELECT * FROM ofertas WHERE codigo = ? AND estado = 'Finalizado'";
     private static String Insert = "INSERT INTO ofertas (codigo, codigo_empresa, nombre, descripcion, categoria, estado, fecha_publicacion, fecha_limite, salario, modalidad, ubicacion, detalles, usuario_elegido) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static String Update = "UPDATE ofertas set nombre = ?, descripcion = ? , categoria = ?, estado = ?, fecha_limite = ?, salario = ?, modalidad = ?, ubicacion = ?, detalles = ? WHERE codigo = ?";
     private static String UpdateEstado = "UPDATE ofertas set estado = ? WHERE codigo = ?";
@@ -122,13 +122,23 @@ public class OfertaBD {
     }
 
     public List<Oferta> getOfertas() {
+        return getOfertasQuery(SelectTodo);
+    }
+
+    public List<Oferta> getOfertasPreferencias(String codigo) {
+
         System.out.println("entramos al getofertas");
         List<Oferta> ofertas = new ArrayList<>();
         try {
-            System.out.println("Entramos al try del getofertas");
-            PreparedStatement select = conexion.prepareStatement(SelectTodo);
+            PreparedStatement select = conexion.prepareStatement(SelectOfertasPreferencias);
+            
+            System.out.println("codigo en getofertaspreferencia: "+ codigo);
+            System.out.println("query en getofertaspreferencia: "+ SelectOfertasPreferencias);
+            
+            select.setString(1, codigo);
 
             ResultSet resultset = select.executeQuery();
+            System.out.println("query ofertas con preferencia"+select.toString());
 
             while (resultset.next()) {
                 ofertas.add(new Oferta(resultset.getString("codigo"), resultset.getString("codigo_empresa"),
@@ -139,7 +149,39 @@ public class OfertaBD {
                         resultset.getString("usuario_elegido"), resultset.getString("nombre_usuario_elegido")
                 ));
 
-          //      System.out.println("codigo:   " + resultset.getString("codigo"));
+                //      System.out.println("codigo:   " + resultset.getString("codigo"));
+            }
+
+        } catch (SQLException ex) {
+            // TODO pendiente manejo
+            ex.printStackTrace();
+
+            System.out.println(ex);
+        }
+
+        return ofertas;
+
+    }
+
+    private List<Oferta> getOfertasQuery(String query) {
+        System.out.println("entramos al getofertas");
+        List<Oferta> ofertas = new ArrayList<>();
+        try {
+            PreparedStatement select = conexion.prepareStatement(query);
+
+            ResultSet resultset = select.executeQuery();
+            System.out.println(select.toString());
+
+            while (resultset.next()) {
+                ofertas.add(new Oferta(resultset.getString("codigo"), resultset.getString("codigo_empresa"),
+                        resultset.getString("nombre_empresa"), resultset.getString("nombre"), resultset.getString("descripcion"),
+                        resultset.getString("categoria"), resultset.getString("nombre_categoria"), resultset.getString("estado"),
+                        resultset.getString("fecha_publicacion"), resultset.getString("fecha_limite"), resultset.getFloat("salario"),
+                        resultset.getString("modalidad"), resultset.getString("ubicacion"), resultset.getString("detalles"),
+                        resultset.getString("usuario_elegido"), resultset.getString("nombre_usuario_elegido")
+                ));
+
+                //      System.out.println("codigo:   " + resultset.getString("codigo"));
             }
 
         } catch (SQLException ex) {
@@ -169,7 +211,7 @@ public class OfertaBD {
                         resultset.getString("usuario_elegido"), resultset.getString("nombre_usuario_elegido")
                 ));
 
-       //         System.out.println("codigo:   " + resultset.getString("codigo"));
+                //         System.out.println("codigo:   " + resultset.getString("codigo"));
             }
 
         } catch (SQLException ex) {
@@ -200,7 +242,7 @@ public class OfertaBD {
                         resultset.getString("usuario_elegido"), resultset.getString("nombre_usuario_elegido")
                 ));
 
-         //       System.out.println("codigo:   " + resultset.getString("codigo"));
+                //       System.out.println("codigo:   " + resultset.getString("codigo"));
             }
 
         } catch (SQLException ex) {
@@ -233,10 +275,7 @@ public class OfertaBD {
             insert.setString(11, oferta.getUbicacion());
             insert.setString(12, oferta.getDetalle());
             insert.setString(13, oferta.getUsuarioElegido());
-            
-          
 
-          
             System.out.println("------------Creando Oferta OFERTA------------");
             System.out.println(insert.toString());
             int affectedRows = insert.executeUpdate();

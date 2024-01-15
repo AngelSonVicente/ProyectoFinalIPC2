@@ -28,26 +28,7 @@ public class CategoriaService {
   
     
 
-    public void ProcesarSolicitud(String body, HttpServletResponse response ) throws IOException {
 
-       
-        try {
-        Categoria categoriaFE = (Categoria) jsonUtil.JsonStringAObjeto(body, Categoria.class);
-
-
-           Categoria categoria = crearCategoria(categoriaFE);
-
-             jsonUtil.EnviarJson(response, categoria);
-        
-
-            response.setStatus(HttpServletResponse.SC_OK);
-        } catch (InvalidDataException e) {
-
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-       
-        }
-
-    }
 
     public List<Categoria> getCategorias() {
         return categoria.getCategorias();

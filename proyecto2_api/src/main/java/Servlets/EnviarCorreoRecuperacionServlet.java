@@ -33,8 +33,7 @@ public class EnviarCorreoRecuperacionServlet extends HttpServlet {
 
         RecuperarCuentaService recuperarCuenta = new RecuperarCuentaService();
         try {
-            recuperarCuenta.procesarSolicitud(body);
-            response.setStatus(HttpServletResponse.SC_OK);
+            recuperarCuenta.procesarSolicitud(body,response);
 
         } catch (InvalidDataException ex) {
           response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

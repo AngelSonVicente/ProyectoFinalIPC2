@@ -40,109 +40,30 @@ public class OfertaService {
     Util util = new Util();
     JsonUtil jsonUtil = new JsonUtil();
 
-    public void ActualizarOferta(String body, HttpServletResponse response) throws IOException, InvalidDataException {
-        Oferta ofertaFE = (Oferta) jsonUtil.JsonStringAObjeto(body, Oferta.class);
-
-        System.out.println("Objeto recibido: " + ofertaFE.toString());
-
-        //actualizar la oferta
-        Oferta oferta = actualizarOfertaBD(ofertaFE);
-
-        //enviar notificacion 
-        //entrevista enviar a usuario con entrevistas 
-        NotificacionesService notificacionService = new NotificacionesService(conexion);
-
-        //Activo, Seleccion enviar notificacion  a usuarios con solicitudes
-        if (ofertaFE.getEstado().equals(Estado.Activo.name()) || ofertaFE.getEstado().equals("Seleccion")) {
-
-            System.out.println("en fase de seleccion ");
-            SolicitudesService solciitudesService = new SolicitudesService();
-
-            List<Solicitudes> solicitudesOferta = solciitudesService.getSolicitudesOferta(ofertaFE.getCodigo());
-
-            //enviar notificacion a todas los usuarios con solicitud en la oferta
-            for (Solicitudes solicitud : solicitudesOferta) {
-                System.out.println(solicitud.toString());
-
-                Notificaciones notificacion = new Notificaciones(null, ofertaFE.getCodigoEmpresa(), null, solicitud.getCodigoUsuario(), null, ofertaFE.getCodigo(), null, "Se ha modificado la oferta", null, null);
-
-                notificacionService.CrearNotificacion(notificacion);
-
-            }
-
-        }
-
-        if (ofertaFE.getEstado().equals(Estado.Entrevista.name())) {
-
-            EntrevistaService entrevistaService = new EntrevistaService();
-
-            List<Entrevista> entrevistasOferta = entrevistaService.getEntrevistasOferta(ofertaFE.getCodigo());
-
-            //enviar notificacion a todas los usuarios con entrevista en la oferta
-            for (Entrevista entrevista : entrevistasOferta) {
-                Notificaciones notificacion = new Notificaciones(null, ofertaFE.getCodigoEmpresa(), null, entrevista.getCodigoUsuario(), null, ofertaFE.getCodigo(), null, "Se ha modificado la oferta", null, null);
-
-                notificacionService.CrearNotificacion(notificacion);
-
-            }
-
-        }
-
-        jsonUtil.EnviarJson(response, oferta);
-
-    }
-
-    public void EliminarOferta(OfertaEliminada ofertaEliminada, HttpServletResponse response) throws NotFoundException, InvalidDataException {
-
-        System.out.println("oferta eliminada " + ofertaEliminada.toString());
-        
-        OfertaEliminada oferta = eliminarOfertaBD(ofertaEliminada);
-        
-        if (oferta != null) {
-
-            SolicitudesService solicitudesService = new SolicitudesService();
-            EntrevistaService entrevistaService = new EntrevistaService();
-
-            List<Solicitudes> solicitudesOferta = solicitudesService.getSolicitudesOferta(ofertaEliminada.getCodigoOferta());
-            List<Entrevista> entrevistasOferta = entrevistaService.getEntrevistasOferta(ofertaEliminada.getCodigoOferta());
-
-            NotificacionesService notificacionesService = new NotificacionesService(conexion);
-
-            Notificaciones notificacion = new Notificaciones(null, null, null, null, null, ofertaEliminada.getCodigoOferta(), null, "Se ha eliminado la oferta de empleo. MOtivo: " + ofertaEliminada.getMotivo(), null, null);
-
-            for (Solicitudes solicitud : solicitudesOferta) {
-                notificacion.setCodigoUsuarioDestino(solicitud.getCodigoUsuario());
-                notificacionesService.CrearNotificacion(notificacion);
-
-            }
-
-            for (Entrevista entrevista : entrevistasOferta) {
-                notificacion.setCodigoUsuarioDestino(entrevista.getCodigoUsuario());
-                notificacionesService.CrearNotificacion(notificacion);
-
-            }
-
-            response.setStatus(HttpServletResponse.SC_OK);
-        } else {
-
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        }
-
-    }
-
+   
     public List<Oferta> getOfertas() {
         return ofertasBD.getOfertas();
     }
 
+    public List<Oferta> getOfertasPreferencias(String codigo) throws InvalidDataException {
+        
+        PasarOfertasFaseSeleccion();
+        return ofertasBD.getOfertasPreferencias(codigo);
+    }
+
     public boolean OfertaFinalizada(String codigoOferta) {
+        
         return ofertasBD.OfertaFinalizada(codigoOferta);
     }
 
-    public List<Oferta> getOfertasEmpresa(String codigo) {
+    public List<Oferta> getOfertasEmpresa(String codigo) throws InvalidDataException {
+        PasarOfertasFaseSeleccion();
         return ofertasBD.getOfertasEmpresa(codigo);
     }
 
-    public List<Oferta> getOfertasEmpresaEstados(String codigo, String estado) {
+    public List<Oferta> getOfertasEmpresaEstados(String codigo, String estado) throws InvalidDataException {
+          PasarOfertasFaseSeleccion();
+      
         return ofertasBD.getOfertasEmpresaEstados(codigo, estado);
     }
 
@@ -176,6 +97,47 @@ public class OfertaService {
         } else {
 
             throw new NotFoundException("No se encontró la categoria");
+        }
+
+    }
+
+    public void PasarOfertasFaseSeleccion() throws InvalidDataException {
+        //pasamos las ofertas de fase Activa a fase de seleccion cuando llegue la fecha limite
+        List<Oferta> ofertas = getOfertas();
+
+        for (Oferta oferta : ofertas) {
+            
+            System.out.println(oferta.toString());
+
+            if (!util.NoHaAlcanzadoFechaLimite(oferta.getFechaLimite())) {
+                
+                System.out.println("Aqui segun que ya alcanzó la fecha limite");
+
+                oferta.setEstado("Seleccion");
+                
+                System.out.println("cambio de estado hecho: "+ oferta.toString());
+                
+                actualizarEstadoOferta(oferta);
+
+                //enviar Notificacion
+                NotificacionesService notificacionService = new NotificacionesService(conexion);
+
+                SolicitudesService solicitudService = new SolicitudesService();
+
+                //obtenemos todas las solicitudes que pertenezcan a la oferta para enviarles la notificaion
+                List<Solicitudes> solicitudesOferta = solicitudService.getSolicitudesOferta(oferta.getCodigo());
+
+                for (Solicitudes solicitud : solicitudesOferta) {
+                    //enviamos todas notificacion a todas las personas que se hayan postulado
+                    //creamos la notificaion 
+                    Notificaciones notificacion = new Notificaciones(null, oferta.getCodigoEmpresa(), null, solicitud.getCodigoUsuario(), null, oferta.getCodigo(), null, "La Oferta de empleo ha pasado a fase de seleccion! Se le enviara una notificacion si se le aganda una entrevista o es rechazado. Mucha Suerte!", null, null);
+
+                    //enviamos la notificaion
+                    notificacionService.CrearNotificacion(notificacion);
+                }
+
+            }
+
         }
 
     }

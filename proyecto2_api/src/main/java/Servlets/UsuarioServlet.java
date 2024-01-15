@@ -4,6 +4,7 @@
  */
 package Servlets;
 
+import Controller.UsuarioController;
 import Datos.DashBoard;
 import Datos.JsonUtil;
 import Datos.Usuario;
@@ -38,24 +39,13 @@ public class UsuarioServlet extends HttpServlet {
         String dash = request.getParameter("dash");
 
         System.out.println("codigo usuario: " + codigo);
-        
-        if(dash!=null){
-            
-            DashBoard dashito = usuarioService.getDasg();
-             jsonUtil2.EnviarJson(response, dashito);
 
-        
-        }
-        else{
-               try {
-            Usuario usuario = usuarioService.getUsuarioID(codigo);
-            jsonUtil.EnviarJson(response, usuario);
-
+        UsuarioController usuarioController = new UsuarioController();
+        try {
+            usuarioController.GetUsuario(codigo, dash, response);
         } catch (NotFoundException ex) {
-            System.out.println(ex);
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
-        }
         }
  
 
@@ -65,21 +55,17 @@ public class UsuarioServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
         System.out.println("----------------Entramos al servlet Crear Usuario-----------------------");
-        var UsuarioFE = jsonUtil.JsonAObjeto(request, Usuario.class);
-        Usuario user = (Usuario) UsuarioFE;
-        System.out.println("usuario"+user.getUsuario());
-        System.out.println("nombre"+user.getNombre());
-        System.out.println("contraseña"+user.getPassword());
+    
+        String bosy = jsonUtil.getBody(request);
         
-        Usuario usuarioCreado;
+        UsuarioController usuarioController = new UsuarioController();
         try {
-            usuarioCreado = usuarioService.CrearUsuario(user);
-      jsonUtil.EnviarJson(response, usuarioCreado);
-        
+            usuarioController.CrearUsurio(bosy, response);
         } catch (InvalidDataException ex) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-
-        }
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+  }
+        
+  
             
          
     }

@@ -24,46 +24,32 @@ import java.util.logging.Logger;
  */
 @WebServlet(name = "HorasDisponiblesController", urlPatterns = {"/v1/HoraDisponible"})
 
-public class HoraDisponibleServlet extends HttpServlet{
+public class HoraDisponibleServlet extends HttpServlet {
 
-    
-    HorasDisponiblesService Horas = new HorasDisponiblesService();
     JsonUtil jsonUtil = new JsonUtil();
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    
+
         System.out.println("Entrando al servlet HOra disponible");
-        
-        String fecha= request.getParameter("fecha");
-        String ubicacion= request.getParameter("ubicacion");
-        String codigoOferta= request.getParameter("codigoOferta");
-        
+
+        String fecha = request.getParameter("fecha");
+        String ubicacion = request.getParameter("ubicacion");
+        String codigoOferta = request.getParameter("codigoOferta");
+
         System.out.println("fecha: " + fecha);
         System.out.println("ubicacion: " + ubicacion);
         System.out.println("codigo Oferta: " + codigoOferta);
-        
+
+        HorasDisponiblesService Horas = new HorasDisponiblesService();
+
         try {
-          
-            List<HoraDisponible> horasDisponibles = Horas.getHorasDisponibles(fecha, ubicacion, codigoOferta);
-            jsonUtil.EnviarListaJson(response, horasDisponibles);
-            System.out.println("se envio lista de horad");
-            
-         
-            
+            Horas.HorasDisponibles(fecha, ubicacion, codigoOferta, response);
         } catch (InvalidDataException ex) {
-            System.out.println("No se envio nada");
-        
-                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-   
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
         }
-        
-        
-        
-    
+
     }
-    
-    
-    
-    
+
 }

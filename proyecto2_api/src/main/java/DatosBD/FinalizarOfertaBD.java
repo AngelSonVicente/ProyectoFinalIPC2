@@ -19,24 +19,23 @@ import java.time.format.DateTimeFormatter;
  * @author MSI
  */
 public class FinalizarOfertaBD {
-  LocalDate fechaActual = LocalDate.now();
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Formato para obtener solo la fecha
-        String fecha = fechaActual.format(formato);
-    
+
+    LocalDate fechaActual = LocalDate.now();
+    DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Formato para obtener solo la fecha
+    String fecha = fechaActual.format(formato);
+
     static Connection conexion = ConexionBD.getInstancia().getConexion();
     private static String FinalizarOferta = "UPDATE ofertas set estado = 'Finalizado', usuario_elegido = ? WHERE codigo = ?";
     private static String FinalizarSolicitudes = "UPDATE solicitudes set estado = 'Elegido' WHERE codigo = ?";
     private static String Pago = "INSERT INTO historial_cobros (codigo_empresa, monto, fecha, codigo_oferta) VALUES (?,  (SELECT comision FROM parametros ORDER BY codigo DESC LIMIT 1), ?, ?);";
 
-    
     public FinalizarOferta realizarPago(FinalizarOferta finalizarOferta) {
-        
+
         try {
             PreparedStatement insert = conexion.prepareStatement(Pago, PreparedStatement.RETURN_GENERATED_KEYS);
-               insert.setString(1, finalizarOferta.getCodigoEmpresa());
-               insert.setString(2, fecha);
-               insert.setString(2, finalizarOferta.getCodigoOferta());
-
+            insert.setString(1, finalizarOferta.getCodigoEmpresa());
+            insert.setString(2, fecha);
+            insert.setString(2, finalizarOferta.getCodigoOferta());
 
             System.out.println(insert.toString());
             int affectedRows = insert.executeUpdate();
@@ -55,22 +54,20 @@ public class FinalizarOfertaBD {
                 }
             }
         } catch (SQLException ex) {
-          
+
         }
 
         return null;
     }
-    
 
     public FinalizarOferta actualizarEstadoOferta(FinalizarOferta finalizarOferta) {
         System.out.println("Actualizando la oferta");
         try {
             PreparedStatement update = conexion.prepareStatement(FinalizarOferta);
-          update.setString(1, finalizarOferta.getCodigoUsuarioElegido());
+            update.setString(1, finalizarOferta.getCodigoUsuarioElegido());
 
             update.setString(2, finalizarOferta.getCodigoOferta());
 
-       
             int affectedRows = update.executeUpdate();
 
             if (affectedRows == 1) {
@@ -93,8 +90,8 @@ public class FinalizarOfertaBD {
         System.out.println("Actualizando la oferta");
         try {
             PreparedStatement update = conexion.prepareStatement(FinalizarSolicitudes);
-           update.setString(1, finalizarOferta.getCodigoSolicitud());
-   
+            update.setString(1, finalizarOferta.getCodigoSolicitud());
+
             int affectedRows = update.executeUpdate();
 
             if (affectedRows == 1) {

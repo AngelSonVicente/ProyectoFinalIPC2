@@ -4,6 +4,7 @@
  */
 package Servlets;
 
+import Controller.CategoriaController;
 import Datos.Categoria;
 import Datos.JsonUtil;
 import DatosBD.GestionCategoriaBD;
@@ -18,6 +19,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -29,43 +32,18 @@ public class CategoriasServlet extends HttpServlet {
 
     private JsonUtil jsonUtil = new JsonUtil();
     private final Gson gson = new Gson();
-   
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        
         String codigo = request.getParameter("codigo");
-        if (codigo == null) {
-            GestionCategoriaBD categoria = new GestionCategoriaBD();
 
-            // CategoriaService categoriaService = new CategoriaService( categoria);
-            List<Categoria> categorias = categoria.getCategorias();
+        CategoriaController categoriaController = new CategoriaController();
 
-            String json = new Gson().toJson(categorias);
-
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-
-            // Envía el JSON como respuesta
-            response.getWriter().write(json);
-        } else {
-
-            try {
-                CategoriaService categoriaService = new CategoriaService();
-                Categoria cat = categoriaService.getCategoria(codigo);
-
-                String json = new Gson().toJson(cat);
-                // Configura la respuesta
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-
-                // Envía el JSON como respuesta
-                response.getWriter().write(json);
-
-                response.setStatus(HttpServletResponse.SC_OK);
-            } catch (NotFoundException e) {
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            }
+        try {
+            categoriaController.getCategorias(codigo, response);
+        } catch (NotFoundException ex) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
         }
 
@@ -74,14 +52,17 @@ public class CategoriasServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        
-     
-        CategoriaService categoriaService = new CategoriaService();
+        CategoriaController categoriaController = new CategoriaController();
+
         String body = jsonUtil.getBody(request);
-        categoriaService.ProcesarSolicitud(body, response);
-            
-       
-     
+        try {
+            categoriaController.CrearSolicitud(body, response);
+
+        } catch (InvalidDataException ex) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+        }
+
     }
 
     @Override
@@ -89,39 +70,15 @@ public class CategoriasServlet extends HttpServlet {
 
         System.out.println("Entre al servlet metodo put");
 
-        var buffer = new StringBuilder();
-        var reader = request.getReader();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            buffer.append(line);
-        }
-        String payload = buffer.toString();
-        Categoria categoriaFE = gson.fromJson(payload, Categoria.class);
+        String body = jsonUtil.getBody(request);
+        CategoriaController categoriaController = new CategoriaController();
 
-        System.out.println(categoriaFE.getNombre());
-        System.out.println(categoriaFE.getDescripcion());
-        System.out.println(categoriaFE.getCodigo());
-
-        // Usuario usuario = loginService.IsLogin(logincito.getPassword(), logincito.getUsuario());
         try {
+            categoriaController.ActualizarCategoria(body, response);
+        } catch (InvalidDataException ex) {
 
-            CategoriaService categoriaService = new CategoriaService();
-
-            Categoria categoria = new Categoria();
-
-            categoria = categoriaService.actualizarCategoria(categoriaFE);
-
-            String json = new Gson().toJson(categoria);
-            // Configura la respuesta
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-
-            // Envía el JSON como respuesta
-            response.getWriter().write(json);
-
-            response.setStatus(HttpServletResponse.SC_OK);
-        } catch (InvalidDataException e) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
         }
 
     }

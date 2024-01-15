@@ -10,50 +10,62 @@ import { OfertaService } from 'src/services/OfertaService';
   templateUrl: './buscar-ofertas-empleo.component.html',
   styleUrls: ['./buscar-ofertas-empleo.component.css']
 })
-export class BuscarOfertasEmpleoComponent  implements OnInit{
+export class BuscarOfertasEmpleoComponent implements OnInit {
   @Input() codigoEmpresa!: string;
-  
-  
 
+
+
+  sugeridas :string="Sugeridas";
   empresaId!: string;
 
   ofertas: Oferta[] = [];
   usuario!: Usuario;
-  constructor(private ofertaService: OfertaService, private route: ActivatedRoute){
+  constructor(private ofertaService: OfertaService, private route: ActivatedRoute) {
 
   }
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.empresaId = params['codigoEmpresa'];
     });
 
-    
+
     let jsonUsuario = localStorage.getItem('usuario');
-    this.usuario= jsonUsuario ? JSON.parse(jsonUsuario) : null;    
+    this.usuario = jsonUsuario ? JSON.parse(jsonUsuario) : null;
 
-    if(this.codigoEmpresa==null){
-  this.ofertaService.getOfertas().subscribe({
-
-      next: (list: Oferta[]) => {
-        this.ofertas = list;
-      }
-    });
-    }else{
-
-      this.ofertaService.getOfertasEmpresaEstado(this.codigoEmpresa,"Activo").subscribe({
+    if (this.codigoEmpresa == null) {
+      this.ofertaService.getOfertasPreferencia(this.usuario.codigo.toString()).subscribe({
 
         next: (list: Oferta[]) => {
           this.ofertas = list;
         }
       });
-      
+    } else {
+
+      this.ofertaService.getOfertasEmpresaEstado(this.codigoEmpresa, "Activo").subscribe({
+
+        next: (list: Oferta[]) => {
+          this.ofertas = list;
+        }
+      });
+
     }
-  
+
 
   }
 
 
-  
+
+  TodasLasOfertas() {
+    this.ofertaService.getOfertas().subscribe({
+
+      next: (list: Oferta[]) => {
+        this.ofertas = list;
+
+        this.sugeridas=" ";
+      }
+    });
+
+  }
 
 
 

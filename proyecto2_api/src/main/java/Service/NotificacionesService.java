@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Service;
 
 import Datos.JsonUtil;
@@ -14,10 +11,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
-/**
- *
- * @author MSI
- */
 public class NotificacionesService {
 
     private Connection conexion;
