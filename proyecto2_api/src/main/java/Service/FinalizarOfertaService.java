@@ -50,7 +50,6 @@ public class FinalizarOfertaService {
         finalizarOferta.setCodigoSolicitud(soli.getSolicitudOU(finalizarOferta.getCodigoUsuarioElegido(), finalizarOferta.getCodigoOferta()));
 
         System.out.println("------------------------------------------------------------------------------------");
-        System.out.println("Si jalo");
         System.out.println("oferta: " + finalizarOferta.getCodigoOferta());
         System.out.println("soli: " + finalizarOferta.getCodigoSolicitud());
         System.out.println("usuario: " + finalizarOferta.getCodigoUsuarioElegido());
@@ -68,11 +67,14 @@ public class FinalizarOfertaService {
             finalizar.actualizarEstadoSolicitud(finalizarOferta);
             finalizar.realizarPago(finalizarOferta);
 
-            Notificaciones notificacionUsuarioElegido = new Notificaciones(null, finalizarOferta.getCodigoEmpresa(), null, finalizarOferta.getCodigoUsuarioElegido(), null, finalizarOferta.getCodigoOferta(), null, "Felicidades! ha conseguido el puesto en la oferta de empleo! Pongase en contacto con la empresa.", null, null);
+            Notificaciones notificacionUsuarioElegido = new Notificaciones(null, finalizarOferta.getCodigoEmpresa(), null, finalizarOferta.getCodigoUsuarioElegido(), null, finalizarOferta.getCodigoOferta(), null, "FELICIDADES! ha conseguido el puesto en la oferta de empleo! Pongase en contacto con la empresa.", null, null);
 
             //enviar notificacion al usuario elegido
             notificacionesService.CrearNotificacion(notificacionUsuarioElegido);
 
+            System.out.println("noti elegido: " + notificacionUsuarioElegido.toString());
+            
+            
             //enviar notificaion a los demás usuarios 
             for (Entrevista entrevista : entrevistas) {
 
@@ -80,9 +82,13 @@ public class FinalizarOfertaService {
 
                     Notificaciones notificacion = new Notificaciones(null, finalizarOferta.getCodigoEmpresa(), null, entrevista.getCodigoUsuario(), null, finalizarOferta.getCodigoOferta(), null, "La oferta de empleo ha finalizado, Lamentablemente usted no ha sido elegido para tomar el puesto. siga buscando mas ofertas!", null, null);
 
+                    System.out.println("noti no elegidos" + notificacion.toString());
                     notificacionesService.CrearNotificacion(notificacion);
 
                 }
+               
+
+                
 
             }
 
@@ -106,7 +112,7 @@ public class FinalizarOfertaService {
             try {
                 conexion.setAutoCommit(true);
                 //enviar json
-                 return finalizarOferta;
+               
 
             } catch (SQLException closeException) {
                 closeException.printStackTrace();

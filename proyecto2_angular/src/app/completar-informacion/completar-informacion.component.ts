@@ -144,9 +144,26 @@ export class CompletarInformacionComponent {
     this.completarInformacionSerice.completarUsuario(this.completarUsuario, this.selectedJsonFile).subscribe({
       next: (created: CompletarPerfilUsuario) => {
         console.log("creado " + created);
+
+
         if(this.usuario.tipo == "Usuario"){
           this.router.navigate(['/Proyecto2/Modulo/Usuario']);
+
+
+          this.usuarioService.getUsuarioID(this.usuario.codigo.toString()).subscribe({
+            next: (usuarioActualizado: Usuario) => {
+              localStorage.setItem('usuario', JSON.stringify(usuarioActualizado));
+        
+
+              },
+            error: (error: any) => {
+              console.log("error");
+            }
+          });
+
           
+
+         
         }
 
       },

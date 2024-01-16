@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Empresa } from 'src/entities/Empresa';
 import { EmpresaService } from 'src/services/EmpresaService';
+import { TelefonosService } from 'src/services/TelefonosService';
 
 @Component({
   selector: 'app-perfil-empleador',
@@ -13,7 +14,9 @@ export class PerfilEmpleadorComponent {
   empresa!: Empresa;
 
 
-  constructor(private route: ActivatedRoute, private empresaService: EmpresaService) {}
+  telefonos: string[] = [];
+  constructor(private route: ActivatedRoute, private empresaService: EmpresaService
+    , private telefonosService : TelefonosService) {}
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -25,6 +28,13 @@ export class PerfilEmpleadorComponent {
         this.empresa = empresa;
 
   
+      }
+    });
+
+    this.telefonosService.getTelefonos(this.codigo).subscribe({
+
+      next: (list: string[]) => {
+        this.telefonos = list;
       }
     });
   

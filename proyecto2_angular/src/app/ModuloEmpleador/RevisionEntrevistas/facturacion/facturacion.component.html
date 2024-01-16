@@ -1,6 +1,16 @@
+<app-navbar></app-navbar>
+
+<div *ngIf="usuario.tipo!='Empleador'">
+
+    <h1>No tiene permisos para usar esta funcionalidad!</h1>
+
+</div>
+
+<div *ngIf="usuario.tipo=='Empleador'">
 <div *ngIf="oferta.estado!='Finalizado'">
 <h1>La oferta de empleo no ha finalizado!</h1>
 </div>
+
 
 <div *ngIf="oferta.codigoEmpresa != usuario.codigo.toString()">
 
@@ -32,4 +42,5 @@
         <a class="w-100 btn btn-lg btn-outline-primary" href="{{downloadUrl}}">Descargar Factura</a>
 
     </div>
+</div>
 </div>

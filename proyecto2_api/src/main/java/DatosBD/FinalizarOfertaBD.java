@@ -45,7 +45,7 @@ public class FinalizarOfertaBD {
             PreparedStatement insert = conexion.prepareStatement(Pago, PreparedStatement.RETURN_GENERATED_KEYS);
             insert.setString(1, finalizarOferta.getCodigoEmpresa());
             insert.setString(2, fecha);
-            insert.setString(2, finalizarOferta.getCodigoOferta());
+            insert.setString(3, finalizarOferta.getCodigoOferta());
 
             System.out.println(insert.toString());
             int affectedRows = insert.executeUpdate();

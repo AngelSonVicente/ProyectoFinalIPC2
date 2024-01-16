@@ -99,6 +99,7 @@ public class OfertaServlet extends HttpServlet {
             ofertaController.EliminarOferta(oferta, response);
         } catch (NotFoundException | InvalidDataException ex) {
 
+            System.out.println("error_ "+ ex);
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
         }

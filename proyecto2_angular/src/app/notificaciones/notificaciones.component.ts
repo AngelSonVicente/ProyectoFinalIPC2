@@ -27,6 +27,12 @@ export class NotificacionesComponent {
 
         next: (list: Notificaciones[]) => {
           this.notificaciones = list;
+
+          this.notificaciones = this.notificaciones.sort((a, b) => {
+            const fechaA = new Date(a.fecha).getTime(); // Convertir cadena a tiempo en milisegundos
+            const fechaB = new Date(b.fecha).getTime();
+            return fechaB - fechaA;
+          });
         }
       });
 
@@ -44,6 +50,12 @@ export class NotificacionesComponent {
 
             next: (list: Notificaciones[]) => {
               this.notificaciones = list;
+
+              this.notificaciones = this.notificaciones.sort((a, b) => {
+                const fechaA = new Date(a.fecha).getTime(); // Convertir cadena a tiempo en milisegundos
+                const fechaB = new Date(b.fecha).getTime();
+                return fechaB - fechaA;
+              });
 
               
             }

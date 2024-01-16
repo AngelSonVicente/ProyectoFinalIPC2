@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,41 +42,12 @@ public class SolicitudesServlet extends HttpServlet {
         String codigoUsuario = request.getParameter("codigoSuuario");
         String Usuario = request.getParameter("usuario");
 
-        if (codigoOferta != null && codigoUsuario != null) {
-
-            if (solicitudService.ExisteSolicitud(codigoUsuario, codigoOferta)) {
-                response.setStatus(HttpServletResponse.SC_OK);
-
-            } else {
-
+        try {
+            solicitudService.GetSolicitudes(codigoOferta, codigoUsuario, response);
+        } catch (InvalidDataException ex) {
+       
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
-            }
-
-        }
-        if (codigoUsuario != null && codigoOferta == null) {
-
-            List<Solicitudes> solis = solicitudService.getSolicitudesEmpresa(codigoUsuario);
-
-            String json = new Gson().toJson(solis);
-
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-
-            // Envía el JSON como respuesta
-            response.getWriter().write(json);
-
-        }
-        if (codigoUsuario == null && codigoOferta != null) {
-            List<Solicitudes> solis = solicitudService.getSolicitudesOferta(codigoOferta);
-
-            String json = new Gson().toJson(solis);
-
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-
-            // Envía el JSON como respuesta
-            response.getWriter().write(json);
         }
 
     }
@@ -89,7 +61,7 @@ public class SolicitudesServlet extends HttpServlet {
         
         try {
             solicitudService.CrearSolicitud(body, response);
-        } catch (InvalidDataException | NotFoundException ex) {
+        } catch (InvalidDataException | NotFoundException | SQLException ex) {
               response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
       
         }
@@ -127,7 +99,7 @@ public class SolicitudesServlet extends HttpServlet {
        
         try {
             solicitudService.ActualizarSolicitud(soli,response);
-        } catch (InvalidDataException ex) {
+        } catch (InvalidDataException | NotFoundException ex) {
              response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
        
         }

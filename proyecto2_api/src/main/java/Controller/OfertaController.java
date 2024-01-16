@@ -178,10 +178,11 @@ public class OfertaController {
 
             NotificacionesService notificacionesService = new NotificacionesService(conexion);
 
-            Notificaciones notificacion = new Notificaciones(null, null, null, null, null, ofertaEliminada.getCodigoOferta(), null, "Se ha eliminado la oferta de empleo. MOtivo: " + ofertaEliminada.getMotivo(), null, null);
+            Notificaciones notificacion = new Notificaciones(null, "1", null, null, null, ofertaEliminada.getCodigoOferta(), null, "Se ha eliminado la oferta de empleo. MOtivo: " + ofertaEliminada.getMotivo(), null, null);
 
             for (Solicitudes solicitud : solicitudesOferta) {
                 notificacion.setCodigoUsuarioDestino(solicitud.getCodigoUsuario());
+                System.out.println("notificacion"+ notificacion.toString());
                 notificacionesService.CrearNotificacion(notificacion);
 
             }

@@ -9,7 +9,7 @@ public class ConexionBD {
 
     private static ConexionBD instancia;
     private static Connection conexion = null;
-    private final String url = "jdbc:mysql://localhost:3306/empleos";
+    private final String url = "jdbc:mysql://localhost:3306/empleos2";
     private final String usuario = "root";
     private final String contrasena = "ASV30885";
 

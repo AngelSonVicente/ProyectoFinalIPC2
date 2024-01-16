@@ -19,14 +19,14 @@ import java.util.List;
  */
 public class OfertaBD {
 
-    private Connection conexion;
+    private Connection conexion = ConexionBD.getInstancia().getConexion();;
 
     public OfertaBD(Connection conexion) {
-        this.conexion = conexion;
+        //this.conexion = conexion;
     }
 
     public OfertaBD() {
-        conexion = ConexionBD.getInstancia().getConexion();
+      //  conexion = ConexionBD.getInstancia().getConexion();
 
     }
 

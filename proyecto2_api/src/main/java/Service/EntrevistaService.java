@@ -36,12 +36,12 @@ public class EntrevistaService {
     private EntrevistaBD entrevistaBD = new EntrevistaBD();
     private OfertaService ofertaService = new OfertaService();
     private JsonUtil jsonUtil = new JsonUtil();
-    private SolicitudesService solicitudService = new SolicitudesService(conexion);
+    // private SolicitudesService solicitudService = new SolicitudesService(conexion);
 
     public Entrevista agendarEntrevista(Entrevista entrevista) throws InvalidDataException, SQLException, NotFoundException {
         Solicitudes solicitud = new Solicitudes(entrevista.getCodigoSolicitud(), entrevista.getCodigoOferta(), null, null, null, null, Estado.Entrevista.name());
         Entrevista entrevistaCreada = new Entrevista();
-
+        SolicitudesService solicitudService = new SolicitudesService(conexion);
         try {
             // Iniciar transacción
             conexion.setAutoCommit(false);
@@ -99,6 +99,7 @@ public class EntrevistaService {
     }
 
     public Entrevista crearEntrevista(Entrevista entrevista) throws InvalidDataException {
+        System.out.println("Entrevista: " + entrevista.toString());
         validar(entrevista);
 
         return entrevistaBD.crearEntrevista(entrevista);

@@ -37,7 +37,8 @@ public class ReporteController {
 
     
     public void GetReportes(Reporte reporte, HttpServletResponse response) throws IOException{
-    
+        System.out.println("reporteeeeee. "+ reporte.toString());
+        
         //Administrador
         if (reporte.getTipo().equals("admin")) {
             if (reporte.getReporte().equals("1")) {
@@ -68,6 +69,15 @@ public class ReporteController {
         if (reporte.getTipo().equals("usuario")) {
             if (reporte.getReporte().equals("1")) {
                 List<SolicitudRetirada> reportes = reportesUsuario.Reporte1(reporte.getCodigo(), reporte.getFecha1(), reporte.getFecha2());
+              
+                System.out.println("objetos enviados: ");
+                for(SolicitudRetirada solicitud : reportes){
+                    
+                    System.out.println(solicitud.toString());
+                
+                }
+                
+                
                 jsonUtil.EnviarListaJson(response, reportes);
             }
             if (reporte.getReporte().equals("2")) {
@@ -107,7 +117,6 @@ public class ReporteController {
 
         }
 
-        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         
     }
     

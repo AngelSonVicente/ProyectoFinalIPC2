@@ -34,10 +34,12 @@ public class SolicitudesService {
     private Connection conexion;
 
     public SolicitudesService() {
+            conexion = ConexionBD.getInstancia().getConexion();
+
     }
 
     public SolicitudesService(Connection conexion) {
-        conexion = ConexionBD.getInstancia().getConexion();
+        this.conexion = conexion;
     }
 
     // SolicitudesBD solicitudBD = new SolicitudesBD();
@@ -46,6 +48,37 @@ public class SolicitudesService {
     Util util = new Util();
     JsonUtil jsonUtil = new JsonUtil();
     private String MensajeNotificacion = "ha aplicado a la oferta de empleo";
+
+    public void GetSolicitudes(String codigoOferta, String codigoUsuario, HttpServletResponse response) throws IOException, InvalidDataException {
+
+        SolicitudesService solicitudService = new SolicitudesService();
+
+        if (codigoOferta != null && codigoUsuario != null) {
+
+            if (solicitudService.ExisteSolicitud(codigoUsuario, codigoOferta)) {
+                response.setStatus(HttpServletResponse.SC_OK);
+
+            } else {
+
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+            }
+
+        }
+        if (codigoUsuario != null && codigoOferta == null) {
+
+            List<Solicitudes> solis = solicitudService.getSolicitudesEmpresa(codigoUsuario);
+
+            jsonUtil.EnviarListaJson(response, solis);
+
+        }
+        if (codigoUsuario == null && codigoOferta != null) {
+            List<Solicitudes> solis = solicitudService.getSolicitudesOferta(codigoOferta);
+
+            jsonUtil.EnviarListaJson(response, solis);
+        }
+
+    }
 
     public void CrearSolicitud(String body, HttpServletResponse response) throws InvalidDataException, IOException, NotFoundException, SQLException {
 
@@ -95,12 +128,17 @@ public class SolicitudesService {
             try {
                 conexion.setAutoCommit(true);
                 //enviar json
-                jsonUtil.EnviarJson(response, solicitud);
-
+            response.setStatus(HttpServletResponse.SC_OK);
+               
             } catch (SQLException closeException) {
                 closeException.printStackTrace();
             }
         }
+        
+        System.out.println("solicitud creada: "+ solicitud.toString());
+        
+         jsonUtil.EnviarJson(response, solicitud);
+
 
     }
 
@@ -120,7 +158,7 @@ public class SolicitudesService {
             if (solicitud.getEstado().equals(Estado.Rechazado.name())) {
 
                 //enviar notificacion de rechazo
-                Notificaciones notificaion = new Notificaciones(null, null, null, solicitud.getCodigoUsuario(), null, solicitud.getCodigoOferta(), null, "Se ha rechazado su Solicitud a la oferta", null, null);
+                Notificaciones notificaion = new Notificaciones(null, "1", null, solicitud.getCodigoUsuario(), null, solicitud.getCodigoOferta(), null, "Se ha rechazado su Solicitud a la oferta", null, null);
                 System.out.println(notificaion.toString());
 
                 notificacionesService.CrearNotificacion(notificaion);
@@ -140,7 +178,6 @@ public class SolicitudesService {
             }
             e.printStackTrace();
 
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } finally {
             // Restaurar el modo de autocommit y cerrar la conexión
             try {
@@ -160,6 +197,7 @@ public class SolicitudesService {
 
         validar(solicitud);
         SolicitudesBD solicitudBD = new SolicitudesBD(conexion);
+        System.out.println("solicitudBD: "+solicitud.toString());
         return solicitudBD.crearSolicitud(solicitud);
     }
 
@@ -245,8 +283,8 @@ public class SolicitudesService {
     public Solicitudes actualizarEstadoSolicitudBD(Solicitudes solicitud) throws InvalidDataException, NotFoundException {
         SolicitudesBD solicitudBD = new SolicitudesBD(conexion);
         OfertaService ofertaService = new OfertaService(conexion);
-        
-         Solicitudes solicitudactualizada = new Solicitudes();
+
+        Solicitudes solicitudactualizada = new Solicitudes();
 
         try {
             // Iniciar transacción
@@ -254,7 +292,7 @@ public class SolicitudesService {
 
             //funciones
             //cambiar el estado de la oferta a Entrevista
-             solicitudactualizada = solicitudBD.actualizarEstadoSolicitud(solicitud);
+            solicitudactualizada = solicitudBD.actualizarEstadoSolicitud(solicitud);
 
             List<Solicitudes> solicitudesOferta = getSolicitudesOferta(solicitud.getCodigoOferta());
             System.out.println("codigo OFerta kjndkjnsadkjs_: " + solicitud.getCodigoOferta());
@@ -285,7 +323,7 @@ public class SolicitudesService {
             // Restaurar el modo de autocommit y cerrar la conexión
             try {
                 conexion.setAutoCommit(true);
-          
+
             } catch (SQLException closeException) {
                 closeException.printStackTrace();
             }

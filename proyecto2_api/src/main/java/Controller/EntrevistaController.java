@@ -61,7 +61,7 @@ public class EntrevistaController {
             Oferta oferta = ofertaService.getOferta(entrevista.getCodigoOferta());
 
             //enviar notificacion a usuario de que ha conseguido la entrevista
-            Notificaciones notificacion = new Notificaciones(null, oferta.getCodigoEmpresa(), null, entrevista.getCodigoUsuario(), null, entrevista.getCodigoOferta(), null, "Se ha agendado una Entrevista En la oferta de empleo", null, null);
+            Notificaciones notificacion = new Notificaciones(null, "1", null, entrevista.getCodigoUsuario(), null, entrevista.getCodigoOferta(), null, "Se ha agendado una Entrevista En la oferta de empleo", null, null);
             //enviar notificacion
             notificacionesService.CrearNotificacion(notificacion);
 
@@ -78,18 +78,19 @@ public class EntrevistaController {
             }
             e.printStackTrace();
 
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+          //  response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } finally {
             // Restaurar el modo de autocommit y cerrar la conexión
             try {
                 conexion.setAutoCommit(true);
                 //enviar json
-                jsonUtil.EnviarJson(response, entrevistaAgendada);
-
+                
             } catch (SQLException closeException) {
                 closeException.printStackTrace();
             }
         }
+        jsonUtil.EnviarJson(response, entrevistaAgendada);
+
 
     }
 

@@ -1,16 +1,29 @@
 <app-navbar></app-navbar>
 
 <div class="container">
- 
-  <div class="row">
-    <div class="col-md-12">
+
+  <div class="row align-items-start">
+    <div class="col">
       <h4 class="display-5">{{empresa.nombreEmpresa}}</h4>
       <p class="lead">Mision: {{empresa.mision}}</p>
       <p class="lead">Vision: {{empresa.vision}}</p>
     </div>
+    <div class="col-md-7">
+
+      <div class="col-md-7">
+        <h5 class="display-8">Teléfonos</h5>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let telefono of telefonos">{{ telefono }}</li>
+        </ul>
+      </div>
+    </div>
   </div>
+
+
   <hr>
-  
+
+
+
 
   <app-buscar-ofertas-empleo [codigoEmpresa]="codigo"></app-buscar-ofertas-empleo>
 </div>

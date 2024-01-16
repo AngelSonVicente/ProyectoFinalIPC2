@@ -22,8 +22,8 @@ import java.util.List;
 public class ReportesUsuarioBD {
         static Connection conexion = ConexionBD.getInstancia().getConexion();
 
-    String Reporte1Fecha ="SELECT solicitudes_retiradas.*, o.nombre AS nombre_oferta FROM solicitudes_retiradas JOIN ofertas AS o ON solicitudes_retiradas.codigo_oferta = o.codigo WHERE o.fecha_publicacion BETWEEN ? AND ? AND solicitudes_retiradas.codigo_usuario = ?;";
-    String Reporte1 ="SELECT solicitudes_retiradas.*, o.nombre AS nombre_oferta FROM solicitudes_retiradas JOIN ofertas AS o ON solicitudes_retiradas.codigo_oferta = o.codigo WHERE solicitudes_retiradas.codigo_usuario = ?;";
+    String Reporte1Fecha ="SELECT solicitudes_retiradas.*, o.nombre AS nombre_oferta FROM solicitudes_retiradas JOIN ofertas AS o ON solicitudes_retiradas.codigo_oferta = o.codigo WHERE o.fecha_publicacion BETWEEN ? AND ? AND codigo_usuario = ?;";
+    String Reporte1 ="SELECT solicitudes_retiradas.*, o.nombre AS nombre_oferta FROM solicitudes_retiradas JOIN ofertas AS o ON solicitudes_retiradas.codigo_oferta = o.codigo WHERE codigo_usuario = ?;";
     String Reporte2 ="SELECT s.*, o.nombre AS nombre_oferta FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo WHERE s.codigo_usuario = ? AND s.estado = 'Entrevista';";
     String Reporte3 ="SELECT s.*, o.nombre AS nombre_oferta FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo WHERE s.estado = 'Rechazado' AND s.codigo_usuario = ?;";
     String Reporte4 ="SELECT s.*, o.nombre AS nombre_oferta FROM solicitudes AS s JOIN ofertas AS o ON s.codigo_oferta = o.codigo WHERE s.estado != 'Elegido' AND s.codigo_usuario = ?;";
@@ -35,6 +35,7 @@ public class ReportesUsuarioBD {
             PreparedStatement select = conexion.prepareStatement(Reporte1);
             select.setString(1, codigoEmpresa);
 
+            System.out.println("query: "+ select.toString());
             ResultSet resultset = select.executeQuery();
 
             while (resultset.next()) {

@@ -136,6 +136,7 @@ export class InformacionUsuarioComponent {
         },
         error: (error: any) => {
           console.log("error");
+          this.confirmar();
         }
       });
 
@@ -168,6 +169,7 @@ export class InformacionUsuarioComponent {
         this.confirmar();
       },
       error: (error: any) => {
+        this.confirmar();
         console.log("error -----------------------------");
       }
     });

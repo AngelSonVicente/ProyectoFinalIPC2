@@ -26,7 +26,6 @@ import java.sql.Connection;
 public class OfertaService {
 
     private Connection conexion;
-    OfertaBD ofertasBD;
 
     public OfertaService(Connection conexion) {
         this.conexion = conexion;
@@ -34,17 +33,19 @@ public class OfertaService {
 
     public OfertaService() {
         conexion = ConexionBD.getInstancia().getConexion();
-        ofertasBD = new OfertaBD(conexion);
 
     }
 
     Util util = new Util();
 
     public List<Oferta> getOfertas() {
+        OfertaBD ofertasBD = new OfertaBD(conexion);
+
         return ofertasBD.getOfertas();
     }
 
     public List<Oferta> getOfertasPreferencias(String codigo) throws InvalidDataException {
+        OfertaBD ofertasBD = new OfertaBD(conexion);
 
         if (codigo == null || codigo.isEmpty()) {
             throw new InvalidDataException("El codigo no es valido");
@@ -55,6 +56,8 @@ public class OfertaService {
     }
 
     public boolean OfertaFinalizada(String codigoOferta) throws InvalidDataException {
+        OfertaBD ofertasBD = new OfertaBD(conexion);
+
         if (codigoOferta == null || codigoOferta.isEmpty()) {
             throw new InvalidDataException("El codigo no es valido");
 
@@ -64,6 +67,8 @@ public class OfertaService {
     }
 
     public List<Oferta> getOfertasEmpresa(String codigo) throws InvalidDataException {
+        OfertaBD ofertasBD = new OfertaBD(conexion);
+
         if (codigo == null || codigo.isEmpty()) {
             throw new InvalidDataException("El codigo no es valido");
 
@@ -74,6 +79,8 @@ public class OfertaService {
     }
 
     public List<Oferta> getOfertasEmpresaEstados(String codigo, String estado) throws InvalidDataException {
+        OfertaBD ofertasBD = new OfertaBD(conexion);
+
         if (codigo == null || codigo.isEmpty() || estado == null || estado.isEmpty()) {
             throw new InvalidDataException("El codigo no es valido");
 
@@ -84,29 +91,38 @@ public class OfertaService {
     }
 
     public Oferta crearOferta(Oferta oferta) throws InvalidDataException {
+        OfertaBD ofertasBD = new OfertaBD(conexion);
+
         validar(oferta);
         return ofertasBD.crearOferta(oferta);
     }
 
     public Oferta actualizarEstadoOferta(Oferta oferta) throws InvalidDataException {
         validar(oferta);
+        OfertaBD ofertasBD = new OfertaBD(conexion);
+
         return ofertasBD.actualizarEstadoOferta(oferta);
     }
 
     public Oferta actualizarOfertaBD(Oferta oferta) throws InvalidDataException {
         validar(oferta);
+        OfertaBD ofertasBD = new OfertaBD(conexion);
+
         return ofertasBD.actualizarOferta(oferta);
     }
 
     public OfertaEliminada eliminarOfertaBD(OfertaEliminada oferta) throws InvalidDataException {
-        if (oferta.getCodigo() == null || oferta.getCodigo().isEmpty()) {
+        if (oferta.getCodigoOferta() == null || oferta.getCodigoOferta().isEmpty()) {
             throw new InvalidDataException("El codigo no es valido");
 
         }
+        OfertaBD ofertasBD = new OfertaBD(conexion);
+
         return ofertasBD.EliminarOferta(oferta);
     }
 
     public Oferta getOferta(String codigo) throws NotFoundException {
+        OfertaBD ofertasBD = new OfertaBD(conexion);
 
         Oferta oferta = ofertasBD.getOferta(codigo);
 
@@ -163,11 +179,12 @@ public class OfertaService {
 
     public List<Oferta> getOfertasFiltradas(Filtro filtros) throws InvalidDataException {
 
-        if (filtros.getCategoria()==null || filtros.getCategoria().isEmpty() || filtros.getModalidad()==null
+        if (filtros.getCategoria() == null || filtros.getCategoria().isEmpty() || filtros.getModalidad() == null
                 || filtros.getModalidad().isEmpty()) {
             throw new InvalidDataException("Faltan Datos");
 
         }
+        OfertaBD ofertasBD = new OfertaBD(conexion);
 
         return ofertasBD.obtenerOfertasFiltradas(filtros);
     }

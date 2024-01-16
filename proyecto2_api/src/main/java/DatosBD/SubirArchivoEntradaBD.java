@@ -288,6 +288,7 @@ public class SubirArchivoEntradaBD {
                             if (solicitud.getCodigoUsuario().equals(entrevistaNode.get("usuario").asText())) {
                                 codigoSolicitud = solicitud.getCodigo();
                             }
+                            
 
                         }
 
@@ -301,7 +302,7 @@ public class SubirArchivoEntradaBD {
 
                         String estadoEntrevistaBD = "";
                         if (estadoEntrevista.equals("FINALIZADA")) {
-                            estadoEntrevistaBD = Estado.Finalizado.name();
+                            estadoEntrevistaBD = "Finalizado";
                         } else {
                             estadoEntrevistaBD = estadoEntrevista;
                         }
@@ -326,6 +327,7 @@ public class SubirArchivoEntradaBD {
             }
 
         } catch (Exception e) {
+            System.out.println("eorrr______________________"+e);
 
         }
 
