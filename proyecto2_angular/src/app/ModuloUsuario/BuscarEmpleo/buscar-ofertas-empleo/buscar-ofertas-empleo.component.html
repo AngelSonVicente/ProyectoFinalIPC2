@@ -9,11 +9,37 @@
 
 <div class="container" *ngIf="usuario.tipo=='Usuario' || usuario.tipo =='Invitado'">
 
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    
+      <select class="form-control"   [(ngModel)]="filtro.categoria">
+        <option selected value="todas">Categorias</option>
+        <option *ngFor="let categoria of categorias" [value]="categoria.codigo">
+          {{ categoria.nombre }} - Descripción: {{categoria.descripcion}}
+        </option>
+      </select>
+      
 
+      <select class="form-control"  [(ngModel)]="filtro.modalidad">
+        <option value="todas">Modalidad</option>
+        <option value="Presencial">Presencial</option>
+        <option value="Virtual">Virtual</option>
+        <option value="Hibrido">Hibrido</option>
+      </select>
+ 
+     
+          <input class="form-control me-2" type="ubicacion" placeholder="ubicacion" aria-label="ubicacion" [(ngModel)]="filtro.ubicacion">
+          <input class="form-control me-2" type="Salario" placeholder="Salario" aria-label="Salario" [(ngModel)]="filtro.salario">
+          <input class="form-control me-2" type="Nombre" placeholder="Nombre" aria-label="Nombre" [(ngModel)]="filtro.nombre">
+     
+     
+          <button class="btn btn-outline-success" (click)="FiltrarOfertas()">Aplicar</button>
+          
+        
+    
+  </nav>
 
-
+ 
   <h1>Ofertas de Empleo {{sugeridas}}</h1>
-  <button class="btn btn-primary" (click)="TodasLasOfertas()">Mostrar Todas las ofertas de empleo</button>
   <div class="row">
     <div class="col-md-7" *ngFor="let oferta of ofertas">
       <div class="card mb-3 border-primary">

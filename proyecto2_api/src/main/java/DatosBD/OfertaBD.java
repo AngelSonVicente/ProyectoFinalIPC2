@@ -1,7 +1,9 @@
 package DatosBD;
 
+import Datos.Filtro;
 import Datos.Oferta;
 import Datos.OfertaEliminada;
+import Datos.Util;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,12 +26,10 @@ public class OfertaBD {
     }
 
     public OfertaBD() {
-         conexion = ConexionBD.getInstancia().getConexion();
-    
-    }
-    
+        conexion = ConexionBD.getInstancia().getConexion();
 
-    
+    }
+
     //agregar fltro de las preferencias del usuario de momento todo
     private static String SelectTodo = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.estado = 'Activo'";
     private static String SelectOfertasPreferencias = "SELECT o.*, (SELECT nombre FROM usuarios WHERE codigo = o.codigo_empresa) AS nombre_empresa, (SELECT nombre FROM usuarios WHERE codigo = o.usuario_elegido) AS nombre_usuario_elegido, (SELECT nombre FROM categorias WHERE codigo = o.categoria) AS nombre_categoria FROM ofertas AS o WHERE o.estado = 'Activo' AND o.categoria IN (SELECT codigo_categoria FROM preferencias WHERE codigo_usuario = ?)";
@@ -41,6 +41,8 @@ public class OfertaBD {
     private static String Insert = "INSERT INTO ofertas (codigo, codigo_empresa, nombre, descripcion, categoria, estado, fecha_publicacion, fecha_limite, salario, modalidad, ubicacion, detalles, usuario_elegido) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static String Update = "UPDATE ofertas set nombre = ?, descripcion = ? , categoria = ?, estado = ?, fecha_limite = ?, salario = ?, modalidad = ?, ubicacion = ?, detalles = ? WHERE codigo = ?";
     private static String UpdateEstado = "UPDATE ofertas set estado = ? WHERE codigo = ?";
+
+    Util util = new Util();
 
     public OfertaEliminada EliminarOferta(OfertaEliminada oferta) {
         System.out.println("Actualizando la oferta");
@@ -142,14 +144,14 @@ public class OfertaBD {
         List<Oferta> ofertas = new ArrayList<>();
         try {
             PreparedStatement select = conexion.prepareStatement(SelectOfertasPreferencias);
-            
-            System.out.println("codigo en getofertaspreferencia: "+ codigo);
-            System.out.println("query en getofertaspreferencia: "+ SelectOfertasPreferencias);
-            
+
+            System.out.println("codigo en getofertaspreferencia: " + codigo);
+            System.out.println("query en getofertaspreferencia: " + SelectOfertasPreferencias);
+
             select.setString(1, codigo);
 
             ResultSet resultset = select.executeQuery();
-            System.out.println("query ofertas con preferencia"+select.toString());
+            System.out.println("query ofertas con preferencia" + select.toString());
 
             while (resultset.next()) {
                 ofertas.add(new Oferta(resultset.getString("codigo"), resultset.getString("codigo_empresa"),
@@ -355,6 +357,92 @@ public class OfertaBD {
         }
 
         return false;
+    }
+
+    public List<Oferta> obtenerOfertasFiltradas(Filtro filtros) {
+        List<Oferta> ofertas = new ArrayList<>();
+
+        try {
+
+            String sql = SelectTodo;
+
+            if (!filtros.getCategoria().equals("todas")) {
+                sql += " AND categoria = ?";
+            }
+
+            if ( filtros.getSalario() != null ) {
+                if(util.esNumero(filtros.getSalario())){
+                
+                if (Float.parseFloat(filtros.getSalario()) > 0  ) {
+                    sql += " AND salario >= ?";
+                }
+                }
+
+            }
+
+            if (filtros.getNombre() != null ) {
+                sql += " AND nombre LIKE ?";
+            }
+            if (filtros.getUbicacion() != null ) {
+                sql += " AND ubicacion LIKE ?";
+            }
+            if (!filtros.getModalidad().equals("todas")) {
+                sql += " AND modalidad = ?";
+            }
+
+            System.out.println("sql: " + sql);
+            PreparedStatement statement = conexion.prepareStatement(sql);
+
+            int parametroIndex = 1;
+
+            if (!filtros.getCategoria().equals("todas")) {
+                statement.setString(parametroIndex++, filtros.getCategoria());
+            }
+
+            if ( filtros.getSalario() != null ) {
+                
+                if(util.esNumero(filtros.getSalario())){
+                if (Float.parseFloat(filtros.getSalario()) > 0) {
+                    
+                    
+                    statement.setFloat(parametroIndex++, Float.parseFloat(filtros.getSalario()));
+                }
+                }
+
+            }
+
+            if (filtros.getNombre() != null ) {
+
+                statement.setString(parametroIndex++, "%" + filtros.getNombre() + "%");
+            }
+            if (filtros.getUbicacion() != null ) {
+
+                statement.setString(parametroIndex++, "%" + filtros.getUbicacion()+ "%");
+            } 
+            if (!filtros.getModalidad().equals("todas")) {
+                statement.setString(parametroIndex++, filtros.getModalidad());
+            }
+            System.out.println("query ofertasFiltrdas: "+statement.toString());
+
+            System.out.println("SQL: " + sql);
+            ResultSet resultset = statement.executeQuery();
+
+            while (resultset.next()) {
+                ofertas.add(new Oferta(resultset.getString("codigo"), resultset.getString("codigo_empresa"),
+                        resultset.getString("nombre_empresa"), resultset.getString("nombre"), resultset.getString("descripcion"),
+                        resultset.getString("categoria"), resultset.getString("nombre_categoria"), resultset.getString("estado"),
+                        resultset.getString("fecha_publicacion"), resultset.getString("fecha_limite"), resultset.getFloat("salario"),
+                        resultset.getString("modalidad"), resultset.getString("ubicacion"), resultset.getString("detalles"),
+                        resultset.getString("usuario_elegido"), resultset.getString("nombre_usuario_elegido")
+                ));
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return ofertas;
     }
 
 }

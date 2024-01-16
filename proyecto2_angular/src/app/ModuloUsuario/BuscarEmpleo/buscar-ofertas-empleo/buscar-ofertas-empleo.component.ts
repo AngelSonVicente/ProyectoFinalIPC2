@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Categoria } from 'src/entities/Categoria';
+import { Filtro } from 'src/entities/Filtro';
 import { Oferta } from 'src/entities/Oferta';
 import { Usuario } from 'src/entities/Usuario';
+import { CategoriaService } from 'src/services/CategoriaService';
 import { OfertaService } from 'src/services/OfertaService';
 
 
@@ -15,12 +18,32 @@ export class BuscarOfertasEmpleoComponent implements OnInit {
 
 
 
+
+
+  filtro: Filtro;
+
+  ubicacion!: string;
+  salario!: string;
+  categoriaFiltro: string ="todas";
+  modalidadaFiltro: string ="todas";
+
+  
+
+
+  busqueda!: string;
+
+  categorias: Categoria[]=[];
   sugeridas :string="Sugeridas";
   empresaId!: string;
 
   ofertas: Oferta[] = [];
   usuario!: Usuario;
-  constructor(private ofertaService: OfertaService, private route: ActivatedRoute) {
+  constructor(private ofertaService: OfertaService, private route: ActivatedRoute
+    , private categoriaService: CategoriaService) {
+    this.filtro = new Filtro();
+    this.filtro.categoria = "todas";
+    this.filtro.modalidad = "todas";
+    
 
   }
   ngOnInit(): void {
@@ -39,6 +62,19 @@ export class BuscarOfertasEmpleoComponent implements OnInit {
           this.ofertas = list;
         }
       });
+
+
+      this.categoriaService.getCategorias().subscribe({
+
+        next: (list: Categoria[]) => {
+          this.categorias = list;
+        }
+      });
+
+
+
+
+
     } else {
 
       this.ofertaService.getOfertasEmpresaEstado(this.codigoEmpresa, "Activo").subscribe({
@@ -65,6 +101,19 @@ export class BuscarOfertasEmpleoComponent implements OnInit {
       }
     });
 
+  }
+
+
+  FiltrarOfertas() {
+    this.ofertaService.FiltrarOfertas(this.filtro).subscribe({
+
+      next: (list: Oferta[]) => {
+        this.ofertas = list;
+
+        this.sugeridas=" ";
+      }
+    });
+    
   }
 
 

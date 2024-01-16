@@ -2,6 +2,7 @@ package Service;
 
 import Datos.Comision;
 import Datos.Entrevista;
+import Datos.Filtro;
 import Datos.JsonUtil;
 import Datos.Oferta;
 import Datos.OfertaEliminada;
@@ -26,17 +27,17 @@ public class OfertaService {
 
     private Connection conexion;
     OfertaBD ofertasBD;
+
     public OfertaService(Connection conexion) {
         this.conexion = conexion;
     }
 
     public OfertaService() {
         conexion = ConexionBD.getInstancia().getConexion();
-       ofertasBD = new OfertaBD(conexion);
+        ofertasBD = new OfertaBD(conexion);
 
     }
 
- 
     Util util = new Util();
 
     public List<Oferta> getOfertas() {
@@ -158,6 +159,17 @@ public class OfertaService {
 
         }
 
+    }
+
+    public List<Oferta> getOfertasFiltradas(Filtro filtros) throws InvalidDataException {
+
+        if (filtros.getCategoria()==null || filtros.getCategoria().isEmpty() || filtros.getModalidad()==null
+                || filtros.getModalidad().isEmpty()) {
+            throw new InvalidDataException("Faltan Datos");
+
+        }
+
+        return ofertasBD.obtenerOfertasFiltradas(filtros);
     }
 
     public void validar(Oferta oferta) throws InvalidDataException {

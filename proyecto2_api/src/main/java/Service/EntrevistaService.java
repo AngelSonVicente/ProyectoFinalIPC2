@@ -38,7 +38,7 @@ public class EntrevistaService {
     private JsonUtil jsonUtil = new JsonUtil();
     private SolicitudesService solicitudService = new SolicitudesService(conexion);
 
-    public Entrevista agendarEntrevista(Entrevista entrevista) throws InvalidDataException, SQLException {
+    public Entrevista agendarEntrevista(Entrevista entrevista) throws InvalidDataException, SQLException, NotFoundException {
         Solicitudes solicitud = new Solicitudes(entrevista.getCodigoSolicitud(), entrevista.getCodigoOferta(), null, null, null, null, Estado.Entrevista.name());
         Entrevista entrevistaCreada = new Entrevista();
 

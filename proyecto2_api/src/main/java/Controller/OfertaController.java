@@ -6,6 +6,7 @@ package Controller;
 
 import Datos.Entrevista;
 import Datos.Estado;
+import Datos.Filtro;
 import Datos.JsonUtil;
 import Datos.Notificaciones;
 import Datos.Oferta;
@@ -36,7 +37,6 @@ public class OfertaController {
     JsonUtil jsonUtil = new JsonUtil();
     private String EstadoActivo = "Activo";
     static Connection conexion = ConexionBD.getInstancia().getConexion();
-
 
     public void GetOfertas(String codigo, String estado, String codigoEmpresa, String codigoUsuario, HttpServletResponse response) throws IOException, InvalidDataException, NotFoundException {
         OfertaService ofertaService = new OfertaService();
@@ -92,23 +92,19 @@ public class OfertaController {
         jsonUtil.EnviarJson(response, ofertaaa);
 
     }
-    
-     public void ActualizarOferta(String body, HttpServletResponse response) throws IOException, InvalidDataException {
-     OfertaService ofertaService = new OfertaService(conexion);
+
+    public void ActualizarOferta(String body, HttpServletResponse response) throws IOException, InvalidDataException {
+        OfertaService ofertaService = new OfertaService(conexion);
         NotificacionesService notificacionService = new NotificacionesService(conexion);
-         Oferta ofertaFE = (Oferta) jsonUtil.JsonStringAObjeto(body, Oferta.class);
+        Oferta ofertaFE = (Oferta) jsonUtil.JsonStringAObjeto(body, Oferta.class);
 
         System.out.println("Objeto recibido: " + ofertaFE.toString());
 
-        
-        
-        
         //actualizar la oferta
         Oferta oferta = ofertaService.actualizarOfertaBD(ofertaFE);
 
         //enviar notificacion 
         //entrevista enviar a usuario con entrevistas 
-
         //Activo, Seleccion enviar notificacion  a usuarios con solicitudes
         if (ofertaFE.getEstado().equals(Estado.Activo.name()) || ofertaFE.getEstado().equals("Seleccion")) {
 
@@ -148,8 +144,22 @@ public class OfertaController {
         jsonUtil.EnviarJson(response, oferta);
 
     }
-     
-     
+
+    public void FiltrarOfertas(String body, HttpServletResponse response) throws IOException, InvalidDataException {
+          OfertaService ofertaService = new OfertaService();
+
+        Filtro filtro = (Filtro) jsonUtil.JsonStringAObjeto(body, Filtro.class);
+
+        System.out.println(filtro.toString());
+        
+        List<Oferta> ofertasFiltradas =ofertaService.getOfertasFiltradas(filtro);
+        
+        jsonUtil.EnviarListaJson(response, ofertasFiltradas);
+        
+        
+        
+
+    }
 
     public void EliminarOferta(OfertaEliminada ofertaEliminada, HttpServletResponse response) throws NotFoundException, InvalidDataException {
 
@@ -189,7 +199,5 @@ public class OfertaController {
         }
 
     }
-
-    
 
 }

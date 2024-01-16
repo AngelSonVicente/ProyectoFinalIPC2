@@ -3,6 +3,7 @@ import { HttpClient, HttpParams, HttpResponse } from "@angular/common/http";
 import { Observable, catchError, map, of } from "rxjs";
 import { Oferta } from "src/entities/Oferta";
 import { OfertaEliminada } from "src/entities/OfertaEliminada";
+import { Filtro } from "src/entities/Filtro";
 @Injectable({
     providedIn: 'root'
 })
@@ -29,6 +30,11 @@ export class OfertaService {
         return this.httpClient.post<Oferta>(this.API_URL + "Ofertas", oferta);
     }
 
+    public FiltrarOfertas(filtro: Filtro): Observable<Oferta[]> {
+        console.log('connectando con el BE: ');
+        return this.httpClient.post<Oferta[]>(this.API_URL + "FiltrarOfertas", filtro);
+    }
+    
     public getOfertas(): Observable<Oferta[]> {
         console.log('connectando con el BE: ');
         return this.httpClient.get<Oferta[]>(this.API_URL + "Ofertas");
