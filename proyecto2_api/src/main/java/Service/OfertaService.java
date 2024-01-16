@@ -4,6 +4,7 @@ import Datos.Comision;
 import Datos.Entrevista;
 import Datos.Filtro;
 import Datos.JsonUtil;
+import Datos.Estado;
 import Datos.Oferta;
 import Datos.OfertaEliminada;
 import Datos.Util;
@@ -39,6 +40,7 @@ public class OfertaService {
     Util util = new Util();
 
     public List<Oferta> getOfertas() {
+        
         OfertaBD ofertasBD = new OfertaBD(conexion);
 
         return ofertasBD.getOfertas();
@@ -67,6 +69,7 @@ public class OfertaService {
     }
 
     public List<Oferta> getOfertasEmpresa(String codigo) throws InvalidDataException {
+        PasarOfertasFaseSeleccion();
         OfertaBD ofertasBD = new OfertaBD(conexion);
 
         if (codigo == null || codigo.isEmpty()) {
@@ -74,11 +77,12 @@ public class OfertaService {
 
         }
 
-        PasarOfertasFaseSeleccion();
+        
         return ofertasBD.getOfertasEmpresa(codigo);
     }
 
     public List<Oferta> getOfertasEmpresaEstados(String codigo, String estado) throws InvalidDataException {
+        PasarOfertasFaseSeleccion();
         OfertaBD ofertasBD = new OfertaBD(conexion);
 
         if (codigo == null || codigo.isEmpty() || estado == null || estado.isEmpty()) {
@@ -101,11 +105,19 @@ public class OfertaService {
         validar(oferta);
         OfertaBD ofertasBD = new OfertaBD(conexion);
 
+        System.out.println("oferta a actualizar: "+oferta.toString());
         return ofertasBD.actualizarEstadoOferta(oferta);
     }
 
     public Oferta actualizarOfertaBD(Oferta oferta) throws InvalidDataException {
         validar(oferta);
+        
+        if(util.NoHaAlcanzadoFechaLimite(oferta.getFechaLimite()) && !oferta.getEstado().equals(Estado.Finalizado.name())){
+       
+            //si se modifica la fecha y no esta finalizada la fecha y la fecha ingresada no se ha alcanzado
+            //se modifica su estado para poder recibir más postulaciones
+            oferta.setEstado(Estado.Activo.name());
+        }
         OfertaBD ofertasBD = new OfertaBD(conexion);
 
         return ofertasBD.actualizarOferta(oferta);
@@ -121,7 +133,8 @@ public class OfertaService {
         return ofertasBD.EliminarOferta(oferta);
     }
 
-    public Oferta getOferta(String codigo) throws NotFoundException {
+    public Oferta getOferta(String codigo) throws NotFoundException, InvalidDataException {
+        PasarOfertasFaseSeleccion();
         OfertaBD ofertasBD = new OfertaBD(conexion);
 
         Oferta oferta = ofertasBD.getOferta(codigo);
