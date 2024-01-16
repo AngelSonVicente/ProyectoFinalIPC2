@@ -1,2 +1,35 @@
-<p>facturacion works!</p>
-codigo oferta {{codigo}}
+<div *ngIf="oferta.estado!='Finalizado'">
+<h1>La oferta de empleo no ha finalizado!</h1>
+</div>
+
+<div *ngIf="oferta.codigoEmpresa != usuario.codigo.toString()">
+
+    <h1>Usted no ha publicado esta oferta de empleo</h1>
+
+</div>
+
+<div class="container col-xl-10 col-xxl-8 px-6 py-5" *ngIf="oferta.estado=='Finalizado' && oferta.codigoEmpresa == usuario.codigo.toString()">
+
+    <div class="col-md-10 mx-auto col-lg-3">
+        <h1 class="display-10 fw-bold lh-5 text-body-emphasis mb-50">Factura</h1>
+   
+    </div>    
+    
+    <div class="row align-items-center g-lg-5 py-5">
+        <div class="col-lg-1 text-center text-lg-start">
+        
+        </div>
+        
+        <div class="col-md-5 mx-auto col-lg-9 border rounded-3 bg-body-tertiary">
+            <h2>Muchas gracias por usar nuestro Servicio!</h2>
+
+            <h5>Se le ha cobrado Q{{comision.comision}}  de comision </h5><br>
+            <h5>Tarjeta:  termina en {{getTarjeta()}} <br>titular: {{empresa.titularTarjeta}}</h5><br>
+
+         
+        </div>
+
+        <a class="w-100 btn btn-lg btn-outline-primary" href="{{downloadUrl}}">Descargar Factura</a>
+
+    </div>
+</div>
